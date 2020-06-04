@@ -4,6 +4,7 @@ import os
 import csv
 import inspect
 
+#comment
 def logtoshell(logstr):
     debug=1
     if (debug ==1):
