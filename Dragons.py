@@ -70,6 +70,8 @@ def msg(msg, textx, texty, fontsize):
         pygame.display.update()
     i = 0
 
+
+
 def Start():
     start = True
     if start == True:
@@ -159,6 +161,7 @@ def gameloop():
     area = [0, 0, 0, 0]
     global dl
     items = False
+    ID = False
     x = 480
     y = 512
     global bg
@@ -166,9 +169,7 @@ def gameloop():
     global mapno
     global player
     while not gamequit:
-        #pygame.event.pump()
         for event in pygame.event.get():
-            #pygame.event.pump()
             if event.type == pygame.QUIT:
                 gamequit = True
             if event.type == pygame.KEYDOWN:
@@ -178,7 +179,7 @@ def gameloop():
                 
                 if mapno == 1:
                     if event.key == pygame.K_LEFT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_14.png')
                         if x == 608 and y <= 448 and y >= 352:
                             x+=0
@@ -204,7 +205,7 @@ def gameloop():
                             x += -32
                         
                     elif event.key == pygame.K_RIGHT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_11.png')
                         if x == 352:
                             if y <= 448 and y >=352:
@@ -233,7 +234,7 @@ def gameloop():
                             x += 32
                         
                     elif event.key == pygame.K_UP:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_02.png')
                         if x >= 640 and x <=1280 and y == 256:
                             y += 0
@@ -278,7 +279,7 @@ def gameloop():
                             y += -32
                             
                     elif event.key == pygame.K_DOWN:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_23.png')
                         if y == 320:
                             if x >= 64 and x <= 192 or x >= 288 and x <= 672 or x >= 768 and x <= 1216:
@@ -337,7 +338,7 @@ def gameloop():
                             
                 if mapno == 3:
                     if event.key == pygame.K_LEFT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_14.png')
                         if x == 0:
                             x+=0
@@ -354,7 +355,7 @@ def gameloop():
                             x += -32
                         
                     elif event.key == pygame.K_RIGHT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_11.png')
                         if x == 576:
                             x+=0
@@ -388,7 +389,7 @@ def gameloop():
                             x += 32
                         
                     elif event.key == pygame.K_UP:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_02.png')
                         if y == 0:
                             y+=0
@@ -407,7 +408,7 @@ def gameloop():
                             y += -32
                             
                     elif event.key == pygame.K_DOWN:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_23.png')
                         if y == 576:
                             bg = pygame.image.load('map1.png')
@@ -432,7 +433,7 @@ def gameloop():
                         
                 if mapno == 4:
                     if event.key == pygame.K_LEFT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_14.png')
                         if x == 0:
                             x+=0
@@ -440,7 +441,7 @@ def gameloop():
                             x += -32
                         
                     elif event.key == pygame.K_RIGHT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_11.png')
                         if x == 256:
                             x+=0
@@ -448,7 +449,7 @@ def gameloop():
                             x += 32
                         
                     elif event.key == pygame.K_UP:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_02.png')
                         if y == 160:
                             y+=0
@@ -456,7 +457,7 @@ def gameloop():
                             y += -32
                             
                     elif event.key == pygame.K_DOWN:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_23.png')
                         if y == 576:
                             bg = pygame.image.load('map1.png')
@@ -472,7 +473,7 @@ def gameloop():
 
                 if mapno == 5:
                     if event.key == pygame.K_LEFT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_14.png')
                         if x == 544:
                             if y == 64:
@@ -490,7 +491,7 @@ def gameloop():
                         else:
                             x+=-32
                     elif event.key == pygame.K_RIGHT:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_11.png')
                         if x == 576:
                             x+=0
@@ -499,7 +500,7 @@ def gameloop():
                         else:
                             x+=32
                     elif event.key == pygame.K_UP:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_02.png')
                         if y == 0:
                             y+=0
@@ -508,7 +509,7 @@ def gameloop():
                         else:
                             y+=-32
                     elif event.key == pygame.K_DOWN:
-                        print ("hello, this is line number"+ str(lineno())+__name__ )
+                        
                         player = pygame.image.load('player_23.png')
                         if y == 576:
                             y+=0
@@ -530,6 +531,7 @@ def gameloop():
         game.fill(black)
         game.blit(bg, (0, 0))
         game.blit(player, (x, y))
+        game.blit(cursor, (X, Y))
 
 
 
@@ -618,7 +620,7 @@ def gameloop():
             game.blit(pill2, ((round(winw/2)-300) +550, inventory_y+ 200))
 
             
-            
+            game.blit(cursor, (X, Y))
             for event in pygame.event.get():
                 if event.type==pygame.KEYDOWN:
                     if event.key == pygame.K_i:
@@ -626,9 +628,23 @@ def gameloop():
                             items = True
                         elif items==True:
                             items = False
-        game.blit(cursor, (X, Y))
+        if X>=372+550 and X <= 372+600 and Y >= inventory_y and Y <= inventory_y+50 and pygame.mouse.get_pressed() == (1, 0, 0):
+            ID =True
+            print("ID")
+            items = False
+            pygame.time.delay(500)
+            game.blit(cursor, (X, Y))
+
+        if ID == True:
+            inventory_panel = pygame.image.load('buttons\\panelInset_blue.png')
+            inventory_panel = pygame.transform.scale(inventory_panel, (600, 400))
+            game.blit(inventory_panel,(inventory_x, inventory_y-50))
+            game.blit(cursor, (X, Y))
+            pygame.display.update()
         pygame.display.update()
         clock.tick(30)
+        
+
     pygame.quit()
     quit
 
