@@ -2,6 +2,7 @@ import pygame
 import os
 import csv
 import inspect
+import random
 pygame.init()
 
 winw = 1344
@@ -22,6 +23,8 @@ clock = pygame.time.Clock()
 bg = pygame.image.load('map1.png')
 bg = pygame.transform.scale(bg, (1344, 768))
 player = pygame.image.load('player_23.png')
+dl = (480, 512)
+
 
 
 def msg_to_screen(msg, color, textx, texty, fontsize):
@@ -52,8 +55,110 @@ def lineno():
     return inspect.currentframe().f_back.f_lineno
 
 #print ("hello, this is line number"+ str(lineno())+__name__ )
-        
+
+
+def msg(msg, textx, texty, fontsize):
+    i = 0
+    while i !=255:
+        msg_to_screen(msg, (i, i, i), textx, texty, fontsize)
+        i+=1
+        pygame.display.update()
+    pygame.time.delay(3000)
+    while i !=0:
+        msg_to_screen(msg, (i, i, i), textx, texty, fontsize)
+        i-=1
+        pygame.display.update()
+    i = 0
+
+def Start():
+    start = True
+    if start == True:
+        msg("You are now in a world full of Dragons", 325, 300, 50)
+        msg("Here you are starting as a Dragon Trainer", 300, 300, 50)
+        msg("You have only one goal here...", 375, 300, 50)
+        msg("To Tame the King of Dragons.", 375, 300, 50)
+        msg("You have aldready got the starter Dragon", 300, 300, 50)
+        msg("Start you journey - Explore areas and battle your way to the top", 150, 300, 50)
+        start = False
+    gameloop()
+
+def Battle():
+    battle = True
+    optx = 775
+    opty = 495
+    
+    while battle == True:
+        pygame.draw.rect(game, white, [336, 192, 672, 380])
+        battleopt = pygame.image.load('buttons\\panelInset_brown.png')
+        battleopt = pygame.transform.scale(battleopt, (650, 80))
+        game.blit(battleopt, (347, 480))
+        opt = pygame.image.load('buttons\\arrowBlue_right.png')
+        msg_to_screen("Fight", white, 800, 495, 25)
+        msg_to_screen("Dragon", white, 800, 525, 25)
+        msg_to_screen("Bag", white, 900, 495, 25)
+        msg_to_screen("Run", white, 900, 525, 25)
+        game.blit(opt, (optx, opty))
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    if optx == 775:
+                        if opty == 495:
+                            opty = 525
+                        elif opty == 525:
+                            optx = 875
+                            opty = 495
+                    elif optx == 875 and opty == 495:
+                        opty = 525
+                    else:
+                        optx+=0
+                        opty+=0
+                elif event.key == pygame.K_UP:
+                    if optx == 775:
+                        opty = 495
+                    elif optx == 875:
+                        if opty == 495:
+                            optx = 775
+                            opty = 525
+                        elif opty == 525:
+                            opty = 495
+                    else:
+                        opty+=0
+                        optx+=0
+                elif event.key == pygame.K_RETURN:
+                    if optx == 775:
+                        if opty == 495:
+                            #fight later
+                            print(" ")
+                        elif opty == 525:
+                            # dragons later
+                            print(" ")
+                    if optx == 875:
+                        if opty == 495:
+                            #bag later
+                            print(" ")
+                        elif opty == 525:
+                            #run now
+                            game.blit(battleopt, (347, 480))
+                            msg_to_screen("You ran away safely", white, 400, 495, 25)
+                            pygame.display.update()
+                            pygame.time.delay(1000)
+                            battle = False
+                        
+        pygame.display.update()
+
+def fight(x, y, area):
+    global dl
+    #0 = xsmall   1 = xbig   2 = ysmall   3 = y big
+    if x>=area[0] and x<=area[1] and y>=area[2] and y<=area[3]:
+        battlechance = random.randrange(0, 10)
+        if battlechance == 1:
+            Battle()
+
+
 def gameloop():
+    area = [0, 0, 0, 0]
+    global dl
+    items = False
     x = 480
     y = 512
     global bg
@@ -191,6 +296,7 @@ def gameloop():
                             x+=0
                         else:
                             x += -32
+                        fight(x, y, [0, 1280, 0, 320])
                         
                     elif event.key == pygame.K_RIGHT:
                         player = pygame.image.load('player_11.png')
@@ -198,6 +304,7 @@ def gameloop():
                             x+=0
                         else:
                             x += 32
+                        fight(x, y, [0, 1280, 0, 320])
                         
                     elif event.key == pygame.K_UP:
                         player = pygame.image.load('player_02.png')
@@ -205,6 +312,7 @@ def gameloop():
                             y+=0
                         else:
                             y += -32
+                        fight(x, y, [0, 1280, 0, 320])
                             
                     elif event.key == pygame.K_DOWN:
                         player = pygame.image.load('player_23.png')
@@ -216,7 +324,9 @@ def gameloop():
                             mapno = 1
                         else:
                             y += 32
-
+                        fight(x, y, [0, 1280, 0, 320])
+                        
+                    
                 #Map3 Movements
                             
                 if mapno == 3:
@@ -388,18 +498,136 @@ def gameloop():
                             y+=0
                         else:
                             y+=32
-                    
 
-                                
-
+                                      
+        pygame.mouse.set_visible(False)
+        cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+        (X, Y) = pygame.mouse.get_pos()
         print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
         game.blit(player, (x, y))
+
+
+        
+        game.blit(cursor, (X, Y))
+        
+        for event in pygame.event.get():
+            if event.type==pygame.KEYDOWN:
+                if event.key == pygame.K_i:
+                    if items==False:
+                        items = True
+                    elif items==True:
+                        items = False
+
+        if items== True:      
+            pygame.mouse.set_visible(False)
+            cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+            (X, Y) = pygame.mouse.get_pos()
+            print(x, y)
+            game.fill(black)
+            game.blit(bg, (0, 0))
+            game.blit(player, (x, y))
+            game.blit(cursor, (X, Y))
+
+
+
+
+            inventory_panel = pygame.image.load('buttons\\panelInset_blue.png')
+            inventory_panel = pygame.transform.scale(inventory_panel, (600, 400))
+            inventory_x = (round(winw/2)-300)
+            inventory_y = (round(winh/2)-200) + 50
+            game.blit(inventory_panel,(inventory_x, inventory_y-50))
+            
+            # original items
+            pen = pygame.image.load('items\\genericItem_color_025.png')
+            pen = pygame.transform.scale(pen, (50, 50))
+            game.blit(pen, ((round(winw/2)-300) +50, inventory_y))
+            
+            notes = pygame.image.load('items\\genericItem_color_038.png')
+            notes = pygame.transform.scale(notes, (50, 50))
+            game.blit(notes, ((round(winw/2)-300) +150, inventory_y))
+            
+            camera = pygame.image.load('items\\genericItem_color_045.png')
+            camera = pygame.transform.scale(camera, (50, 50))
+            game.blit(camera, ((round(winw/2)-300) +250, inventory_y))
+            
+            phone = pygame.image.load('items\\genericItem_color_067.png')
+            phone = pygame.transform.scale(phone, (50, 50))
+            game.blit(phone, ((round(winw/2)-300) +350, inventory_y))
+            
+            healing = pygame.image.load('items\\genericItem_color_102.png')
+            healing = pygame.transform.scale(healing, (50, 50))
+            game.blit(healing, ((round(winw/2)-300) +450, inventory_y))
+            
+            ID = pygame.image.load('items\\genericItem_color_150.png')
+            ID = pygame.transform.scale(ID, (50, 50))
+            game.blit(ID, ((round(winw/2)-300) +550, inventory_y))
+            
+            money = pygame.image.load('items\\genericItem_color_157.png')
+            money = pygame.transform.scale(money, (50, 50))
+            game.blit(money, ((round(winw/2)-300) +50, inventory_y + 100))
+            
+            compass = pygame.image.load('items\\genericItem_color_162.png')
+            compass = pygame.transform.scale(compass, (50, 50))
+            game.blit(compass, ((round(winw/2)-300) +150, inventory_y+ 100))
+            
+            trap = pygame.image.load('items\\genericItem_color_105.png')
+            trap = pygame.transform.scale(trap, (50, 50))
+            game.blit(trap, ((round(winw/2)-300) +250, inventory_y+ 100))
+
+            knife = pygame.image.load('items\\genericItem_color_134.png')
+            knife = pygame.transform.scale(knife, (50, 50))
+            game.blit(knife, ((round(winw/2)-300) +350, inventory_y+ 100))
+
+            key = pygame.image.load('items\\genericItem_color_155.png')
+            key = pygame.transform.scale(key, (50, 50))
+            game.blit(key, ((round(winw/2)-300) +450, inventory_y+ 100))
+
+            injection = pygame.image.load('items\\genericItem_color_093.png')
+            injection = pygame.transform.scale(injection, (50, 50))
+            game.blit(injection, ((round(winw/2)-300) +550, inventory_y+ 100))
+
+            hammer = pygame.image.load('items\\genericItem_color_023.png')
+            hammer = pygame.transform.scale(hammer, (50, 50))
+            game.blit(hammer, ((round(winw/2)-300) +50, inventory_y+ 200))
+
+            saw = pygame.image.load('items\\genericItem_color_016.png')
+            saw = pygame.transform.scale(saw, (50, 50))
+            game.blit(saw, ((round(winw/2)-300) +150, inventory_y+ 200))
+
+            online = pygame.image.load('items\\genericItem_color_049.png')
+            online = pygame.transform.scale(online, (50, 50))
+            game.blit(online, ((round(winw/2)-300) +250, inventory_y+ 200))
+
+            pendrive = pygame.image.load('items\\genericItem_color_073.png')
+            pendrive = pygame.transform.scale(pendrive, (50, 50))
+            game.blit(pendrive, ((round(winw/2)-300) +350, inventory_y+ 200))
+
+            pill1 = pygame.image.load('items\\genericItem_color_089.png')
+            pill1 = pygame.transform.scale(pill1, (50, 50))
+            game.blit(pill1, ((round(winw/2)-300) +450, inventory_y+ 200))
+
+            pill2 = pygame.image.load('items\\genericItem_color_090.png')
+            pill2 = pygame.transform.scale(pill2, (50, 50))
+            game.blit(pill2, ((round(winw/2)-300) +550, inventory_y+ 200))
+
+            
+            
+            for event in pygame.event.get():
+                if event.type==pygame.KEYDOWN:
+                    if event.key == pygame.K_i:
+                        if items==False:
+                            items = True
+                        elif items==True:
+                            items = False
+               
+
         pygame.display.update()
-        clock.tick(15)
+        clock.tick(30)
     pygame.quit()
     quit
 
-    
+
+#Start()
 gameloop()
