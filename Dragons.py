@@ -24,7 +24,9 @@ bg = pygame.image.load('map1.png')
 bg = pygame.transform.scale(bg, (1344, 768))
 player = pygame.image.load('player_23.png')
 dl = (480, 512)
-
+red = (255,0, 0)
+rank = "Dragon Trainer"
+money_count = 0
 
 
 def msg_to_screen(msg, color, textx, texty, fontsize):
@@ -137,7 +139,9 @@ def Battle():
                     if optx == 875:
                         if opty == 495:
                             #bag later
-                            print(" ")
+                            bag_items = True
+                            if bag_items == True:
+                                pygame.draw.rect(game, (50, 50, 50), [400, 495, 50, 50])
                         elif opty == 525:
                             #run now
                             game.blit(battleopt, (347, 480))
@@ -161,13 +165,16 @@ def gameloop():
     area = [0, 0, 0, 0]
     global dl
     items = False
-    ID = False
+    IDstart = False
+    moneystart = False
     x = 480
     y = 512
     global bg
     global gamequit
     global mapno
     global player
+    global rank
+    global money_count
     while not gamequit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -628,19 +635,47 @@ def gameloop():
                             items = True
                         elif items==True:
                             items = False
-        if X>=372+550 and X <= 372+600 and Y >= inventory_y and Y <= inventory_y+50 and pygame.mouse.get_pressed() == (1, 0, 0):
-            ID =True
-            print("ID")
-            items = False
-            pygame.time.delay(500)
-            game.blit(cursor, (X, Y))
+                            IDstart = False
+                            moneystart = False
+                            
+            if X>=372+550 and X <= 372+600 and Y >= inventory_y and Y <= inventory_y+50 and pygame.mouse.get_pressed() == (1, 0, 0):
+                IDstart =True
+                print("ID")
+                items = False
+                pygame.time.delay(500)
+                game.blit(cursor, (X, Y))
+                pygame.display.update()
 
-        if ID == True:
-            inventory_panel = pygame.image.load('buttons\\panelInset_blue.png')
-            inventory_panel = pygame.transform.scale(inventory_panel, (600, 400))
-            game.blit(inventory_panel,(inventory_x, inventory_y-50))
+
+            
+            if X>=372+50 and X <= 372+100 and Y >= inventory_y+100 and Y <= inventory_y+150 and pygame.mouse.get_pressed() == (1, 0, 0):
+                moneystart =True
+                print("money")
+                items = False
+                pygame.time.delay(500)
+                game.blit(cursor, (X, Y))
+                pygame.display.update()
+            
+
+        if IDstart == True:
+            pygame.draw.rect(game, white, [inventory_x, inventory_y-50, 600, 400])
+            pygame.draw.rect(game, red, [inventory_x+10, inventory_y - 40, 130, 130])
+            profilepic = pygame.image.load('player_23.png')
+            profilepic = pygame.transform.scale(profilepic, (100, 100))
+            game.blit(profilepic, (inventory_x+25, inventory_y - 25))
+            pygame.draw.rect(game, (200, 200, 200), [inventory_x+150, inventory_y-40, 440, 30])
+            msg_to_screen(rank, black, inventory_x+160, inventory_y-35, 25)
+
+                
+            
             game.blit(cursor, (X, Y))
             pygame.display.update()
+        if moneystart == True:
+            pygame.draw.rect(game, white, [round((winw/2)-150), round((winh/2)-15), 300, 30])
+            msg_to_screen(str(money_count), black, round(winw/2-140), round(winh/2-10), 25)
+            game.blit(cursor, (X, Y))
+            pygame.display.update()
+            
         pygame.display.update()
         clock.tick(30)
         
