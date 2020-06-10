@@ -87,9 +87,25 @@ def Start():
     gameloop()
 
 def Battle():
+    pen = pygame.image.load('items\\genericItem_color_025.png')
+    pen = pygame.transform.scale(pen, (50, 50))
+    camera = pygame.image.load('items\\genericItem_color_045.png')
+    camera = pygame.transform.scale(camera, (50, 50))
+    healing = pygame.image.load('items\\genericItem_color_102.png')
+    healing = pygame.transform.scale(healing, (50, 50))
+    trap = pygame.image.load('items\\genericItem_color_105.png')
+    trap = pygame.transform.scale(trap, (50, 50))
+    pill1 = pygame.image.load('items\\genericItem_color_089.png')
+    pill1 = pygame.transform.scale(pill1, (50, 50))
+    pill2 = pygame.image.load('items\\genericItem_color_090.png')
+    pill2 = pygame.transform.scale(pill2, (50, 50))
+
     battle = True
     optx = 775
     opty = 495
+    bag_items = False
+    itemno = 0
+    bagitem = [pen, camera, healing, trap, pill1, pill2]
     
     while battle == True:
         pygame.draw.rect(game, white, [336, 192, 672, 380])
@@ -138,10 +154,8 @@ def Battle():
                             print(" ")
                     if optx == 875:
                         if opty == 495:
-                            #bag later
+                            #bag now
                             bag_items = True
-                            if bag_items == True:
-                                pygame.draw.rect(game, (50, 50, 50), [400, 495, 50, 50])
                         elif opty == 525:
                             #run now
                             game.blit(battleopt, (347, 480))
@@ -149,7 +163,30 @@ def Battle():
                             pygame.display.update()
                             pygame.time.delay(1000)
                             battle = False
-                        
+        if bag_items == True:
+            print(itemno)
+            game.blit(battleopt, (347, 480))
+            pygame.draw.rect(game, (50, 50, 50), [400, 495, 50, 50])
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    itemno-=1
+                    if itemno <= -1:
+                        itemno = 0
+                    else:
+                        itemno+=0
+                elif event.key == pygame.K_RIGHT:
+                    itemno+=1
+                    if itemno >= 6:
+                        itemno = 5
+                    else:
+                        itemno+=0
+                elif event.key == pygame.K_ESCAPE:
+                    bag_items = False
+                    itemno = 0
+                else:
+                    itemno+=0
+            game.blit(bagitem[itemno], (400, 495))
+            pygame.time.delay(100)
         pygame.display.update()
 
 def fight(x, y, area):
