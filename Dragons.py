@@ -27,7 +27,37 @@ dl = (480, 512)
 red = (255,0, 0)
 rank = "Dragon Trainer"
 money_count = 0
+your_dragon = False
 
+def menu():
+    global your_dragon
+    menubg = pygame.image.load('Dragons_wallpaper.jpg')
+    menubg = pygame.transform.scale(menubg, (1344, 768))
+    game.blit(menubg, (0, 0))
+    your_dragon_ = 'nothing'
+    while your_dragon_ == 'nothing':
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    your_dragon = pygame.image.load('dragons\\Black 4.png')
+                elif event.key == pygame.K_2:
+                    your_dragon = pygame.image.load('dragons\\Blue 3.png')
+                elif event.key == pygame.K_3:
+                    you_dragon = pygame.image.load('dragons\\Red 4.png')
+                elif event.key == pygame.K_4:
+                    your_dragon = pygame.image.load('dragons\\Yellow 2.png')
+
+                elif event.key == pygame.K_RETURN:
+                    if your_dragon == False:
+                        your_dragon = False
+                    else:
+                        your_dragon = pygame.transform.scale(your_dragon, (200, 200))
+                        gameloop()
+                
+            
+        pygame.display.update()
+
+your_dragon = your_dragon
 
 def msg_to_screen(msg, color, textx, texty, fontsize):
     font = pygame.font.SysFont(None, fontsize)
@@ -87,6 +117,42 @@ def Start():
     gameloop()
 
 def Battle():
+    global your_dragon
+    battle_num = random.randrange(1, 16)
+    if battle_num == 1:
+        battle_dragon = pygame.image.load('dragons\\Blue 1.png')
+    elif battle_num == 2:
+        battle_dragon = pygame.image.load('dragons\\Blue 2.png')
+    elif battle_num == 3:
+        battle_dragon = pygame.image.load('dragons\\Blue 3.png')
+    elif battle_num == 4:
+        battle_dragon = pygame.image.load('dragons\\Blue 4.png')
+    elif battle_num == 5:
+        battle_dragon = pygame.image.load('dragons\\Red 1.png')
+    elif battle_num == 6:
+        battle_dragon = pygame.image.load('dragons\\Red 2.png')
+    elif battle_num == 7:
+        battle_dragon = pygame.image.load('dragons\\Red 3.png')
+    elif battle_num == 8:
+        battle_dragon = pygame.image.load('dragons\\Red 4.png')
+    elif battle_num == 9:
+        battle_dragon = pygame.image.load('dragons\\Green 1.png')
+    elif battle_num == 10:
+        battle_dragon = pygame.image.load('dragons\\Green 2.png')
+    elif battle_num == 11:
+        battle_dragon = pygame.image.load('dragons\\Green 3.png')
+    elif battle_num == 12:
+        battle_dragon = pygame.image.load('dragons\\Green 4.png')
+    elif battle_num == 13:
+        battle_dragon = pygame.image.load('dragons\\Yellow 1.png')
+    elif battle_num == 14:
+        battle_dragon = pygame.image.load('dragons\\Yellow 2.png')
+    elif battle_num == 15:
+        battle_dragon = pygame.image.load('dragons\\Yellow 3.png')
+    elif battle_num == 16:
+        battle_dragon = pygame.image.load('dragons\\Yellow 4.png')
+    battle_dragon = pygame.transform.scale(battle_dragon, (200, 200))
+        
     pen = pygame.image.load('items\\genericItem_color_025.png')
     pen = pygame.transform.scale(pen, (50, 50))
     camera = pygame.image.load('items\\genericItem_color_045.png')
@@ -109,6 +175,8 @@ def Battle():
     
     while battle == True:
         pygame.draw.rect(game, white, [336, 192, 672, 380])
+        game.blit(battle_dragon, (803, 197))
+        game.blit(your_dragon, (341, 192))
         battleopt = pygame.image.load('buttons\\panelInset_brown.png')
         battleopt = pygame.transform.scale(battleopt, (650, 80))
         game.blit(battleopt, (347, 480))
@@ -190,6 +258,7 @@ def Battle():
         pygame.display.update()
 
 def fight(x, y, area):
+    global your_dragon
     global dl
     #0 = xsmall   1 = xbig   2 = ysmall   3 = y big
     if x>=area[0] and x<=area[1] and y>=area[2] and y<=area[3]:
@@ -217,6 +286,7 @@ def gameloop():
             if event.type == pygame.QUIT:
                 gamequit = True
             if event.type == pygame.KEYDOWN:
+                pygame.time.delay(50)
 
 
             #Map1 movements
@@ -720,6 +790,7 @@ def gameloop():
     pygame.quit()
     quit
 
-
+menu()
 #Start()
-gameloop()
+#gameloop()
+    
