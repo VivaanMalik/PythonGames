@@ -43,7 +43,7 @@ def menu():
                 elif event.key == pygame.K_2:
                     your_dragon = pygame.image.load('dragons\\Blue 3.png')
                 elif event.key == pygame.K_3:
-                    you_dragon = pygame.image.load('dragons\\Red 4.png')
+                    your_dragon = pygame.image.load('dragons\\Red 4.png')
                 elif event.key == pygame.K_4:
                     your_dragon = pygame.image.load('dragons\\Yellow 2.png')
 
