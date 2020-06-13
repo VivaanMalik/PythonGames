@@ -184,7 +184,8 @@ def Start():
 
 def Battle():
     global your_dragon
-    battle_num = random.randrange(1, 20)
+    global dragon_health
+    battle_num = random.randrange(1, 21)
     if battle_num == 1:
         battle_dragon = pygame.image.load('dragons\\Blue 1.png')
         opponent_health = 750
@@ -287,10 +288,10 @@ def Battle():
     itemno = 0
     bagitem = [pen, camera, healing, trap, pill1, pill2]
     
-    while battle == True and not opponent_health <=0:
+    while battle == True and not opponent_health <=0 or not your_dragon<=0:
         pygame.draw.rect(game, white, [336, 192, 672, 380])
         game.blit(battle_dragon, (803, 197))
-        game.blit(your_dragon, (341, 192))
+        game.blit(your_dragon, (341, 197))
         battleopt = pygame.image.load('buttons\\panelInset_brown.png')
         battleopt = pygame.transform.scale(battleopt, (650, 80))
         game.blit(battleopt, (347, 480))
@@ -300,6 +301,8 @@ def Battle():
         msg_to_screen("Bag", white, 900, 495, 25)
         msg_to_screen("Run", white, 900, 525, 25)
         game.blit(opt, (optx, opty))
+        pygame.draw.rect(game, (100, 100, 100), [341, 450, 200, 20])
+        pygame.draw.rect(game, (100, 100, 100), [803, 450, 200, 20])
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
@@ -330,7 +333,6 @@ def Battle():
                     if optx == 775:
                         if opty == 495:
                             #fight now
-                            print(opponent_health)
                             fight_power = random.randrange(1, 3)
                             opponent_health -= fight_power*dragon_fight
                             msg_to_screen("You attacked the opponent Dragon", white, 400, 495, 25)
@@ -341,7 +343,15 @@ def Battle():
                             if opponent_health <= 0:
                                 battle = False
                             dragon_health-=(opponent_health/10)*fight_power
+                            msg_to_screen("The opponent dragon attaked you", white, 400, 495, 25)
                             pygame.display.update()
+                            pygame.time.delay(1000)
+                            game.blit(battleopt, (347, 480))
+                            pygame.display.update()
+                            if dragon_health <= 0:
+                                battle = False
+                            pygame.display.update()
+                            
                         elif opty == 525:
                             # dragons later
                             print(" ")
@@ -356,7 +366,11 @@ def Battle():
                             pygame.display.update()
                             pygame.time.delay(1000)
                             battle = False
-                    pygame.event.clear()
+                            pygame.event.clear()
+                cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+                (X, Y) = pygame.mouse.get_pos()
+                game.blit(cursor, (X, Y))
+                    
         if bag_items == True:
             print(itemno)
             game.blit(battleopt, (347, 480))
