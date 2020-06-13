@@ -28,34 +28,101 @@ red = (255,0, 0)
 rank = "Dragon Trainer"
 money_count = 0
 your_dragon = False
+dragon_fight = 100
+dragon_health = 1000
 
 def menu():
     global your_dragon
+    your_dragon_color1 = (0, 0, 0)
+    your_dragon_color2 = (0, 0, 0)
+    your_dragon_color3 = (0, 0, 0)
+    your_dragon_color4 = (0, 0, 0)
+    your_dragon_color5 = (0, 0, 0)
     menubg = pygame.image.load('Dragons_wallpaper.jpg')
     menubg = pygame.transform.scale(menubg, (1344, 768))
+    opt1 = pygame.image.load('dragons\\Black 4.png')
+    opt1 = pygame.transform.scale(opt1, (200, 200))
+    opt2 = pygame.image.load('dragons\\Blue 3.png')
+    opt2 = pygame.transform.scale(opt2, (200, 200))
+    opt3 = pygame.image.load('dragons\\Red 4.png')
+    opt3 = pygame.transform.scale(opt3, (200, 200))
+    opt4 = pygame.image.load('dragons\\Yellow 2.png')
+    opt4 = pygame.transform.scale(opt4, (200, 200))
+    opt5 = pygame.image.load('dragons\\Green 1.png')
+    opt5 = pygame.transform.scale(opt5, (200, 200))
     game.blit(menubg, (0, 0))
     your_dragon_ = 'nothing'
+    i = 0
     while your_dragon_ == 'nothing':
+        pygame.draw.rect(game, your_dragon_color1, [winw//5-200, 500, 200, 200])
+        game.blit(opt1, (winw//5-200, 500))
+        pygame.draw.rect(game, your_dragon_color2, [winw//5*2-200, 500, 200, 200])
+        game.blit(opt2, (winw//5*2-200, 500))
+        pygame.draw.rect(game, your_dragon_color3, [winw//5*3-200, 500, 200, 200])
+        game.blit(opt3, (winw//5*3-200, 500))
+        pygame.draw.rect(game, your_dragon_color4, [winw//5*4-200, 500, 200, 200])
+        game.blit(opt4, (winw//5*4-200, 500))
+        pygame.draw.rect(game, your_dragon_color5, [winw-200, 500, 200, 200])
+        game.blit(opt5, (winw-200, 500))
+        if i !=255:
+            msg_to_screen("Number keys to Choose:", (i, i, i), 400, 100, 50)
+            i+=1
+        pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
+                    your_dragon_color1 = (255, 255, 255)
+                    your_dragon_color2 = (0, 0, 0)
+                    your_dragon_color3 = (0, 0, 0)
+                    your_dragon_color4 = (0, 0, 0)
+                    your_dragon_color5 = (0, 0, 0)
                     your_dragon = pygame.image.load('dragons\\Black 4.png')
+                    
                 elif event.key == pygame.K_2:
+                    your_dragon_color1 = (0, 0, 0)
+                    your_dragon_color2 = (255, 255, 255)
+                    your_dragon_color3 = (0, 0, 0)
+                    your_dragon_color4 = (0, 0, 0)
+                    your_dragon_color5 = (0, 0, 0)
                     your_dragon = pygame.image.load('dragons\\Blue 3.png')
+                    
                 elif event.key == pygame.K_3:
+                    your_dragon_color1 = (0, 0, 0)
+                    your_dragon_color2 = (0, 0, 0)
+                    your_dragon_color3 = (255, 255, 255)
+                    your_dragon_color4 = (0, 0, 0)
+                    your_dragon_color5 = (0, 0, 0)
                     your_dragon = pygame.image.load('dragons\\Red 4.png')
+                    
                 elif event.key == pygame.K_4:
+                    your_dragon_color1 = (0, 0, 0)
+                    your_dragon_color2 = (0, 0, 0)
+                    your_dragon_color3 = (0, 0, 0)
+                    your_dragon_color4 = (255, 255, 255)
+                    your_dragon_color5 = (0, 0, 0)
                     your_dragon = pygame.image.load('dragons\\Yellow 2.png')
+                    
+                elif event.key == pygame.K_5:
+                    your_dragon_color1 = (0, 0, 0)
+                    your_dragon_color2 = (0, 0, 0)
+                    your_dragon_color3 = (0, 0, 0)
+                    your_dragon_color4 = (0, 0, 0)
+                    your_dragon_color5 = (255, 255, 255)
+                    your_dragon = pygame.image.load('dragons\\Green 1.png')
 
                 elif event.key == pygame.K_RETURN:
                     if your_dragon == False:
                         your_dragon = False
                     else:
                         your_dragon = pygame.transform.scale(your_dragon, (200, 200))
-                        gameloop()
+                        your_dragon_ = 'LOL'
+                
+        pygame.display.update()
+    i = 0
+    gameloop()
                 
             
-        pygame.display.update()
+        
 
 your_dragon = your_dragon
 
@@ -85,8 +152,7 @@ def readhigh():
 def lineno():
     """Returns the current line number in our program."""
     return inspect.currentframe().f_back.f_lineno
-
-#print ("hello, this is line number"+ str(lineno())+__name__ )
+    print ("hello, this is line number"+ str(lineno())+__name__ )
 
 
 def msg(msg, textx, texty, fontsize):
@@ -118,39 +184,87 @@ def Start():
 
 def Battle():
     global your_dragon
-    battle_num = random.randrange(1, 16)
+    battle_num = random.randrange(1, 20)
     if battle_num == 1:
         battle_dragon = pygame.image.load('dragons\\Blue 1.png')
+        opponent_health = 750
+        
     elif battle_num == 2:
         battle_dragon = pygame.image.load('dragons\\Blue 2.png')
+        opponent_health = 1000
+        
     elif battle_num == 3:
         battle_dragon = pygame.image.load('dragons\\Blue 3.png')
+        opponent_health = 1250
+        
     elif battle_num == 4:
         battle_dragon = pygame.image.load('dragons\\Blue 4.png')
+        opponent_health = 1500
+        
     elif battle_num == 5:
         battle_dragon = pygame.image.load('dragons\\Red 1.png')
+        opponent_health = 750
+        
     elif battle_num == 6:
         battle_dragon = pygame.image.load('dragons\\Red 2.png')
+        opponent_health = 1000
+        
     elif battle_num == 7:
         battle_dragon = pygame.image.load('dragons\\Red 3.png')
+        opponent_health = 1250
+        
     elif battle_num == 8:
         battle_dragon = pygame.image.load('dragons\\Red 4.png')
+        opponent_health = 1500
+        
     elif battle_num == 9:
         battle_dragon = pygame.image.load('dragons\\Green 1.png')
+        opponent_health = 750
+        
     elif battle_num == 10:
         battle_dragon = pygame.image.load('dragons\\Green 2.png')
+        opponent_health = 1000
+        
     elif battle_num == 11:
         battle_dragon = pygame.image.load('dragons\\Green 3.png')
+        opponent_health = 1250
+        
     elif battle_num == 12:
         battle_dragon = pygame.image.load('dragons\\Green 4.png')
+        opponent_health = 1500
+        
     elif battle_num == 13:
         battle_dragon = pygame.image.load('dragons\\Yellow 1.png')
+        opponent_health = 750
+        
     elif battle_num == 14:
         battle_dragon = pygame.image.load('dragons\\Yellow 2.png')
+        opponent_health = 1000
+        
     elif battle_num == 15:
         battle_dragon = pygame.image.load('dragons\\Yellow 3.png')
+        opponent_health = 1250
+        
     elif battle_num == 16:
         battle_dragon = pygame.image.load('dragons\\Yellow 4.png')
+        opponent_health = 1500
+        
+    elif battle_num == 17:
+        battle_dragon = pygame.image.load('dragons\\Black 1.png')
+        opponent_health = 750
+        
+    elif battle_num == 18:
+        battle_dragon = pygame.image.load('dragons\\Black 2.png')
+        opponent_health = 1000
+        
+    elif battle_num == 19:
+        battle_dragon = pygame.image.load('dragons\\Black 3.png')
+        opponent_health = 1250
+        
+    elif battle_num == 20:
+        battle_dragon = pygame.image.load('dragons\\Black 4.png')
+        opponent_health = 1500
+    original_opponent_health = opponent_health   
     battle_dragon = pygame.transform.scale(battle_dragon, (200, 200))
         
     pen = pygame.image.load('items\\genericItem_color_025.png')
@@ -173,7 +287,7 @@ def Battle():
     itemno = 0
     bagitem = [pen, camera, healing, trap, pill1, pill2]
     
-    while battle == True:
+    while battle == True and not opponent_health <=0:
         pygame.draw.rect(game, white, [336, 192, 672, 380])
         game.blit(battle_dragon, (803, 197))
         game.blit(your_dragon, (341, 192))
@@ -215,8 +329,19 @@ def Battle():
                 elif event.key == pygame.K_RETURN:
                     if optx == 775:
                         if opty == 495:
-                            #fight later
-                            print(" ")
+                            #fight now
+                            print(opponent_health)
+                            fight_power = random.randrange(1, 3)
+                            opponent_health -= fight_power*dragon_fight
+                            msg_to_screen("You attacked the opponent Dragon", white, 400, 495, 25)
+                            pygame.display.update()
+                            pygame.time.delay(1000)
+                            game.blit(battleopt, (347, 480))
+                            pygame.display.update()
+                            if opponent_health <= 0:
+                                battle = False
+                            dragon_health-=(opponent_health/10)*fight_power
+                            pygame.display.update()
                         elif opty == 525:
                             # dragons later
                             print(" ")
@@ -231,6 +356,7 @@ def Battle():
                             pygame.display.update()
                             pygame.time.delay(1000)
                             battle = False
+                    pygame.event.clear()
         if bag_items == True:
             print(itemno)
             game.blit(battleopt, (347, 480))
@@ -262,7 +388,7 @@ def fight(x, y, area):
     global dl
     #0 = xsmall   1 = xbig   2 = ysmall   3 = y big
     if x>=area[0] and x<=area[1] and y>=area[2] and y<=area[3]:
-        battlechance = random.randrange(0, 10)
+        battlechance = random.randrange(0, 20)
         if battlechance == 1:
             Battle()
 
@@ -791,6 +917,5 @@ def gameloop():
     quit
 
 menu()
-#Start()
-#gameloop()
+
     
