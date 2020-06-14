@@ -30,6 +30,8 @@ your_dragon = False
 dragon_fight = 100
 dragon_health = 1000
 original_dragon_health = dragon_health
+healing_count = 0
+
 
 
 def menu():
@@ -184,6 +186,7 @@ def Start():
     gameloop()
 
 def Battle():
+    global healing_count
     global your_dragon
     global dragon_health
     global original_dragon_health
@@ -279,10 +282,7 @@ def Battle():
     healing = pygame.transform.scale(healing, (50, 50))
     trap = pygame.image.load('items\\genericItem_color_105.png')
     trap = pygame.transform.scale(trap, (50, 50))
-    pill1 = pygame.image.load('items\\genericItem_color_089.png')
-    pill1 = pygame.transform.scale(pill1, (50, 50))
-    pill2 = pygame.image.load('items\\genericItem_color_090.png')
-    pill2 = pygame.transform.scale(pill2, (50, 50))
+
 
     opponent_healthbar_length = 200
     dragon_healthbar_length = 200
@@ -291,7 +291,7 @@ def Battle():
     opty = 495
     bag_items = False
     itemno = 0
-    bagitem = [pen, camera, healing, trap, pill1, pill2]
+    bagitem = [pen, camera, healing, trap]
     
     while battle == True:
         game.blit(bg, (0, 0))
@@ -385,6 +385,10 @@ def Battle():
                                 msg_to_screen("You Won!!!   ;p", white, 400, 495, 25)
                                 pygame.display.update()
                                 pygame.time.delay(1000)
+                                msg_to_screen("You get a first-aid-kit!!!", white, 400, 495, 25)
+                                pygame.display.update()
+                                pygame.time.delay(1000)
+                                healing_count += 1
                                 game.blit(battleopt, (347, 480))
                                 battle = False
                             else:
@@ -417,8 +421,8 @@ def Battle():
                                                 itemno+=0
                                         elif event.key == pygame.K_RIGHT:
                                             itemno+=1
-                                            if itemno >= 6:
-                                                itemno = 5
+                                            if itemno >= 4:
+                                                itemno = 3
                                             else:
                                                 itemno+=0
                                         elif event.key == pygame.K_ESCAPE:
@@ -876,6 +880,8 @@ def gameloop():
             healing = pygame.image.load('items\\genericItem_color_102.png')
             healing = pygame.transform.scale(healing, (50, 50))
             game.blit(healing, ((round(winw/2)-300) +450, inventory_y))
+            msg_to_screen(str(healing_count), black, (round(winw/2)-300) +455, (inventory_y), 75)
+            int(healing_count)
             
             ID = pygame.image.load('items\\genericItem_color_150.png')
             ID = pygame.transform.scale(ID, (50, 50))
@@ -920,14 +926,6 @@ def gameloop():
             pendrive = pygame.image.load('items\\genericItem_color_073.png')
             pendrive = pygame.transform.scale(pendrive, (50, 50))
             game.blit(pendrive, ((round(winw/2)-300) +350, inventory_y+ 200))
-
-            pill1 = pygame.image.load('items\\genericItem_color_089.png')
-            pill1 = pygame.transform.scale(pill1, (50, 50))
-            game.blit(pill1, ((round(winw/2)-300) +450, inventory_y+ 200))
-
-            pill2 = pygame.image.load('items\\genericItem_color_090.png')
-            pill2 = pygame.transform.scale(pill2, (50, 50))
-            game.blit(pill2, ((round(winw/2)-300) +550, inventory_y+ 200))
 
             
             game.blit(cursor, (X, Y))
@@ -985,6 +983,7 @@ def gameloop():
 
     pygame.quit()
     quit
+    
 
 menu()
 
