@@ -9,7 +9,6 @@ winw = 1344
 winh = 768
 bgcolor = 0
 
-
 game = pygame.display.set_mode((winw, winh))
 pygame.display.set_caption("Dragons")
 
@@ -30,6 +29,8 @@ money_count = 0
 your_dragon = False
 dragon_fight = 100
 dragon_health = 1000
+original_dragon_health = dragon_health
+
 
 def menu():
     global your_dragon
@@ -185,6 +186,8 @@ def Start():
 def Battle():
     global your_dragon
     global dragon_health
+    global original_dragon_health
+    print(dragon_health)
     battle_num = random.randrange(1, 21)
     if battle_num == 1:
         battle_dragon = pygame.image.load('dragons\\Blue 1.png')
@@ -281,6 +284,8 @@ def Battle():
     pill2 = pygame.image.load('items\\genericItem_color_090.png')
     pill2 = pygame.transform.scale(pill2, (50, 50))
 
+    opponent_healthbar_length = 200
+    dragon_healthbar_length = 200
     battle = True
     optx = 775
     opty = 495
@@ -288,7 +293,8 @@ def Battle():
     itemno = 0
     bagitem = [pen, camera, healing, trap, pill1, pill2]
     
-    while battle == True and not opponent_health <=0 or not your_dragon<=0:
+    while battle == True:
+        game.blit(bg, (0, 0))
         pygame.draw.rect(game, white, [336, 192, 672, 380])
         game.blit(battle_dragon, (803, 197))
         game.blit(your_dragon, (341, 197))
@@ -303,6 +309,16 @@ def Battle():
         game.blit(opt, (optx, opty))
         pygame.draw.rect(game, (100, 100, 100), [341, 450, 200, 20])
         pygame.draw.rect(game, (100, 100, 100), [803, 450, 200, 20])
+        pygame.draw.rect(game, (175, 0, 0), [803, 450, opponent_healthbar_length, 20])
+        pygame.draw.rect(game, (175, 0, 0), [341, 450, dragon_healthbar_length, 20])
+        msg_to_screen(str(dragon_health), white, 341, 450, 20)
+        msg_to_screen(str(opponent_health), white, 803, 450, 20)
+        cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+        (X, Y) = pygame.mouse.get_pos()
+        game.blit(cursor, (X, Y))
+        pygame.display.update()
+        dragon_health = int(dragon_health)
+        opponent_health = int(opponent_health)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
@@ -340,16 +356,39 @@ def Battle():
                             pygame.time.delay(1000)
                             game.blit(battleopt, (347, 480))
                             pygame.display.update()
-                            if opponent_health <= 0:
-                                battle = False
-                            dragon_health-=(opponent_health/10)*fight_power
+                            if original_opponent_health == 750:
+                                opponent_healthbar_length = round(opponent_health/7.5)*2
+                            elif original_opponent_health == 1000:
+                                opponent_healthbar_length = round(opponent_health/10)*2
+                            elif original_opponent_health == 1250:
+                                opponent_healthbar_length = round(opponent_health/12.5)*2
+                            elif original_opponent_health == 1500:
+                                opponent_healthbar_length = round(opponent_health/15)*2
+                            else:
+                                opponent_healthbar_length+=0
+                            fight_power = random.randrange(1, 3)
+                            dragon_health-=(original_opponent_health/10)*fight_power
                             msg_to_screen("The opponent dragon attaked you", white, 400, 495, 25)
                             pygame.display.update()
                             pygame.time.delay(1000)
                             game.blit(battleopt, (347, 480))
                             pygame.display.update()
+                            dragon_health_bar = round(original_dragon_health/100)
+                            dragon_healthbar_length = round(dragon_health/dragon_health_bar)*2
                             if dragon_health <= 0:
+                                msg_to_screen("You Lost!!!   :(", white, 400, 495, 25)
+                                pygame.display.update()
+                                pygame.time.delay(1000)
+                                game.blit(battleopt, (347, 480))
                                 battle = False
+                            elif opponent_health <= 0:
+                                msg_to_screen("You Won!!!   ;p", white, 400, 495, 25)
+                                pygame.display.update()
+                                pygame.time.delay(1000)
+                                game.blit(battleopt, (347, 480))
+                                battle = False
+                            else:
+                                battle = True
                             pygame.display.update()
                             
                         elif opty == 525:
@@ -359,6 +398,50 @@ def Battle():
                         if opty == 495:
                             #bag now
                             bag_items = True
+                            pygame.time.delay(200)
+                            pygame.event.clear()
+                            while bag_items:
+                                cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+                                pygame.draw.rect(game, (50, 50, 50), [400, 495, 50, 50])
+                                pygame.draw.rect(game, (50, 50, 50), [400, 550, 60, 20])
+                                msg_to_screen("Enter-Use", white, 400, 555, 20)
+                                game.blit(bagitem[itemno], (400, 495))
+                                pygame.display.update()
+                                for event in pygame.event.get():
+                                    if event.type == pygame.KEYDOWN:
+                                        if event.key == pygame.K_LEFT:
+                                            itemno-=1
+                                            if itemno <= -1:
+                                                itemno = 0
+                                            else:
+                                                itemno+=0
+                                        elif event.key == pygame.K_RIGHT:
+                                            itemno+=1
+                                            if itemno >= 6:
+                                                itemno = 5
+                                            else:
+                                                itemno+=0
+                                        elif event.key == pygame.K_ESCAPE:
+                                            itemno = 0
+                                            bag_items = False
+                                        elif event.key == pygame.K_RETURN:
+                                            if itemno == 0:
+                                                msg_to_screen("Notes Made!!", white, 475, 495, 25)
+                                                msg_to_screen("(This will affect nothing)", white, 475, 515, 25)
+                                                pygame.display.update()
+                                                pygame.time.delay(1000)
+                                                bag_items = False
+                                            if itemno == 1:
+                                                msg_to_screen("It's Original Health is " + str(original_opponent_health) + "!!", white, 475, 495, 25)
+                                                pygame.display.update()
+                                                pygame.time.delay(1000)
+                                                bag_items=False
+                                        else:
+                                            itemno+=0
+                                        
+                                game.blit(bagitem[itemno], (400, 495))
+                                pygame.time.delay(100)
+                                pygame.display.update()
                         elif opty == 525:
                             #run now
                             game.blit(battleopt, (347, 480))
@@ -366,36 +449,9 @@ def Battle():
                             pygame.display.update()
                             pygame.time.delay(1000)
                             battle = False
-                            pygame.event.clear()
-                cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
-                (X, Y) = pygame.mouse.get_pos()
-                game.blit(cursor, (X, Y))
+                    pygame.event.clear()
                     
-        if bag_items == True:
-            print(itemno)
-            game.blit(battleopt, (347, 480))
-            pygame.draw.rect(game, (50, 50, 50), [400, 495, 50, 50])
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    itemno-=1
-                    if itemno <= -1:
-                        itemno = 0
-                    else:
-                        itemno+=0
-                elif event.key == pygame.K_RIGHT:
-                    itemno+=1
-                    if itemno >= 6:
-                        itemno = 5
-                    else:
-                        itemno+=0
-                elif event.key == pygame.K_ESCAPE:
-                    bag_items = False
-                    itemno = 0
-                else:
-                    itemno+=0
-            game.blit(bagitem[itemno], (400, 495))
-            pygame.time.delay(100)
-        pygame.display.update()
+
 
 def fight(x, y, area):
     global your_dragon
