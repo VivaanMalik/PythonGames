@@ -31,7 +31,7 @@ dragon_fight = 100
 dragon_health = 1000
 original_dragon_health = dragon_health
 healing_count = 0
-
+dragon_healthbar_length = 200
 
 
 def menu():
@@ -186,11 +186,11 @@ def Start():
     gameloop()
 
 def Battle():
+    global dragon_healthbar_length
     global healing_count
     global your_dragon
     global dragon_health
     global original_dragon_health
-    print(dragon_health)
     battle_num = random.randrange(1, 21)
     if battle_num == 1:
         battle_dragon = pygame.image.load('dragons\\Blue 1.png')
@@ -285,7 +285,6 @@ def Battle():
 
 
     opponent_healthbar_length = 200
-    dragon_healthbar_length = 200
     battle = True
     optx = 775
     opty = 495
@@ -373,18 +372,20 @@ def Battle():
                             pygame.time.delay(1000)
                             game.blit(battleopt, (347, 480))
                             pygame.display.update()
-                            dragon_health_bar = round(original_dragon_health/100)
+                            dragon_health_bar = round(original_dragon_health/(round(original_dragon_health/10)))
                             dragon_healthbar_length = round(dragon_health/dragon_health_bar)*2
                             if dragon_health <= 0:
-                                msg_to_screen("You Lost!!!   :(", white, 400, 495, 25)
+                                msg_to_screen("You Lost!!!", white, 400, 495, 25)
                                 pygame.display.update()
                                 pygame.time.delay(1000)
                                 game.blit(battleopt, (347, 480))
                                 battle = False
                             elif opponent_health <= 0:
-                                msg_to_screen("You Won!!!   ;p", white, 400, 495, 25)
+                                original_dragon_health+=10
+                                msg_to_screen("You Won!!!", white, 400, 495, 25)
                                 pygame.display.update()
                                 pygame.time.delay(1000)
+                                game.blit(battleopt, (347, 480))
                                 msg_to_screen("You get a first-aid-kit!!!", white, 400, 495, 25)
                                 pygame.display.update()
                                 pygame.time.delay(1000)
@@ -396,8 +397,89 @@ def Battle():
                             pygame.display.update()
                             
                         elif opty == 525:
-                            # dragons later
-                            print(" ")
+                            # dragons now
+                            if battle_num == 1:
+                                msg_to_screen("Shadow Wing(small)", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 2:
+                                msg_to_screen("Sea Shocker", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 3:
+                                msg_to_screen("Deadly Nadder", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 4:
+                                msg_to_screen("Blue Death", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 5:
+                                msg_to_screen("Fire Terror", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 6:
+                                msg_to_screen("Change Wing", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 7:
+                                msg_to_screen("Singe Tail", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 8:
+                                msg_to_screen("Monstrous Nightmare", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 9:
+                                msg_to_screen("Hideous Zippleback", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 10:
+                                msg_to_screen("Rumle Horn", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 11:
+                                msg_to_screen("Submaripper", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 12:
+                                msg_to_screen("Shadow Wing(Big)", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 13:
+                                msg_to_screen("Terrible Terror", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 14:
+                                msg_to_screen("Gronkle", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 15:
+                                msg_to_screen("Fireworm Queen", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 16:
+                                msg_to_screen("Deathsong", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 17:
+                                msg_to_screen("Night Terror", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 18:
+                                msg_to_screen("Cavern Crasher", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 19:
+                                msg_to_screen("Eruptodon", white, 400, 495, 25)
+                                pygame.display.update()
+                                
+                            elif battle_num == 20:
+                                msg_to_screen("Night Fury", white, 400, 495, 25)
+                                pygame.display.update()
+                            pygame.time.delay(1000)
+                            game.blit(battleopt, (347, 480))
+                            pygame.display.update()
                     if optx == 875:
                         if opty == 495:
                             #bag now
@@ -435,11 +517,33 @@ def Battle():
                                                 pygame.display.update()
                                                 pygame.time.delay(1000)
                                                 bag_items = False
-                                            if itemno == 1:
+                                            elif itemno == 1:
                                                 msg_to_screen("It's Original Health is " + str(original_opponent_health) + "!!", white, 475, 495, 25)
                                                 pygame.display.update()
                                                 pygame.time.delay(1000)
                                                 bag_items=False
+                                            elif itemno == 2:
+                                                if healing_count>=1:
+                                                    dragon_health = original_dragon_health
+                                                    healing_count-=1
+                                                    msg_to_screen("First Aid Kit Used!!!", white, 475, 495, 25)
+                                                    pygame.display.update()
+                                                    pygame.time.delay(1000)
+                                                    game.blit(battleopt, (347, 480))
+                                                    msg_to_screen("Health is Restored!!!", white, 475, 495, 25)
+                                                    pygame.display.update()
+                                                    pygame.time.delay(1000)
+                                                    dragon_healthbar_length = 200
+                                                    bag_items=False
+                                                elif healing_count == 0:
+                                                    msg_to_screen("No First Aid Kit!!!", white, 475, 495, 25)
+                                                    pygame.display.update()
+                                                    pygame.time.delay(1000)
+                                                    bag_items=False
+                                                else:
+                                                    healing_count+=0
+                                            else:
+                                                healing_count+=0
                                         else:
                                             itemno+=0
                                         
