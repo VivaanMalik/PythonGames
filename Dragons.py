@@ -27,11 +27,12 @@ red = (255,0, 0)
 rank = "Dragon Trainer"
 money_count = 0
 your_dragon = False
-dragon_fight = 100
 dragon_health = 1000
 original_dragon_health = dragon_health
 healing_count = 0
+dragon_fight = original_dragon_health/10
 dragon_healthbar_length = 200
+poison_count = 0
 
 
 def menu():
@@ -188,6 +189,7 @@ def Start():
 def Battle():
     global dragon_healthbar_length
     global healing_count
+    global poison_count
     global your_dragon
     global dragon_health
     global original_dragon_health
@@ -309,7 +311,7 @@ def Battle():
         pygame.draw.rect(game, (100, 100, 100), [341, 450, 200, 20])
         pygame.draw.rect(game, (100, 100, 100), [803, 450, 200, 20])
         pygame.draw.rect(game, (175, 0, 0), [803, 450, opponent_healthbar_length, 20])
-        pygame.draw.rect(game, (175, 0, 0), [341, 450, dragon_healthbar_length, 20])
+        pygame.draw.rect(game, (175, 0, 0), [341, 450, dragon_healthbar_length, 20])    
         msg_to_screen(str(dragon_health), white, 341, 450, 20)
         msg_to_screen(str(opponent_health), white, 803, 450, 20)
         cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
@@ -348,7 +350,7 @@ def Battle():
                     if optx == 775:
                         if opty == 495:
                             #fight now
-                            fight_power = random.randrange(1, 3)
+                            fight_power = random.randrange(1, 4)
                             opponent_health -= fight_power*dragon_fight
                             msg_to_screen("You attacked the opponent Dragon", white, 400, 495, 25)
                             pygame.display.update()
@@ -365,7 +367,7 @@ def Battle():
                                 opponent_healthbar_length = round(opponent_health/15)*2
                             else:
                                 opponent_healthbar_length+=0
-                            fight_power = random.randrange(1, 3)
+                            fight_power = random.randrange(1, 4)
                             dragon_health-=(original_opponent_health/10)*fight_power
                             msg_to_screen("The opponent dragon attaked you", white, 400, 495, 25)
                             pygame.display.update()
@@ -386,10 +388,21 @@ def Battle():
                                 pygame.display.update()
                                 pygame.time.delay(1000)
                                 game.blit(battleopt, (347, 480))
-                                msg_to_screen("You get a first-aid-kit!!!", white, 400, 495, 25)
+                                healing_get = random.randrange(1, 4)
+                                if healing_get == 1:
+                                    msg_to_screen("You get a first-aid-kit!!!", white, 400, 495, 25)
+                                    pygame.display.update()
+                                    pygame.time.delay(1000)
+                                    healing_count += 1
+                                else:
+                                    healing_count += 0
+                                game.blit(battleopt, (347, 480))
+                                poison_get = random.randrange(1, 6)
+                                msg_to_screen("You get a Vial of Poison!!!", white, 400, 495, 25)
                                 pygame.display.update()
                                 pygame.time.delay(1000)
-                                healing_count += 1
+                                poison_count+=1
+                                
                                 game.blit(battleopt, (347, 480))
                                 battle = False
                             else:
@@ -530,16 +543,82 @@ def Battle():
                                                     pygame.display.update()
                                                     pygame.time.delay(1000)
                                                     game.blit(battleopt, (347, 480))
+                                                    game.blit(bg, (0, 0))
+                                                    pygame.draw.rect(game, white, [336, 192, 672, 380])
+                                                    game.blit(battle_dragon, (803, 197))
+                                                    game.blit(your_dragon, (341, 197))
+                                                    battleopt = pygame.image.load('buttons\\panelInset_brown.png')
+                                                    battleopt = pygame.transform.scale(battleopt, (650, 80))
+                                                    game.blit(battleopt, (347, 480))
+                                                    opt = pygame.image.load('buttons\\arrowBlue_right.png')
+                                                    msg_to_screen("Fight", white, 800, 495, 25)
+                                                    msg_to_screen("Dragon", white, 800, 525, 25)
+                                                    msg_to_screen("Bag", white, 900, 495, 25)
+                                                    msg_to_screen("Run", white, 900, 525, 25)
+                                                    game.blit(opt, (optx, opty))
+                                                    pygame.draw.rect(game, (100, 100, 100), [341, 450, 200, 20])
+                                                    pygame.draw.rect(game, (100, 100, 100), [803, 450, 200, 20])
+                                                    pygame.draw.rect(game, (175, 0, 0), [803, 450, opponent_healthbar_length, 20])
+                                                    pygame.draw.rect(game, (175, 0, 0), [341, 450, dragon_healthbar_length, 20])
+                                                    msg_to_screen(str(dragon_health), white, 341, 450, 20)
+                                                    msg_to_screen(str(opponent_health), white, 803, 450, 20)
+                                                    cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+                                                    (X, Y) = pygame.mouse.get_pos()
+                                                    game.blit(cursor, (X, Y))
+                                                    pygame.display.update()
                                                     msg_to_screen("Health is Restored!!!", white, 475, 495, 25)
+                                                    dragon_healthbar_length = 200
+                                                    pygame.draw.rect(game, (175, 0, 0), [341, 450, dragon_healthbar_length, 20])
+                                                    msg_to_screen(str(dragon_health), white, 341, 450, 20)
                                                     pygame.display.update()
                                                     pygame.time.delay(1000)
-                                                    dragon_healthbar_length = 200
                                                     bag_items=False
                                                 elif healing_count == 0:
                                                     msg_to_screen("No First Aid Kit!!!", white, 475, 495, 25)
                                                     pygame.display.update()
                                                     pygame.time.delay(1000)
                                                     bag_items=False
+                                            elif itemno == 3:
+                                                if poison_count>=1:
+                                                    opponent_health -= 250
+                                                    poison_count-=1
+                                                    msg_to_screen("Poison Used!!!", white, 475, 495, 25)
+                                                    pygame.display.update()
+                                                    pygame.time.delay(1000)
+                                                    game.blit(battleopt, (347, 480))
+                                                    game.blit(bg, (0, 0))
+                                                    pygame.draw.rect(game, white, [336, 192, 672, 380])
+                                                    game.blit(battle_dragon, (803, 197))
+                                                    game.blit(your_dragon, (341, 197))
+                                                    battleopt = pygame.image.load('buttons\\panelInset_brown.png')
+                                                    battleopt = pygame.transform.scale(battleopt, (650, 80))
+                                                    game.blit(battleopt, (347, 480))
+                                                    opt = pygame.image.load('buttons\\arrowBlue_right.png')
+                                                    msg_to_screen("Fight", white, 800, 495, 25)
+                                                    msg_to_screen("Dragon", white, 800, 525, 25)
+                                                    msg_to_screen("Bag", white, 900, 495, 25)
+                                                    msg_to_screen("Run", white, 900, 525, 25)
+                                                    game.blit(opt, (optx, opty))
+                                                    pygame.draw.rect(game, (100, 100, 100), [341, 450, 200, 20])
+                                                    pygame.draw.rect(game, (100, 100, 100), [803, 450, 200, 20])
+                                                    pygame.draw.rect(game, (175, 0, 0), [803, 450, opponent_healthbar_length, 20])
+                                                    pygame.draw.rect(game, (175, 0, 0), [341, 450, dragon_healthbar_length, 20])
+                                                    msg_to_screen(str(dragon_health), white, 341, 450, 20)
+                                                    msg_to_screen(str(opponent_health), white, 803, 450, 20)
+                                                    cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+                                                    (X, Y) = pygame.mouse.get_pos()
+                                                    game.blit(cursor, (X, Y))
+                                                    pygame.display.update()                                                        
+                                                    msg_to_screen("Opponent Dragon lost 250 HP!!!", white, 475, 495, 25)
+                                                    pygame.display.update()
+                                                    pygame.time.delay(1000)
+                                                    bag_items=False
+                                                elif poison_count == 0:
+                                                    msg_to_screen("No Poison!!!", white, 475, 495, 25)
+                                                    pygame.display.update()
+                                                    pygame.time.delay(1000)
+                                                    bag_items=False
+
                                                 else:
                                                     healing_count+=0
                                             else:
@@ -1002,6 +1081,8 @@ def gameloop():
             trap = pygame.image.load('items\\genericItem_color_105.png')
             trap = pygame.transform.scale(trap, (50, 50))
             game.blit(trap, ((round(winw/2)-300) +250, inventory_y+ 100))
+            msg_to_screen(str(poison_count), black, (round(winw/2)-300) +250, (inventory_y+ 100), 75)
+            int(poison_count)
 
             knife = pygame.image.load('items\\genericItem_color_134.png')
             knife = pygame.transform.scale(knife, (50, 50))
