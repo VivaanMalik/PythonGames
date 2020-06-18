@@ -33,8 +33,9 @@ healing_count = 0
 dragon_fight = original_dragon_health/10
 dragon_healthbar_length = 200
 poison_count = 0
-
-
+Guard_Yellow = pygame.image.load('dragons\\Yellow 5.png')
+Guard_Yellow = pygame.transform.scale(Guard_Yellow, (64, 64))
+    
 def menu():
     global your_dragon
     your_dragon_color1 = (0, 0, 0)
@@ -126,9 +127,7 @@ def menu():
     gameloop()
                 
             
-        
-
-your_dragon = your_dragon
+            
 
 def msg_to_screen(msg, color, textx, texty, fontsize):
     font = pygame.font.SysFont(None, fontsize)
@@ -381,6 +380,7 @@ def Battle():
                                 pygame.display.update()
                                 pygame.time.delay(1000)
                                 game.blit(battleopt, (347, 480))
+                                dragon_health = 0
                                 battle = False
                             elif opponent_health <= 0:
                                 original_dragon_health+=10
@@ -583,6 +583,16 @@ def Battle():
                                                     opponent_health -= 250
                                                     poison_count-=1
                                                     msg_to_screen("Poison Used!!!", white, 475, 495, 25)
+                                                    if original_opponent_health == 750:
+                                                        opponent_healthbar_length = round(opponent_health/7.5)*2
+                                                    elif original_opponent_health == 1000:
+                                                        opponent_healthbar_length = round(opponent_health/10)*2
+                                                    elif original_opponent_health == 1250:
+                                                        opponent_healthbar_length = round(opponent_health/12.5)*2
+                                                    elif original_opponent_health == 1500:
+                                                        opponent_healthbar_length = round(opponent_health/15)*2
+                                                    else:
+                                                        opponent_healthbar_length+=0
                                                     pygame.display.update()
                                                     pygame.time.delay(1000)
                                                     game.blit(battleopt, (347, 480))
@@ -637,7 +647,18 @@ def Battle():
                             pygame.time.delay(1000)
                             battle = False
                     pygame.event.clear()
-                    
+    if healing_count == 0 and dragon_health <= 0:
+        dragon_healthbar_length = 0
+        battle = False
+        print("DEAD!!!")
+        player = pygame.image.load('player_23.png')
+        dragon_health = 1000
+        original_dragon_health = dragon_health
+        healing_count = 0
+        dragon_healthbar_length = 200
+        poison_count = 0
+
+
 
 
 def fight(x, y, area):
@@ -648,7 +669,8 @@ def fight(x, y, area):
         battlechance = random.randrange(0, 20)
         if battlechance == 1:
             Battle()
-
+            
+            
 
 def gameloop():
     area = [0, 0, 0, 0]
@@ -664,6 +686,8 @@ def gameloop():
     global player
     global rank
     global money_count
+    mission1_msg = False
+    mission1 = False
     while not gamequit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -678,7 +702,13 @@ def gameloop():
                     if event.key == pygame.K_LEFT:
                         
                         player = pygame.image.load('player_14.png')
-                        if x == 608 and y <= 448 and y >= 352:
+                        if x == 0:
+                            if mission1 == False:
+                                x+=0
+                                mission1_msg = True
+                            else:
+                                x+=-32
+                        elif x == 608 and y <= 448 and y >= 352:
                             x+=0
                         elif y == 480 and x == 352 or y == 480 and x == 672:
                             x+=0
@@ -702,7 +732,7 @@ def gameloop():
                             x += -32
                         
                     elif event.key == pygame.K_RIGHT:
-                        
+                        mission1_msg = False
                         player = pygame.image.load('player_11.png')
                         if x == 352:
                             if y <= 448 and y >=352:
@@ -1020,13 +1050,22 @@ def gameloop():
                         items = True
                     elif items==True:
                         items = False
-                        
+
+
+                     
         pygame.mouse.set_visible(False)
         cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
         (X, Y) = pygame.mouse.get_pos()
-        #print(x, y)
+        print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
+        if mapno == 1:
+            if mission1 == False:
+                game.blit(Guard_Yellow, (0, 416))
+            if mission1_msg == True:
+                pygame.draw.rect(game, black, [64, 416, 1080, 40])
+                msg_to_screen("kill Monstrous Nightmare, 2 Nadders, 3 Gronkles, 4 Zipplebacks", white, 64, 416, 50)
+                pygame.display.update
         game.blit(player, (x, y))
         game.blit(cursor, (X, Y))
 
