@@ -33,9 +33,14 @@ healing_count = 0
 dragon_fight = original_dragon_health/10
 dragon_healthbar_length = 200
 poison_count = 0
+mission1 = False
 Guard_Yellow = pygame.image.load('dragons\\Yellow 5.png')
 Guard_Yellow = pygame.transform.scale(Guard_Yellow, (64, 64))
-    
+mission1_part_1 = 0
+mission1_part_2 = 0
+mission1_part_3 = 0
+mission1_part_4 = 0
+
 def menu():
     global your_dragon
     your_dragon_color1 = (0, 0, 0)
@@ -186,6 +191,11 @@ def Start():
     gameloop()
 
 def Battle():
+    global mission1
+    global mission1_part_1
+    global mission1_part_2
+    global mission1_part_3
+    global mission1_part_4
     global dragon_healthbar_length
     global healing_count
     global poison_count
@@ -402,7 +412,17 @@ def Battle():
                                 pygame.display.update()
                                 pygame.time.delay(1000)
                                 poison_count+=1
-                                
+                                if battle_dragon == pygame.image.load('dragons\\Green 1.png'):
+                                    mission1_part_1+=1
+                                elif battle_dragon == pygame.image.load('dragons\\Yellow 2.png'):
+                                    mission1_part_2+=1
+                                elif battle_dragon == pygame.image.load('dragons\\Blue 3.png'):
+                                    mission1_part_3+=1
+                                else battle_dragon == pygame.image.load('dragons\\Red 4.png'):                                    
+                                    mission1_part_4+=1
+
+                                if mission1_part_1 == 4 and mission1_part_2 == 3 and mission1_part_3 == 2 and mission1_part_4 == 1:
+                                    mission1 = True
                                 game.blit(battleopt, (347, 480))
                                 battle = False
                             else:
@@ -623,6 +643,26 @@ def Battle():
                                                     pygame.display.update()
                                                     pygame.time.delay(1000)
                                                     bag_items=False
+                                                    if opponent_health <= 0:
+                                                        original_dragon_health+=10
+                                                        msg_to_screen("You Won!!!", white, 400, 495, 25)
+                                                        pygame.display.update()
+                                                        pygame.time.delay(1000)
+                                                        game.blit(battleopt, (347, 480))
+                                                        healing_get = random.randrange(1, 4)
+                                                        if healing_get == 1:
+                                                            msg_to_screen("You get a first-aid-kit!!!", white, 400, 495, 25)
+                                                            pygame.display.update()
+                                                            pygame.time.delay(1000)
+                                                            healing_count += 1
+                                                        else:
+                                                            healing_count += 0
+                                                        game.blit(battleopt, (347, 480))
+                                                        poison_get = random.randrange(1, 6)
+                                                        msg_to_screen("You get a Vial of Poison!!!", white, 400, 495, 25)
+                                                        pygame.display.update()
+                                                        pygame.time.delay(1000)
+                                                        poison_count+=1
                                                 elif poison_count == 0:
                                                     msg_to_screen("No Poison!!!", white, 475, 495, 25)
                                                     pygame.display.update()
@@ -673,6 +713,15 @@ def fight(x, y, area):
             
 
 def gameloop():
+    mission1_monstrous_nigtmare = 1
+    mission1_nadder = 2
+    mission1_gronkle= 3
+    mission1_zippleback = 4
+    global mission1_part_1
+    global mission1_part_2
+    global mission1_part_3
+    global mission1_part_4
+    global mission1
     area = [0, 0, 0, 0]
     global dl
     items = False
@@ -687,7 +736,7 @@ def gameloop():
     global rank
     global money_count
     mission1_msg = False
-    mission1 = False
+    
     while not gamequit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -1064,7 +1113,31 @@ def gameloop():
                 game.blit(Guard_Yellow, (0, 416))
             if mission1_msg == True:
                 pygame.draw.rect(game, black, [64, 416, 1080, 40])
-                msg_to_screen("kill Monstrous Nightmare, 2 Nadders, 3 Gronkles, 4 Zipplebacks", white, 64, 416, 50)
+                if 4 - mission1_part_1 >= 1:
+                    mission1_zippleback = 4 - mission1_part_1
+                else:
+                    mission1_zippleback = 0
+                    
+                if 3 - mission1_part_2 >= 1:
+                    mission1_gronkle = 3 - mission1_part_2
+                else:
+                    mission1_gronkle = 0
+
+                if 2 - mission1_part_3 >= 1:
+                    mission1_nadder = 2 - mission1_part_3
+                else:
+                    mission1_nadder = 0
+
+                if 1 - mission1_part_4 >= 1:
+                    mission1_monstrous_nigtmare = 1 - mission1_part_4
+                else:
+                    mission1_monstrous_nigtmare = 0
+                    
+                msg_to_screen(("kill " +str(mission1_monstrous_nigtmare)+" Monstrous Nightmare, "+str(mission1_nadder)+" Nadders, "+str(mission1_gronkle)+" Gronkles, "+str(mission1_zippleback)+" Zipplebacks"), white, 64, 416, 50)
+                mission1_monstrous_nigtmare = int(mission1_monstrous_nigtmare)
+                mission1_nadder = int(mission1_nadder)
+                mission1_gronkle= int(mission1_gronkle)
+                mission1_zippleback = int(mission1_zippleback)
                 pygame.display.update
         game.blit(player, (x, y))
         game.blit(cursor, (X, Y))
