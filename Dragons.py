@@ -33,10 +33,10 @@ healing_count = 0
 dragon_fight = original_dragon_health/10
 dragon_healthbar_length = 200
 poison_count = 0
+bg2 = "nothing"
 
 
-#Only for Testing!!!
-mission1 = True
+mission1 = False
 
 
 
@@ -727,6 +727,7 @@ def gameloop():
     x = 480
     y = 512
     global bg
+    global bg2
     global gamequit
     global mapno
     global player
@@ -1136,6 +1137,9 @@ def gameloop():
                     fight(x, y, [640, 704, 96, 448])
                     fight(x, y, [896, 1280, 224, 704])
                     fight(x, y, [256, 602, 352, 448])
+                    fight(x, y, [0, 864, 608, 704])
+                    fight(x, y, [0, 64, 96, 576])
+                    fight(x, y, [96, 448, 96, 192])
                     
 
                 if event.key == pygame.K_i:
@@ -1152,6 +1156,12 @@ def gameloop():
         print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
+        if bg2 == "nothing":
+            bg2 = "nothing"
+        else:
+            pygame.transform.scale(bg2, (1344, 768))
+            game.blit(bg2, (0, 0))
+        
         if mapno == 1:
             if mission1 == False:
                 game.blit(Guard_Yellow, (0, 416))
