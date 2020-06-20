@@ -33,13 +33,17 @@ healing_count = 0
 dragon_fight = original_dragon_health/10
 dragon_healthbar_length = 200
 poison_count = 0
-mission1 = False
+
+
+#Only for Testing!!!
+mission1 = True
+
+
+
 Guard_Yellow = pygame.image.load('dragons\\Yellow 5.png')
 Guard_Yellow = pygame.transform.scale(Guard_Yellow, (64, 64))
-mission1_part_1 = 0
-mission1_part_2 = 0
-mission1_part_3 = 0
-mission1_part_4 = 0
+mission1_dragons = 4
+
 
 def menu():
     global your_dragon
@@ -191,18 +195,19 @@ def Start():
     gameloop()
 
 def Battle():
+    global mission1_dragons
     global mission1
-    global mission1_part_1
-    global mission1_part_2
-    global mission1_part_3
-    global mission1_part_4
     global dragon_healthbar_length
     global healing_count
     global poison_count
     global your_dragon
     global dragon_health
     global original_dragon_health
-    battle_num = random.randrange(1, 21)
+    global mapno
+    if mapno == 2:
+        battle_num = random.randrange(1, 21)
+    elif mapno == 6:
+        battle_num = random.randrange(13, 17)
     if battle_num == 1:
         battle_dragon = pygame.image.load('dragons\\Blue 1.png')
         opponent_health = 750
@@ -358,7 +363,6 @@ def Battle():
                 elif event.key == pygame.K_RETURN:
                     if optx == 775:
                         if opty == 495:
-                            #fight now
                             fight_power = random.randrange(1, 4)
                             opponent_health -= fight_power*dragon_fight
                             msg_to_screen("You attacked the opponent Dragon", white, 400, 495, 25)
@@ -412,16 +416,10 @@ def Battle():
                                 pygame.display.update()
                                 pygame.time.delay(1000)
                                 poison_count+=1
-                                if battle_dragon == pygame.image.load('dragons\\Green 1.png'):
-                                    mission1_part_1+=1
-                                elif battle_dragon == pygame.image.load('dragons\\Yellow 2.png'):
-                                    mission1_part_2+=1
-                                elif battle_dragon == pygame.image.load('dragons\\Blue 3.png'):
-                                    mission1_part_3+=1
-                                else battle_dragon == pygame.image.load('dragons\\Red 4.png'):                                    
-                                    mission1_part_4+=1
+                                if battle_num == 1 or battle_num == 5 or battle_num == 9 or battle_num == 13 or battle_num == 17:
+                                    mission1_dragons-=1
 
-                                if mission1_part_1 == 4 and mission1_part_2 == 3 and mission1_part_3 == 2 and mission1_part_4 == 1:
+                                if mission1_dragons == 0:
                                     mission1 = True
                                 game.blit(battleopt, (347, 480))
                                 battle = False
@@ -430,7 +428,6 @@ def Battle():
                             pygame.display.update()
                             
                         elif opty == 525:
-                            # dragons now
                             if battle_num == 1:
                                 msg_to_screen("Shadow Wing(small)", white, 400, 495, 25)
                                 pygame.display.update()
@@ -515,7 +512,6 @@ def Battle():
                             pygame.display.update()
                     if optx == 875:
                         if opty == 495:
-                            #bag now
                             bag_items = True
                             pygame.time.delay(200)
                             pygame.event.clear()
@@ -642,6 +638,7 @@ def Battle():
                                                     msg_to_screen("Opponent Dragon lost 250 HP!!!", white, 475, 495, 25)
                                                     pygame.display.update()
                                                     pygame.time.delay(1000)
+                                                    game.blit(battleopt, (347, 480))
                                                     bag_items=False
                                                     if opponent_health <= 0:
                                                         original_dragon_health+=10
@@ -663,6 +660,13 @@ def Battle():
                                                         pygame.display.update()
                                                         pygame.time.delay(1000)
                                                         poison_count+=1
+                                                        game.blit(battleopt, (347, 480))
+                                                        if battle_num == 1 or battle_num == 5 or battle_num == 9 or battle_num == 13 or battle_num == 17:
+                                                            mission1_dragons-=1
+
+                                                        if mission1_dragons == 0:
+                                                            mission1 = True
+                                                        battle = False
                                                 elif poison_count == 0:
                                                     msg_to_screen("No Poison!!!", white, 475, 495, 25)
                                                     pygame.display.update()
@@ -680,7 +684,6 @@ def Battle():
                                 pygame.time.delay(100)
                                 pygame.display.update()
                         elif opty == 525:
-                            #run now
                             game.blit(battleopt, (347, 480))
                             msg_to_screen("You ran away safely", white, 400, 495, 25)
                             pygame.display.update()
@@ -713,15 +716,9 @@ def fight(x, y, area):
             
 
 def gameloop():
-    mission1_monstrous_nigtmare = 1
-    mission1_nadder = 2
-    mission1_gronkle= 3
-    mission1_zippleback = 4
     global mission1_part_1
-    global mission1_part_2
-    global mission1_part_3
-    global mission1_part_4
     global mission1
+    global mission1_dragons 
     area = [0, 0, 0, 0]
     global dl
     items = False
@@ -777,6 +774,15 @@ def gameloop():
                                 x+=-32
                         elif x == 64 and y == 224:
                             x+=0
+                        elif mission1 == True:
+                            if x <= 0:
+                                bg = pygame.image.load('map6.png')
+                                bg = pygame.transform.scale(bg, (1344, 768))
+                                x = 1280
+                                y = 128
+                                mapno = 6
+                            else:
+                                x+=-32
                         else:
                             x += -32
                         
@@ -1005,7 +1011,7 @@ def gameloop():
 
 
                         #Map4 Movements
-
+            
                         
                 if mapno == 4:
                     if event.key == pygame.K_LEFT:
@@ -1043,10 +1049,10 @@ def gameloop():
                             mapno = 1
                         else:
                             y += 32
-
+            
                         #Map5 Movements
-
-
+            
+            
                 if mapno == 5:
                     if event.key == pygame.K_LEFT:
                         
@@ -1094,6 +1100,44 @@ def gameloop():
                         else:
                             y+=32
 
+                if mapno == 6:
+                    if event.key == pygame.K_LEFT:
+                        player = pygame.image.load('player_14.png')
+                        if x == 0:
+                            x+=0
+                        else:
+                            x += -32
+                            
+                    elif event.key == pygame.K_RIGHT:
+                        player = pygame.image.load('player_11.png')
+                        if x == 1280:
+                            bg = pygame.image.load('map1.png')
+                            bg = pygame.transform.scale(bg, (1344, 768))
+                            x = 0
+                            y = 512
+                            mapno = 1
+                        else:
+                            x += 32
+                        
+                    elif event.key == pygame.K_UP:
+                        player = pygame.image.load('player_02.png')
+                        if y == 0:
+                            y+=0
+                        else:
+                            y += -32
+                            
+                    elif event.key == pygame.K_DOWN:
+                        player = pygame.image.load('player_23.png')
+                        if y == 704:
+                            y+=0
+                        else:
+                            y += 32
+                    fight(x, y, [640, 1280, 0, 64])
+                    fight(x, y, [640, 704, 96, 448])
+                    fight(x, y, [896, 1280, 224, 704])
+                    fight(x, y, [256, 602, 352, 448])
+                    
+
                 if event.key == pygame.K_i:
                     if items==False:
                         items = True
@@ -1112,32 +1156,10 @@ def gameloop():
             if mission1 == False:
                 game.blit(Guard_Yellow, (0, 416))
             if mission1_msg == True:
-                pygame.draw.rect(game, black, [64, 416, 1080, 40])
-                if 4 - mission1_part_1 >= 1:
-                    mission1_zippleback = 4 - mission1_part_1
-                else:
-                    mission1_zippleback = 0
-                    
-                if 3 - mission1_part_2 >= 1:
-                    mission1_gronkle = 3 - mission1_part_2
-                else:
-                    mission1_gronkle = 0
-
-                if 2 - mission1_part_3 >= 1:
-                    mission1_nadder = 2 - mission1_part_3
-                else:
-                    mission1_nadder = 0
-
-                if 1 - mission1_part_4 >= 1:
-                    mission1_monstrous_nigtmare = 1 - mission1_part_4
-                else:
-                    mission1_monstrous_nigtmare = 0
-                    
-                msg_to_screen(("kill " +str(mission1_monstrous_nigtmare)+" Monstrous Nightmare, "+str(mission1_nadder)+" Nadders, "+str(mission1_gronkle)+" Gronkles, "+str(mission1_zippleback)+" Zipplebacks"), white, 64, 416, 50)
-                mission1_monstrous_nigtmare = int(mission1_monstrous_nigtmare)
-                mission1_nadder = int(mission1_nadder)
-                mission1_gronkle= int(mission1_gronkle)
-                mission1_zippleback = int(mission1_zippleback)
+                pygame.draw.rect(game, black, [64, 416, 500, 40])
+                if mission1_dragons >= 1: 
+                    msg_to_screen(("kill " + str(mission1_dragons) + " dragons of 750 HP"), white, 64, 416, 50)
+                mission1_dragons = int(mission1_dragons)
                 pygame.display.update
         game.blit(player, (x, y))
         game.blit(cursor, (X, Y))
@@ -1155,7 +1177,6 @@ def gameloop():
             inventory_y = (round(winh/2)-200) + 50
             game.blit(inventory_panel,(inventory_x, inventory_y-50))
             
-            # original items
             pen = pygame.image.load('items\\genericItem_color_025.png')
             pen = pygame.transform.scale(pen, (50, 50))
             game.blit(pen, ((round(winw/2)-300) +50, inventory_y))
@@ -1279,7 +1300,7 @@ def gameloop():
         
 
     pygame.quit()
-    quit
+
     
 
 menu()
