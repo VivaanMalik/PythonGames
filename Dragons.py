@@ -11,7 +11,7 @@ bgcolor = 0
 
 game = pygame.display.set_mode((winw, winh))
 pygame.display.set_caption("Dragons")
-
+knifecount = False
 fulfilepath = os.getcwd() + "\\" + "Dragonssave.csv"
 mmenu = True
 white = (255, 255, 255)
@@ -35,8 +35,8 @@ dragon_healthbar_length = 200
 poison_count = 0
 bg2 = "nothing"
 
-
-mission1 = False
+# For Level 1 creation ONLY!!!!!!!!!!!
+mission1 = True
 
 
 
@@ -204,6 +204,7 @@ def Battle():
     global dragon_health
     global original_dragon_health
     global mapno
+    global knifecount
     if mapno == 2:
         battle_num = random.randrange(1, 21)
     elif mapno == 6:
@@ -716,6 +717,7 @@ def fight(x, y, area):
             
 
 def gameloop():
+    global knifecount
     global mission1_part_1
     global mission1
     global mission1_dragons 
@@ -1124,6 +1126,8 @@ def gameloop():
                         player = pygame.image.load('player_02.png')
                         if y == 0:
                             y+=0
+                        elif x == 64 and y == 32 and knifecount == True:
+                            print('access to mini boss')
                         else:
                             y += -32
                             
@@ -1153,14 +1157,16 @@ def gameloop():
         pygame.mouse.set_visible(False)
         cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
         (X, Y) = pygame.mouse.get_pos()
-        print(x, y)
+        #print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
-        if bg2 == "nothing":
-            bg2 = "nothing"
-        else:
-            pygame.transform.scale(bg2, (1344, 768))
+        if mapno == 6 and knifecount == False:
+            bg2 = pygame.image.load('map 6 knife.png')
+            bg2 = pygame.transform.scale(bg2, (1344, 768))
             game.blit(bg2, (0, 0))
+       
+
+            
         
         if mapno == 1:
             if mission1 == False:
