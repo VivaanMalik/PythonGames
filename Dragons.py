@@ -13,7 +13,6 @@ x = 480
 y = 512
 game = pygame.display.set_mode((winw, winh))
 pygame.display.set_caption("Dragons")
-knife_count = False
 fulfilepath = os.getcwd() + "\\" + "Dragonssave.csv"
 mmenu = True
 white = (255, 255, 255)
@@ -38,9 +37,12 @@ poison_count = 0
 bg2 = "nothing"
 knife_get = False
 knife_giver = "nothing"
+knife_count = False
+mission1 = False
+
 
 #Only for Testing
-mission1 = True 
+
 #Only for Testing
 
 
@@ -462,6 +464,9 @@ def Battle():
                                 if knife_get == True:
                                     knife_get = False
                                     knife_count = True
+                                    msg_to_screen("You Just got a Knife!!!", white, 400, 495, 25)
+                                    pygame.display.update()
+                                    pygame.time.delay(1000)
                                 game.blit(battleopt, (347, 480))
                                 battle = False
                             else:
@@ -707,6 +712,17 @@ def Battle():
 
                                                         if mission1_dragons == 0:
                                                             mission1 = True
+                                                        if knife_get == True:
+                                                            knife_get = False
+                                                            knife_count = True
+                                                            msg_to_screen("You Just got a Knife!!!", white, 400, 495, 25)
+                                                            pygame.display.update()
+                                                            pygame.time.delay(1000)
+                                                            game.blit(battleopt, (347, 480))
+                                                            battle = False
+                                                        else:
+                                                            battle = True
+                                                        pygame.display.update()
                                                         battle = False
                                                 elif poison_count == 0:
                                                     msg_to_screen("No Poison!!!", white, 475, 495, 25)
@@ -1288,7 +1304,11 @@ def gameloop():
             knife = pygame.image.load('items\\genericItem_color_134.png')
             knife = pygame.transform.scale(knife, (50, 50))
             game.blit(knife, ((round(winw/2)-300) +350, inventory_y+ 100))
-
+            if knife_count == True:
+                msg_to_screen("1", black, (round(winw/2)-300) +350, (inventory_y+ 100), 75)
+            else:
+                msg_to_screen("0", black, (round(winw/2)-300) +350, (inventory_y+ 100), 75)
+                
             key = pygame.image.load('items\\genericItem_color_155.png')
             key = pygame.transform.scale(key, (50, 50))
             game.blit(key, ((round(winw/2)-300) +450, inventory_y+ 100))
