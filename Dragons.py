@@ -9,6 +9,8 @@ winw = 1344
 winh = 768
 bgcolor = 0
 
+x = 480
+y = 512
 game = pygame.display.set_mode((winw, winh))
 pygame.display.set_caption("Dragons")
 knife_count = False
@@ -34,9 +36,12 @@ dragon_fight = original_dragon_health/10
 dragon_healthbar_length = 200
 poison_count = 0
 bg2 = "nothing"
+knife_get = False
+knife_giver = "nothing"
 
-mission1 = False
-
+#Only for Testing
+mission1 = True 
+#Only for Testing
 
 
 Guard_Yellow = pygame.image.load('dragons\\Yellow 5.png')
@@ -194,6 +199,10 @@ def Start():
     gameloop()
 
 def Battle():
+    global x
+    global y
+    global knife_giver
+    global bg2
     global mission1_dragons
     global mission1
     global dragon_healthbar_length
@@ -204,6 +213,8 @@ def Battle():
     global original_dragon_health
     global mapno
     global knife_count
+    global knife_get
+    global player
     
     if mapno == 2:
         battle_num = random.randrange(1, 21)
@@ -214,17 +225,16 @@ def Battle():
     elif mapno == 6 and knife_get == True:
         battle_num = random.randrange(0, 5)
         if battle_num == 0:
-            battle_num = 2
+            battle_num = 3
         elif battle_num == 1:
-            battle_num = 6
+            battle_num = 7
         elif battle_num == 2:
-            battle_num = 10
+            battle_num = 11
         elif battle_num == 3:
-            battle_num = 14
+            battle_num = 15
         elif battle_num == 4:
-            battle_num = 18
-        battle_num-=1
-        
+            battle_num = 19
+                
         
         
     if battle_num == 1:
@@ -329,6 +339,15 @@ def Battle():
     
     while battle == True:
         game.blit(bg, (0, 0))
+        if bg2 == "nothing":
+            bg2 == "nothing"
+        else:
+            game.blit(bg2, (0, 0))
+        if knife_giver == "nothing":
+            knife_giver == "nothing"
+        else:
+            game.blit(knife_giver, (64, 0))
+        game.blit(player, (x, y))
         pygame.draw.rect(game, white, [336, 192, 672, 380])
         game.blit(battle_dragon, (803, 197))
         game.blit(your_dragon, (341, 197))
@@ -441,7 +460,8 @@ def Battle():
                                 if mission1_dragons == 0:
                                     mission1 = True
                                 if knife_get == True:
-                                    knife_step +=1
+                                    knife_get = False
+                                    knife_count = True
                                 game.blit(battleopt, (347, 480))
                                 battle = False
                             else:
@@ -687,8 +707,6 @@ def Battle():
 
                                                         if mission1_dragons == 0:
                                                             mission1 = True
-                                                        if knife_get == True:
-                                                            knife_step +=1
                                                         battle = False
                                                 elif poison_count == 0:
                                                     msg_to_screen("No Poison!!!", white, 475, 495, 25)
@@ -740,6 +758,8 @@ def fight(x, y, area):
 
 def gameloop():
     global knife_count
+    global knife_giver
+    global knife_get
     global mission1_part_1
     global mission1
     global mission1_dragons 
@@ -748,8 +768,8 @@ def gameloop():
     items = False
     IDstart = False
     moneystart = False
-    x = 480
-    y = 512
+    global x
+    global y
     global bg
     global bg2
     global gamequit
@@ -1152,6 +1172,8 @@ def gameloop():
                             print('access to mini boss')
                         elif x == 64 and y == 32 and knife_count == False:
                             y+=0
+                            knife_get = True
+                            Battle()
                         else:
                             y += -32
                             
@@ -1184,14 +1206,17 @@ def gameloop():
         #print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
-        if mapno == 6 and knifecount == False:
+        if mapno == 6 and knife_count == False:
             bg2 = pygame.image.load('map 6 knife.png')
             bg2 = pygame.transform.scale(bg2, (1344, 768))
             game.blit(bg2, (0, 0))
             knife_giver = pygame.image.load('characters\\character_femaleAdventurer_idle.png')
             knife_giver = pygame.transform.scale(knife_giver, (64, 64))
             game.blit(knife_giver, (64, 0))
-       
+            pygame.display.update
+        else:
+            bg2 = "nothing"
+            knife_giver = "nothing"
 
             
         
