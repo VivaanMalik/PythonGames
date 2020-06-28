@@ -38,12 +38,15 @@ bg2 = "nothing"
 knife_get = False
 knife_giver = "nothing"
 
+mission1 = False
+knife_count = False
 
 #Only for Testing
-mission1 = True
-knife_count = True
 #Only for Testing
 
+# Job description
+######     Restrictions for mapno 7      ###### 
+# Job description
 
 Guard_Yellow = pygame.image.load('dragons\\Yellow 5.png')
 Guard_Yellow = pygame.transform.scale(Guard_Yellow, (64, 64))
