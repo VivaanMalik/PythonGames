@@ -37,12 +37,11 @@ poison_count = 0
 bg2 = "nothing"
 knife_get = False
 knife_giver = "nothing"
-knife_count = False
-mission1 = False
 
 
 #Only for Testing
-
+mission1 = True
+knife_count = True
 #Only for Testing
 
 
@@ -750,7 +749,6 @@ def Battle():
     if healing_count == 0 and dragon_health <= 0:
         dragon_healthbar_length = 0
         battle = False
-        print("DEAD!!!")
         player = pygame.image.load('player_23.png')
         dragon_health = 1000
         original_dragon_health = dragon_health
@@ -1161,10 +1159,14 @@ def gameloop():
                         else:
                             y+=32
 
+                # Map 6 movements
+                
                 if mapno == 6:
                     if event.key == pygame.K_LEFT:
                         player = pygame.image.load('player_14.png')
                         if x == 0:
+                            x+=0
+                        elif y == 0 and x == 192:
                             x+=0
                         else:
                             x += -32
@@ -1185,11 +1187,20 @@ def gameloop():
                         if y == 0:
                             y+=0
                         elif x == 64 and y == 32 and knife_count == True:
-                            print('access to mini boss')
+                            bg = pygame.image.load('map miniboss 1.png')
+                            bg = pygame.transform.scale(bg, (1344, 768))
+                            x = 640
+                            y = 704
+                            mapno = 7
                         elif x == 64 and y == 32 and knife_count == False:
                             y+=0
                             knife_get = True
                             Battle()
+                        elif y == 32:
+                            if x == 0 or x == 32 or x == 96 or x == 128 or x == 160:
+                                y+=0
+                            else:
+                                y+=-32
                         else:
                             y += -32
                             
@@ -1206,8 +1217,43 @@ def gameloop():
                     fight(x, y, [0, 864, 608, 704])
                     fight(x, y, [0, 64, 96, 576])
                     fight(x, y, [96, 448, 96, 192])
-                    
 
+                    #Map 7 movements
+
+                    
+                if mapno == 7:
+                    if event.key == pygame.K_LEFT:
+                        player = pygame.image.load('player_14.png')
+                        if x == 0:
+                            x+=0
+                        else:
+                            x += -32
+                            
+                    elif event.key == pygame.K_RIGHT:
+                        player = pygame.image.load('player_11.png')
+                        if x == 1280:
+                            x+=0
+                        else:
+                            x += 32
+                        
+                    elif event.key == pygame.K_UP:
+                        player = pygame.image.load('player_02.png')
+                        if y == 0:
+                            y+=0
+                        else:
+                            y += -32
+                            
+                    elif event.key == pygame.K_DOWN:
+                        player = pygame.image.load('player_23.png')
+                        if y == 704:
+                            bg = pygame.image.load('map6.png')
+                            bg = pygame.transform.scale(bg, (1344, 768))
+                            x = 64
+                            y = 32
+                            mapno = 6
+                        else:
+                            y += 32
+                    
                 if event.key == pygame.K_i:
                     if items==False:
                         items = True
@@ -1222,7 +1268,9 @@ def gameloop():
         #print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
+        
         if mapno == 6 and knife_count == False:
+            game.blit(player, (x, y))
             bg2 = pygame.image.load('map 6 knife.png')
             bg2 = pygame.transform.scale(bg2, (1344, 768))
             game.blit(bg2, (0, 0))
@@ -1230,9 +1278,16 @@ def gameloop():
             knife_giver = pygame.transform.scale(knife_giver, (64, 64))
             game.blit(knife_giver, (64, 0))
             pygame.display.update
+        elif mapno == 7:
+            game.blit(player, (x, y))
+            bg2 = pygame.image.load('map miniboss 1 top.png')
+            bg2 = pygame.transform.scale(bg2, (1344, 768))
+            game.blit(bg2, (0, 0))
+            pygame.display.update
         else:
             bg2 = "nothing"
             knife_giver = "nothing"
+            game.blit(player, (x, y))
 
             
         
@@ -1245,7 +1300,7 @@ def gameloop():
                     msg_to_screen(("kill " + str(mission1_dragons) + " dragons of 750 HP"), white, 64, 416, 50)
                 mission1_dragons = int(mission1_dragons)
                 pygame.display.update
-        game.blit(player, (x, y))
+        
         game.blit(cursor, (X, Y))
 
 
@@ -1347,7 +1402,6 @@ def gameloop():
                             
             if X>=372+550 and X <= 372+600 and Y >= inventory_y and Y <= inventory_y+50 and pygame.mouse.get_pressed() == (1, 0, 0):
                 IDstart =True
-                print("ID")
                 items = False
                 pygame.time.delay(500)
                 game.blit(cursor, (X, Y))
@@ -1357,7 +1411,6 @@ def gameloop():
             
             if X>=372+50 and X <= 372+100 and Y >= inventory_y+100 and Y <= inventory_y+150 and pygame.mouse.get_pressed() == (1, 0, 0):
                 moneystart =True
-                print("money")
                 items = False
                 pygame.time.delay(500)
                 game.blit(cursor, (X, Y))
