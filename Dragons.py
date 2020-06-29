@@ -38,15 +38,22 @@ bg2 = "nothing"
 knife_get = False
 knife_giver = "nothing"
 
+knife_count = False
+
 mission1 = False
 knife_count = False
 
 #Only for Testing
+
 #Only for Testing
 
 # Job description
-######     Restrictions for mapno 7      ###### 
+
+# Work in Progress
+######     Restrictions for mapno 7 (up only LOL)      ###### 
+
 # Job description
+
 
 Guard_Yellow = pygame.image.load('dragons\\Yellow 5.png')
 Guard_Yellow = pygame.transform.scale(Guard_Yellow, (64, 64))
@@ -1229,6 +1236,11 @@ def gameloop():
                         player = pygame.image.load('player_14.png')
                         if x == 0:
                             x+=0
+                        elif x == 192 or x == 576 or x == 896 or x == 1280:
+                            if y >= 0 and y <= 192:
+                                x+=0
+                            else:
+                                x+=-32
                         else:
                             x += -32
                             
@@ -1236,6 +1248,11 @@ def gameloop():
                         player = pygame.image.load('player_11.png')
                         if x == 1280:
                             x+=0
+                        elif x == 0 or x == 384 or x == 704 or x == 1088:
+                            if y >= 0 and y <= 192:
+                                x+=0
+                            else:
+                                x+=32
                         else:
                             x += 32
                         
