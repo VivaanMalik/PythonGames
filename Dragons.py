@@ -50,7 +50,7 @@ knife_count = False
 # Job description
 
 # Not Work in Progress
-######     Create map 8      ###### 
+######     Movement de map 8 (teleportation from platforms to platforms)     ###### 
 
 # Job description
 
@@ -1267,7 +1267,13 @@ def gameloop():
                                 y+=-32
                         elif y == 192:
                             # go to map 8 - Figt Area
-                            if x >=32 and x <= 160 or x >=416 and x <= 544 or x >=736 and x <= 864 or x >=1120 and x <= 1248:
+                            if x >=32 and x <= 160:
+                                bg = pygame.image.load('miniboss Battle map 8 part 1.png')
+                                bg = pygame.transform.scale(bg, (1344, 768))
+                                x = 640
+                                y = 640
+                                mapno = 8
+                            elif x >=416 and x <= 544 or x >=736 and x <= 864 or x >=1120 and x <= 1248:
                                 y+=0                            
                             else:
                                 y+=-32
@@ -1284,6 +1290,59 @@ def gameloop():
                             mapno = 6
                         else:
                             y += 32
+
+                # Map 8 Movements
+
+                if mapno == 8:
+                    if event.key == pygame.K_LEFT:
+                        
+                        player = pygame.image.load('player_14.png')
+                        if x == 640 and y == 576:
+                            x = 64
+                        elif x == 384 and y == 448:
+                            x = 64
+                        elif x == 1088 and y == 640:
+                            x = 384
+                        
+                        else:
+                            x += -64
+                        
+                    elif event.key == pygame.K_RIGHT:
+                        
+                        player = pygame.image.load('player_11.png')
+                        if x == 1280:
+                            x+=0
+                        elif x == 64 and y == 576:
+                            x = 640
+                        elif x == 64 and y == 448:
+                            x = 384
+                        elif x == 384 and y == 640:
+                            x = 1088
+                        else:
+                            x += 64
+                        
+                    elif event.key == pygame.K_UP:
+                        
+                        player = pygame.image.load('player_02.png')
+                        if y == 0:
+                            y+=0
+                        elif x == 64 and y == 576:
+                            y = 448
+                        else:
+                            y += -64
+                            
+                    elif event.key == pygame.K_DOWN:
+                        player = pygame.image.load('player_23.png')
+                        if x == 640 and y == 576:
+                            bg = pygame.image.load('map miniboss 1.png')
+                            bg = pygame.transform.scale(bg, (1344, 768))
+                            x = 96
+                            y = 192
+                            mapno = 7
+                        elif x == 64 and y == 448:
+                            y = 576
+                        else:
+                            y += 64
                     
                 if event.key == pygame.K_i:
                     if items==False:
