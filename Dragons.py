@@ -49,8 +49,8 @@ knife_count = False
 
 # Job description
 
-# Work in Progress
-######     Restrictions for mapno 7 (up only LOL)      ###### 
+# Not Work in Progress
+######     Create map 8      ###### 
 
 # Job description
 
@@ -1260,6 +1260,17 @@ def gameloop():
                         player = pygame.image.load('player_02.png')
                         if y == 0:
                             y+=0
+                        elif y == 224:
+                            if x == 32 or x == 416 or x == 736 or x == 1120 or x == 160 or x == 544 or x == 864 or x == 1248:
+                                y+=0
+                            else:
+                                y+=-32
+                        elif y == 192:
+                            # go to map 8 - Figt Area
+                            if x >=32 and x <= 160 or x >=416 and x <= 544 or x >=736 and x <= 864 or x >=1120 and x <= 1248:
+                                y+=0                            
+                            else:
+                                y+=-32
                         else:
                             y += -32
                             
@@ -1285,7 +1296,7 @@ def gameloop():
         pygame.mouse.set_visible(False)
         cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
         (X, Y) = pygame.mouse.get_pos()
-        #print(x, y)
+        print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
         
