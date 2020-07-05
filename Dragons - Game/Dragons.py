@@ -9,7 +9,7 @@ winw = 1344
 winh = 768
 bgcolor = 0
 
-x = 480
+
 y = 512
 game = pygame.display.set_mode((winw, winh))
 pygame.display.set_caption("Dragons")
@@ -17,11 +17,8 @@ fulfilepath = os.getcwd() + "\\" + "Dragonssave.csv"
 mmenu = True
 white = (255, 255, 255)
 black = (0, 0, 0)
-mapno = 1
 gamequit = False
 clock = pygame.time.Clock()
-bg = pygame.image.load('map1.png')
-bg = pygame.transform.scale(bg, (1344, 768))
 player = pygame.image.load('player_23.png')
 dl = (480, 512)
 red = (255,0, 0)
@@ -40,11 +37,13 @@ knife_giver = "nothing"
 
 knife_count = False
 
-
+bg = pygame.image.load('map1.png')
+x = 480
+mapno = 1
 
 #Only for Testing
-mission1 = True
-knife_count = True
+mission1 = True # False
+knife_count = True # False
 #Only for Testing
 
 # Job description
@@ -54,7 +53,7 @@ knife_count = True
 
 # Job description
 
-
+bg = pygame.transform.scale(bg, (1344, 768))
 Guard_Yellow = pygame.image.load('dragons\\Yellow 5.png')
 Guard_Yellow = pygame.transform.scale(Guard_Yellow, (64, 64))
 mission1_dragons = 4
@@ -1271,7 +1270,7 @@ def gameloop():
                                 bg = pygame.image.load('miniboss Battle map 8 part 1.png')
                                 bg = pygame.transform.scale(bg, (1344, 768))
                                 x = 640
-                                y = 640
+                                y = 576
                                 mapno = 8
                             elif x >=416 and x <= 544 or x >=736 and x <= 864 or x >=1120 and x <= 1248:
                                 y+=0                            
@@ -1303,9 +1302,22 @@ def gameloop():
                             x = 64
                         elif x == 1088 and y == 640:
                             x = 384
-                        
+                        elif x == 1088 and y == 256:
+                            x = 832
+                        elif x == 832 and y == 256:
+                            x = 704
+                        elif x == 832 and y == 576:
+                            x = 640
+                        elif x == 704 and y == 640:
+                            x = 512
+                        elif x == 512 and y == 256:
+                            x = 128
+                        elif x == 128 and y == 384:
+                            x = 0
+                        elif x == 960 and y == 192:
+                            x = 0
                         else:
-                            x += -64
+                            x += 0
                         
                     elif event.key == pygame.K_RIGHT:
                         
@@ -1318,8 +1330,22 @@ def gameloop():
                             x = 384
                         elif x == 384 and y == 640:
                             x = 1088
+                        elif x == 832 and y == 256:
+                            x = 1088
+                        elif x == 704 and y == 256:
+                            x = 832
+                        elif x == 640 and y == 576:
+                            x = 832
+                        elif x == 512 and y == 640:
+                            x = 704
+                        elif x == 128 and y == 256:
+                            x = 512
+                        elif x == 0 and y == 384:
+                            x = 128
+                        elif x == 0 and y == 192:
+                            x = 960
                         else:
-                            x += 64
+                            x += 0
                         
                     elif event.key == pygame.K_UP:
                         
@@ -1330,8 +1356,24 @@ def gameloop():
                             y = 448
                         elif x == 384 and y == 640:
                             y = 448
+                        elif x == 1088 and y == 640:
+                            y = 256
+                        elif x == 832 and y == 576:
+                            y = 256
+                        elif x == 704 and y == 640:
+                            y = 256
+                        elif x == 512 and y == 640:
+                            y = 256
+                        elif x == 128 and y == 256:
+                            y = 64
+                        elif x == 128 and y == 384:
+                            y = 256
+                        elif x == 0 and y == 384:
+                            y = 192
+                        elif x == 960 and y == 192:
+                            y = 128
                         else:
-                            y += -64
+                            y += 0
                             
                     elif event.key == pygame.K_DOWN:
                         player = pygame.image.load('player_23.png')
@@ -1345,8 +1387,24 @@ def gameloop():
                             y = 576
                         elif x == 384 and y == 448:
                             y = 640
+                        elif x == 1088 and y == 256:
+                            y = 640
+                        elif x == 832 and y == 256:
+                            y = 576
+                        elif x == 704 and y == 256:
+                            y = 640
+                        elif x == 512 and y == 256:
+                            y = 640
+                        elif x == 128 and y == 64:
+                            y = 256
+                        elif x == 128 and y == 256:
+                            y = 384
+                        elif x == 0 and y == 192:
+                            y = 384
+                        elif x == 960 and y == 128:
+                            y = 192
                         else:
-                            y += 64
+                            y += 0
                     
                 if event.key == pygame.K_i:
                     if items==False:
