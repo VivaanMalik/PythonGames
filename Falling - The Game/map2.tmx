@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.5" orientation="orthogonal" renderorder="left-up" width="21" height="12" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" name="floor" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="Dragonsmaps/rpgTile124.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="2" name="character_femalePerson_idle" tilewidth="64" tileheight="64" tilecount="12" columns="3">
+  <grid orientation="orthogonal" width="32" height="32"/>
+  <image source="Dragonsmaps/character_femalePerson_idle.png" width="192" height="256"/>
+ </tileset>
+ <tileset firstgid="14" name="rpgTile019" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="Dragonsmaps/rpgTile019.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="15" name="rpgTile033" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="Dragonsmaps/rpgTile033.png" width="64" height="64"/>
+ </tileset>
+ <layer id="3" name="Tile Layer 2" width="21" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,
+0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,1,
+0,1,0,0,1,0,0,1,0,0,1,1,1,1,1,0,1,1,1,1,1,
+0,1,0,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,
+0,1,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,
+0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+0,1,1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0
+</data>
+ </layer>
+ <layer id="1" name="Tile Layer 1" width="21" height="12">
+  <data encoding="csv">
+14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
+14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
+14,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,14,
+14,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,14,
+14,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,14,
+14,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,14,
+14,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,1,1,15,14,
+14,15,14,14,15,14,14,15,14,14,15,14,14,15,14,14,15,14,14,15,14
+</data>
+ </layer>
+</map>
