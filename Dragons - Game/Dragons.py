@@ -40,11 +40,11 @@ knife_giver = "nothing"
 
 knife_count = False
 
-mission1 = False
-knife_count = False
+
 
 #Only for Testing
-
+mission1 = True
+knife_count = True
 #Only for Testing
 
 # Job description
@@ -1328,6 +1328,8 @@ def gameloop():
                             y+=0
                         elif x == 64 and y == 576:
                             y = 448
+                        elif x == 384 and y == 640:
+                            y = 448
                         else:
                             y += -64
                             
@@ -1341,6 +1343,8 @@ def gameloop():
                             mapno = 7
                         elif x == 64 and y == 448:
                             y = 576
+                        elif x == 384 and y == 448:
+                            y = 640
                         else:
                             y += 64
                     
