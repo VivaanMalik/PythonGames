@@ -110,7 +110,7 @@ def menu():
 
     global bgcolor
     global mmenu
-    pygame.mixer.music.load('C:\\Users\\ashish\\Documents\\GitHub\\PythonGames\\Falling.mp3')
+    pygame.mixer.music.load('Falling.mp3')
     pygame.mixer.music.play(-1)
     while mmenu == True:
         for event in pygame.event.get():

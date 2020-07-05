@@ -40,16 +40,16 @@ knife_count = False
 bg = pygame.image.load('map1.png')
 x = 480
 mapno = 1
+mission1 = False
+knife_count = False 
 
 #Only for Testing
-mission1 = True # False
-knife_count = True # False
+
 #Only for Testing
 
 # Job description
 
-# Not Work in Progress
-######     Movement de map 8 (teleportation from platforms to platforms)     ###### 
+######     Add an Opponent map 8 and 3 dragons of 750     ###### 
 
 # Job description
 
