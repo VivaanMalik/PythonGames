@@ -210,7 +210,7 @@ def char_msg(msg):
         pygame.display.update()
     i = 0
     pygame.event.clear()
-
+d
 
 def Start():
     start = True
