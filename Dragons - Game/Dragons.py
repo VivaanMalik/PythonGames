@@ -30,21 +30,22 @@ original_dragon_health = dragon_health
 healing_count = 0
 dragon_fight = original_dragon_health/10
 dragon_healthbar_length = 200
-poison_count = 0
 bg2 = "nothing"
 knife_get = False
 knife_giver = "nothing"
-
 knife_count = False
+Yellow_boss1 = False
+Yellow_boss1_fight = 0
 
 bg = pygame.image.load('map1.png')
 x = 480
 mapno = 1
-mission1 = False
-knife_count = False 
+
 
 #Only for Testing
-
+mission1 = True
+knife_count = True
+poison_count = 100 # 0
 #Only for Testing
 
 # Job description
@@ -193,7 +194,22 @@ def msg(msg, textx, texty, fontsize):
         i-=1
         pygame.display.update()
     i = 0
+    pygame.event.clear()
 
+def char_msg(msg):
+    pygame.draw.rect(game, black ,[0, 0, 1344, 50])
+    i = 0
+    while i !=255:
+        msg_to_screen(msg, (i, i, i), 0, 0, 50)
+        i+=1
+        pygame.display.update()
+    pygame.time.delay(3000)
+    while i !=0:
+        msg_to_screen(msg, (i, i, i), 0, 0, 50)
+        i-=1
+        pygame.display.update()
+    i = 0
+    pygame.event.clear()
 
 
 def Start():
@@ -209,6 +225,8 @@ def Start():
     gameloop()
 
 def Battle():
+    global Yellow_boss1
+    global Yellow_boss1_fight
     global x
     global y
     global knife_giver
@@ -244,7 +262,13 @@ def Battle():
             battle_num = 15
         elif battle_num == 4:
             battle_num = 19
-                
+    elif mapno == 8:
+        if Yellow_boss1_fight == 0:
+            battle_num = 13
+        elif Yellow_boss1_fight == 1:
+            battle_num = 14
+        elif Yellow_boss1_fight == 2:
+            battle_num = 15
         
         
     if battle_num == 1:
@@ -466,6 +490,9 @@ def Battle():
                                 poison_count+=1
                                 if battle_num == 1 or battle_num == 5 or battle_num == 9 or battle_num == 13 or battle_num == 17:
                                     mission1_dragons-=1
+                                Yellow_boss1_fight+=1
+                                if Yellow_boss1 == False and Yellow_boss1_fight >= 3:
+                                    Yellow_boss1 = True
 
                                 if mission1_dragons == 0:
                                     mission1 = True
@@ -717,7 +744,9 @@ def Battle():
                                                         game.blit(battleopt, (347, 480))
                                                         if battle_num == 1 or battle_num == 5 or battle_num == 9 or battle_num == 13 or battle_num == 17:
                                                             mission1_dragons-=1
-
+                                                        Yellow_boss1_fight+=1
+                                                        if Yellow_boss1 == False and Yellow_boss1_fight >= 3:
+                                                            Yellow_boss1 = True
                                                         if mission1_dragons == 0:
                                                             mission1 = True
                                                         if knife_get == True:
@@ -780,6 +809,8 @@ def fight(x, y, area):
             
 
 def gameloop():
+    global Yellow_boss1
+    global Yellow_boss1_fight
     global knife_count
     global knife_giver
     global knife_get
@@ -1265,7 +1296,7 @@ def gameloop():
                             else:
                                 y+=-32
                         elif y == 192:
-                            # go to map 8 - Figt Area
+                            # go to map 8 - Fight Area
                             if x >=32 and x <= 160:
                                 bg = pygame.image.load('miniboss Battle map 8 part 1.png')
                                 bg = pygame.transform.scale(bg, (1344, 768))
@@ -1293,6 +1324,17 @@ def gameloop():
                 # Map 8 Movements
 
                 if mapno == 8:
+                    if event.key == pygame.K_SPACE:
+                        if x == 960 and y == 128:
+                            if Yellow_boss1 == False:
+                                char_msg("Hey!!")
+                                char_msg("We don't get many visitors here")
+                                char_msg("Let me show you Around")
+                                Battle()
+                                Battle()
+                                Battle()
+                            else:
+                                char_msg("Already Beaten Me!!!")
                     if event.key == pygame.K_LEFT:
                         
                         player = pygame.image.load('player_14.png')
@@ -1383,6 +1425,7 @@ def gameloop():
                             x = 96
                             y = 192
                             mapno = 7
+                            Yellow_boss1_fight = 0 
                         elif x == 64 and y == 448:
                             y = 576
                         elif x == 384 and y == 448:
@@ -1435,6 +1478,12 @@ def gameloop():
             bg2 = pygame.image.load('map miniboss 1 top.png')
             bg2 = pygame.transform.scale(bg2, (1344, 768))
             game.blit(bg2, (0, 0))
+            pygame.display.update
+        elif mapno == 8:
+            game.blit(player, (x, y))
+            boss1 = pygame.image.load('characters\\character_femalePerson_idle.png')
+            boss1 = pygame.transform.scale(boss1, (64, 64))
+            game.blit(boss1, (960, 64))
             pygame.display.update
         else:
             bg2 = "nothing"
