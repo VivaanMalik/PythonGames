@@ -9,7 +9,7 @@ winw = 1344
 winh = 768
 bgcolor = 0
 
-
+mission1_msg = False
 y = 512
 game = pygame.display.set_mode((winw, winh))
 pygame.display.set_caption("Dragons")
@@ -41,16 +41,16 @@ bg = pygame.image.load('map1.png')
 x = 480
 mapno = 1
 
-
+mission1 = False
+knife_count = False
+poison_count = 0
 #Only for Testing
-mission1 = True
-knife_count = True
-poison_count = 100 # 0
+
 #Only for Testing
 
 # Job description
 
-######     Add an Opponent map 8 and 3 dragons of 750     ###### 
+
 
 # Job description
 
@@ -210,7 +210,7 @@ def char_msg(msg):
         pygame.display.update()
     i = 0
     pygame.event.clear()
-d
+
 
 def Start():
     start = True
@@ -796,7 +796,6 @@ def Battle():
 
 
 
-
 def fight(x, y, area):
     global your_dragon
     global dl
@@ -806,7 +805,50 @@ def fight(x, y, area):
         if battlechance == 1:
             Battle()
             
-            
+def left():
+    global x, y
+    global player
+    g = 0
+    while g!=16:
+        x+=-2
+        game.blit(player, (x, y))
+        g+=1
+        pygame.event.clear()
+        pygame.display.update()
+        
+def right():
+    global x, y
+    global player
+    g = 0
+    while g!=16:
+        x+=2
+        game.blit(player, (x, y))
+        g+=1
+        pygame.event.clear()
+        pygame.display.update()
+  
+def up():
+    global x, y
+    global player
+    g = 0
+    while g!=16:
+        y-=2
+        game.blit(player, (x, y))
+        g+=1
+        pygame.event.clear()
+        pygame.display.update()
+
+def down():
+    global x, y
+    global player
+    g = 0
+    while g!=16:
+        y+=2
+        game.blit(player, (x, y))
+        g+=1
+        pygame.event.clear()
+        pygame.display.update()
+
 
 def gameloop():
     global Yellow_boss1
@@ -831,8 +873,8 @@ def gameloop():
     global player
     global rank
     global money_count
-    mission1_msg = False
-    
+    global mission1_msg
+        
     while not gamequit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -852,7 +894,7 @@ def gameloop():
                                 x+=0
                                 mission1_msg = True
                             else:
-                                x+=-32
+                                left()
                         elif x == 608 and y <= 448 and y >= 352:
                             x+=0
                         elif y == 480 and x == 352 or y == 480 and x == 672:
@@ -861,7 +903,7 @@ def gameloop():
                             if y <= 448 and y >= 352:
                                 x+=0
                             else:
-                                x+=-32
+                                left()
                         elif x == 192 and y <= 448 and y >= 352:
                             x+=0
                         elif x == 1216 and y <= 448 and y >= 352:
@@ -870,7 +912,7 @@ def gameloop():
                             if y >= 608 and y <=672:
                                 x+=0
                             else:
-                                x+=-32
+                                left()
                         elif x == 64 and y == 224:
                             x+=0
                         elif mission1 == True:
@@ -881,9 +923,9 @@ def gameloop():
                                 y = 128
                                 mapno = 6
                             else:
-                                x+=-32
+                                left()
                         else:
-                            x += -32
+                            left()
                         
                     elif event.key == pygame.K_RIGHT:
                         mission1_msg = False
@@ -892,14 +934,14 @@ def gameloop():
                             if y <= 448 and y >=352:
                                 x+=0
                             else:
-                                x+=32
+                                right()
                         elif y == 480 and x == 288 or y == 480 and x == 608:
                             x+=0
                         elif x == 256:
                             if y <= 448 and y >= 352:
                                 x+=0
                             else:
-                                x+=32
+                                right()
                         elif x == 64 and y <= 448 and y >= 352:
                             x+=0
                         elif x == 768 and y <= 448 and y >= 352:
@@ -908,11 +950,11 @@ def gameloop():
                             if y >= 608 and y <=672:
                                 x+=0
                             else:
-                                x+=32
+                                right()
                         elif x == 512 and y == 224:
                             x+=0
                         else:
-                            x += 32
+                            right()
                         
                     elif event.key == pygame.K_UP:
                         
@@ -929,7 +971,7 @@ def gameloop():
                             elif x<=512 and x>=64:
                                 y+=0
                             else:
-                                y += -32
+                                up()
                         elif y == 256 and x == 0 or x == 32 and y == 256 or x == 544 and y == 256 or x == 576 and y == 256 or x == 608 and y == 256:
                             y+=0
                         elif y == 480 and x == 480:
@@ -957,7 +999,7 @@ def gameloop():
                             y = 576
                             mapno = 4
                         else:
-                            y += -32
+                            up()
                             
                     elif event.key == pygame.K_DOWN:
                         
@@ -966,14 +1008,14 @@ def gameloop():
                             if x >= 64 and x <= 192 or x >= 288 and x <= 672 or x >= 768 and x <= 1216:
                                 y+=0
                             else:
-                                y+=32
+                                down()
                         elif y == 576:
                             if x >= 0 and x <= 608 or x >= 704 and x <= 1024 or x >= 1120 and x <= 1280:
                                 y+=0
                             else:
-                                y+=32
+                                down()
                         else:
-                            y += 32
+                            down()
 
                 #Map2 movements
 
@@ -983,7 +1025,7 @@ def gameloop():
                         if x == 0:
                             x+=0
                         else:
-                            x += -32
+                            left()
                         fight(x, y, [0, 1280, 0, 320])
                         
                     elif event.key == pygame.K_RIGHT:
@@ -991,7 +1033,7 @@ def gameloop():
                         if x == 1280:
                             x+=0
                         else:
-                            x += 32
+                            right()
                         fight(x, y, [0, 1280, 0, 320])
                         
                     elif event.key == pygame.K_UP:
@@ -999,7 +1041,7 @@ def gameloop():
                         if y == 0:
                             y+=0
                         else:
-                            y += -32
+                            up()
                         fight(x, y, [0, 1280, 0, 320])
                             
                     elif event.key == pygame.K_DOWN:
@@ -1011,7 +1053,7 @@ def gameloop():
                             y = 224
                             mapno = 1
                         else:
-                            y += 32
+                            down()
                         fight(x, y, [0, 1280, 0, 320])
                         
                     
@@ -1027,13 +1069,13 @@ def gameloop():
                             if x == 224 or x == 288 or x == 352:
                                 x+=0
                             else:
-                                x+=-32
+                                left()
                         elif x == 352 and y <= 448 and y >= 224:
                             x+=0
                         elif x == 544 and y == 576:
                             x+=0
                         else:
-                            x += -32
+                            left()
                         
                     elif event.key == pygame.K_RIGHT:
                         
@@ -1056,7 +1098,7 @@ def gameloop():
                             elif y == 32:
                                 x+=0
                             else:
-                                x+=32
+                                right()
                         elif x == 480 and y == 576:
                             x+=0
                         elif x == 224 and y <= 448 and y >= 224:
@@ -1065,9 +1107,9 @@ def gameloop():
                             if x == 160 or x == 224 or x == 288:
                                 x+=0
                             else:
-                                x+= 32
+                                right()
                         else:
-                            x += 32
+                            right()
                         
                     elif event.key == pygame.K_UP:
                         
@@ -1084,9 +1126,9 @@ def gameloop():
                             if x == 192 or x == 256 or x == 320:
                                 y+=0
                             else:
-                                y+=-32
+                                up()
                         else:
-                            y += -32
+                            up()
                             
                     elif event.key == pygame.K_DOWN:
                         
@@ -1106,7 +1148,7 @@ def gameloop():
                         elif y == 192 and  x >= 256 and x <= 320:
                             y+=0
                         else:
-                            y += 32
+                            down()
 
 
                         #Map4 Movements
@@ -1119,7 +1161,7 @@ def gameloop():
                         if x == 0:
                             x+=0
                         else:
-                            x += -32
+                            left()
                         
                     elif event.key == pygame.K_RIGHT:
                         
@@ -1127,7 +1169,7 @@ def gameloop():
                         if x == 256:
                             x+=0
                         else:
-                            x += 32
+                            right()
                         
                     elif event.key == pygame.K_UP:
                         
@@ -1135,7 +1177,7 @@ def gameloop():
                         if y == 160:
                             y+=0
                         else:
-                            y += -32
+                            up()
                             
                     elif event.key == pygame.K_DOWN:
                         
@@ -1147,7 +1189,7 @@ def gameloop():
                             y = 480
                             mapno = 1
                         else:
-                            y += 32
+                            down()
             
                         #Map5 Movements
             
@@ -1166,11 +1208,11 @@ def gameloop():
                             elif y == 32:
                                 x+=0
                             else:
-                                x+=-32
+                                left()
                         elif x == 0:
                             x+=0
                         else:
-                            x+=-32
+                            left()
                     elif event.key == pygame.K_RIGHT:
                         
                         player = pygame.image.load('player_11.png')
@@ -1179,7 +1221,7 @@ def gameloop():
                         elif x == 448 and y==32 or y==64 and x == 448:
                             x+=0
                         else:
-                            x+=32
+                            right()
                     elif event.key == pygame.K_UP:
                         
                         player = pygame.image.load('player_02.png')
@@ -1188,7 +1230,7 @@ def gameloop():
                         elif x>=480 and x <= 544 and y == 96:
                             y+=0
                         else:
-                            y+=-32
+                            up()
                     elif event.key == pygame.K_DOWN:
                         
                         player = pygame.image.load('player_23.png')
@@ -1197,7 +1239,7 @@ def gameloop():
                         if x >=480 and x<=544 and y == 0:
                             y+=0
                         else:
-                            y+=32
+                            down()
 
                 # Map 6 movements
                 
@@ -1209,7 +1251,7 @@ def gameloop():
                         elif y == 0 and x == 192:
                             x+=0
                         else:
-                            x += -32
+                            left()
                             
                     elif event.key == pygame.K_RIGHT:
                         player = pygame.image.load('player_11.png')
@@ -1220,7 +1262,7 @@ def gameloop():
                             y = 512
                             mapno = 1
                         else:
-                            x += 32
+                            right()
                         
                     elif event.key == pygame.K_UP:
                         player = pygame.image.load('player_02.png')
@@ -1240,16 +1282,16 @@ def gameloop():
                             if x == 0 or x == 32 or x == 96 or x == 128 or x == 160:
                                 y+=0
                             else:
-                                y+=-32
+                                up()
                         else:
-                            y += -32
+                            up()
                             
                     elif event.key == pygame.K_DOWN:
                         player = pygame.image.load('player_23.png')
                         if y == 704:
                             y+=0
                         else:
-                            y += 32
+                            down()
                     fight(x, y, [640, 1280, 0, 64])
                     fight(x, y, [640, 704, 96, 448])
                     fight(x, y, [896, 1280, 224, 704])
@@ -1270,9 +1312,9 @@ def gameloop():
                             if y >= 0 and y <= 192:
                                 x+=0
                             else:
-                                x+=-32
+                                left()
                         else:
-                            x += -32
+                            left()
                             
                     elif event.key == pygame.K_RIGHT:
                         player = pygame.image.load('player_11.png')
@@ -1282,9 +1324,9 @@ def gameloop():
                             if y >= 0 and y <= 192:
                                 x+=0
                             else:
-                                x+=32
+                                right()
                         else:
-                            x += 32
+                            right()
                         
                     elif event.key == pygame.K_UP:
                         player = pygame.image.load('player_02.png')
@@ -1294,7 +1336,7 @@ def gameloop():
                             if x == 32 or x == 416 or x == 736 or x == 1120 or x == 160 or x == 544 or x == 864 or x == 1248:
                                 y+=0
                             else:
-                                y+=-32
+                                up()
                         elif y == 192:
                             # go to map 8 - Fight Area
                             if x >=32 and x <= 160:
@@ -1306,9 +1348,9 @@ def gameloop():
                             elif x >=416 and x <= 544 or x >=736 and x <= 864 or x >=1120 and x <= 1248:
                                 y+=0                            
                             else:
-                                y+=-32
+                                up()
                         else:
-                            y += -32
+                            up()
                             
                     elif event.key == pygame.K_DOWN:
                         player = pygame.image.load('player_23.png')
@@ -1319,7 +1361,7 @@ def gameloop():
                             y = 32
                             mapno = 6
                         else:
-                            y += 32
+                            down()
 
                 # Map 8 Movements
 
@@ -1456,14 +1498,13 @@ def gameloop():
                         items = False
 
 
-                     
+
         pygame.mouse.set_visible(False)
         cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
         (X, Y) = pygame.mouse.get_pos()
         print(x, y)
         game.fill(black)
         game.blit(bg, (0, 0))
-        
         if mapno == 6 and knife_count == False:
             game.blit(player, (x, y))
             bg2 = pygame.image.load('map 6 knife.png')
@@ -1488,10 +1529,7 @@ def gameloop():
         else:
             bg2 = "nothing"
             knife_giver = "nothing"
-            game.blit(player, (x, y))
-
-            
-        
+            game.blit(player, (x, y))    
         if mapno == 1:
             if mission1 == False:
                 game.blit(Guard_Yellow, (0, 416))
@@ -1501,11 +1539,7 @@ def gameloop():
                     msg_to_screen(("kill " + str(mission1_dragons) + " dragons of 750 HP"), white, 64, 416, 50)
                 mission1_dragons = int(mission1_dragons)
                 pygame.display.update
-        
         game.blit(cursor, (X, Y))
-
-
-
 
 
         if items== True:      
