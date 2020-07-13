@@ -372,16 +372,40 @@ def Battle():
     bagitem = [pen, camera, healing, trap]
     
     while battle == True:
+        pygame.mouse.set_visible(False)
+        cursor = pygame.image.load('buttons\\cursorGauntlet_grey.png')
+        (X, Y) = pygame.mouse.get_pos()
+        print(x, y)
+        game.fill(black)
         game.blit(bg, (0, 0))
-        if bg2 == "nothing":
-            bg2 == "nothing"
-        else:
+        
+        if mapno == 6 and knife_count == False:
+            game.blit(player, (x, y))
+            bg2 = pygame.image.load('map 6 knife.png')
+            bg2 = pygame.transform.scale(bg2, (1344, 768))
             game.blit(bg2, (0, 0))
-        if knife_giver == "nothing":
-            knife_giver == "nothing"
-        else:
+            knife_giver = pygame.image.load('characters\\character_femaleAdventurer_idle.png')
+            knife_giver = pygame.transform.scale(knife_giver, (64, 64))
             game.blit(knife_giver, (64, 0))
-        game.blit(player, (x, y))
+            pygame.display.update
+        elif mapno == 7:
+            game.blit(player, (x, y))
+            bg2 = pygame.image.load('map miniboss 1 top.png')
+            bg2 = pygame.transform.scale(bg2, (1344, 768))
+            game.blit(bg2, (0, 0))
+            pygame.display.update
+        elif mapno == 8:
+            game.blit(player, (x, y))
+            boss1 = pygame.image.load('characters\\character_femalePerson_idle.png')
+            boss1 = pygame.transform.scale(boss1, (64, 64))
+            game.blit(boss1, (960, 64))
+            bg2 = "nothing"
+            pygame.display.update
+        else:
+            bg2 = "nothing"
+            knife_giver = "nothing"
+            game.blit(player, (x, y))
+
         pygame.draw.rect(game, white, [336, 192, 672, 380])
         game.blit(battle_dragon, (803, 197))
         game.blit(your_dragon, (341, 197))
@@ -467,6 +491,7 @@ def Battle():
                                 pygame.time.delay(1000)
                                 game.blit(battleopt, (347, 480))
                                 dragon_health = 0
+                                dragon_health_bar = 0
                                 battle = False
                             elif opponent_health <= 0:
                                 original_dragon_health+=10
@@ -752,6 +777,7 @@ def Battle():
                                                         if knife_get == True:
                                                             knife_get = False
                                                             knife_count = True
+                                                            dragon_health_bar = 0
                                                             msg_to_screen("You Just got a Knife!!!", white, 400, 495, 25)
                                                             pygame.display.update()
                                                             pygame.time.delay(1000)
@@ -773,7 +799,7 @@ def Battle():
                                                 healing_count+=0
                                         else:
                                             itemno+=0
-                                        
+                                  
                                 game.blit(bagitem[itemno], (400, 495))
                                 pygame.time.delay(100)
                                 pygame.display.update()
@@ -1485,6 +1511,7 @@ def gameloop():
             boss1 = pygame.image.load('characters\\character_femalePerson_idle.png')
             boss1 = pygame.transform.scale(boss1, (64, 64))
             game.blit(boss1, (960, 64))
+            bg2 = "nothing"
             pygame.display.update
         else:
             bg2 = "nothing"
