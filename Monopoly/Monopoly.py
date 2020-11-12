@@ -1,6 +1,7 @@
 #GivingPlayersValue
 #TypesOfFakePeople@Jordindian
 #XD
+import random
 Player1name = input(print("Enter name of Player 1"))
 Player2name = input(print("Enter name of Player 2"))
 Player3name = input(print("Enter name of Player 3"))
@@ -15,6 +16,10 @@ Player2 = Players[1]
 Player3 = Players[2]
 Player4 = Players[3]
 print(Player2["name"])
+
+
+        
+    
 
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
               { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500},
@@ -37,8 +42,35 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
               { "name":"Oxford Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000},
               { "name":"Bond Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3200, "base_rent":280, "mortgage_value":1600, "unmortgage_value":1760, "house1rent":1500, "house2rent":4500, "house3rent":10000, "house4rent":12000, "Hotelrent":14000, "colorset":560, "house price":2000},
               { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000},
-              { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000},
-                            
-    ]
+              { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000}
+]    
+i = 0          
+              
+# =============================================================================
+# while i != 22:
+#     if Properties[i]["mortgaged"]==False:
+#         Properties[i]["base_rent"]=0
+#     i+=1
+# =============================================================================
+Run = True
+same_roll_count=0
+Playername = Player1name
+Player_chance = 1
+while Run:
+    next_chance=False
+    while next_chance==False:
+        dice_roll_1=random.randrange(1,7)
+        dice_roll_2=random.randrange(1,7)
+        if dice_roll_1==dice_roll_2:
+            next_chance=False
+            same_roll_count+=1
+            if same_roll_count==3:
+                jail=True
+        else: 
+            dice_roll = dice_roll_1 + dice_roll_2
+            print(Playername + " got " + str(dice_roll)) 
+            next_chance=True
+            
+        
 
-print(Properties[0]["name"])    
+  
