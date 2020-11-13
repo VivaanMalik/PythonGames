@@ -3,15 +3,16 @@
 #XD
 #LOL
 import random
+import time
 Player1name = input(print("Enter name of Player 1"))
 Player2name = input(print("Enter name of Player 2"))
 Player3name = input(print("Enter name of Player 3"))
 Player4name = input(print("Enter name of Player 4"))
 
-Players = [{ "name":Player1name, "current_balance":15000, "position":0}, 
-           { "name":Player2name, "current_balance":15000, "position":0},
-           { "name":Player3name, "current_balance":15000, "position":0},
-           { "name":Player4name, "current_balance":15000, "position":0}]
+Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False}, 
+           { "name":Player2name, "current_balance":15000, "position":0, "jail":False},
+           { "name":Player3name, "current_balance":15000, "position":0, "jail":False},
+           { "name":Player4name, "current_balance":15000, "position":0, "jail":False}]
 Player1 = Players[0]
 Player2 = Players[1]
 Player3 = Players[2]
@@ -56,7 +57,8 @@ i = 0
 Run = True
 same_roll_count=0
 Playername = Player1name
-Player_chance = 1
+chance_count = 1
+Player_jail_no=0
 while Run:
     next_chance=False
     while next_chance==False:
@@ -68,8 +70,24 @@ while Run:
             if same_roll_count==3:
                 jail=True
         else: 
-            dice_roll = dice_roll_1 + dice_roll_2
-            print(Playername + " got " + str(dice_roll)) 
-
             next_chance=True
+            chance_count+=1
+            jail=False
+            if chance_count==1:
+                Playername=Player1name
+            elif chance_count==2:
+                Playername=Player2name
+            elif chance_count==3:
+                Playername=Player3name
+            elif chance_count==4:
+                Playername=Player4name
+                chance_count=0
+            
+        dice_roll = dice_roll_1 + dice_roll_2
+        print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
+        print("jail for " + Playername + " is "+ str(Players[chance_count-1]["jail"]))
+        same_roll_count=0
+        time.sleep(5)
+            
 
+ 
