@@ -53,6 +53,7 @@ i = 0
 #     if Properties[i]["mortgaged"]==False:
 #         Properties[i]["base_rent"]=0
 #     i+=1
+# next chance: To see if the next player should play his chance
 # =============================================================================
 Run = True
 same_roll_count=0
