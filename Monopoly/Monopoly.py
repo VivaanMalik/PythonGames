@@ -1,10 +1,7 @@
 #GivingPlayersValue
 #TypesOfFakePeople@Jordindian
 #XD
-<<<<<<< HEAD
 #LOL
-=======
->>>>>>> 0bfc27d1dc4239feb00ae5e2b1a1be12af40e2e8
 import random
 Player1name = input(print("Enter name of Player 1"))
 Player2name = input(print("Enter name of Player 2"))
@@ -73,8 +70,6 @@ while Run:
         else: 
             dice_roll = dice_roll_1 + dice_roll_2
             print(Playername + " got " + str(dice_roll)) 
-<<<<<<< HEAD
+
             next_chance=True
-=======
-            next_chance=True
->>>>>>> 0bfc27d1dc4239feb00ae5e2b1a1be12af40e2e8
+
