@@ -60,13 +60,12 @@ Run = True
 same_roll_count=0
 Playername = Player1name
 chance_count = 0
-Player_jail_no=0
+Player_no=0
 while Run:
     next_chance=False
     while next_chance==False:
         dice_roll_1=random.randrange(1,7)
         dice_roll_2=random.randrange(1,7)
-        chance_count+=1
         if dice_roll_1==dice_roll_2:
             next_chance=False
             same_roll_count+=1
@@ -75,7 +74,8 @@ while Run:
         else: 
             next_chance=True
             same_roll_count=0
-            
+            chance_count+=1
+            Player_no=chance_count-1
             Players[chance_count]["jail"]=False
             if chance_count==1:
                 Playername=Player1name
@@ -89,7 +89,7 @@ while Run:
             
         dice_roll = dice_roll_1 + dice_roll_2
         print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
-        print("jail for " + Playername + " is "+ str(Players[chance_count-1]["jail"]))
+        print("jail for " + Playername + " is "+ str(Players[Player_no]["jail"]))
         
         time.sleep(5)
             
