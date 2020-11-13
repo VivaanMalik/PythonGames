@@ -9,6 +9,7 @@ Player2name = input(print("Enter name of Player 2"))
 Player3name = input(print("Enter name of Player 3"))
 Player4name = input(print("Enter name of Player 4"))
 
+
 Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False}, 
            { "name":Player2name, "current_balance":15000, "position":0, "jail":False},
            { "name":Player3name, "current_balance":15000, "position":0, "jail":False},
@@ -57,7 +58,7 @@ i = 0
 Run = True
 same_roll_count=0
 Playername = Player1name
-chance_count = 1
+chance_count = 0
 Player_jail_no=0
 while Run:
     next_chance=False
@@ -68,12 +69,12 @@ while Run:
             next_chance=False
             same_roll_count+=1
             if same_roll_count==3:
-                jail=True
+                Players[chance_count]["jail"]=True
         else: 
             next_chance=True
             same_roll_count=0
             chance_count+=1
-            jail=False
+            Players[chance_count]["jail"]=False
             if chance_count==1:
                 Playername=Player1name
             elif chance_count==2:
