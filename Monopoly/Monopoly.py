@@ -18,10 +18,7 @@ Player1 = Players[0]
 Player2 = Players[1]
 Player3 = Players[2]
 Player4 = Players[3]
-print(Player2["name"])
-
-
-        
+     
     
 
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
@@ -66,26 +63,27 @@ while Run:
     while next_chance==False:
         dice_roll_1=random.randrange(1,7)
         dice_roll_2=random.randrange(1,7)
+        chance_count+=1
+        Player_no=chance_count-1
+        if chance_count==1:
+            Playername=Player1name
+        elif chance_count==2:
+            Playername=Player2name
+        elif chance_count==3:
+            Playername=Player3name
+        elif chance_count==4:
+            Playername=Player4name
+            chance_count=0
         if dice_roll_1==dice_roll_2:
             next_chance=False
             same_roll_count+=1
             if same_roll_count==3:
-                Players[chance_count]["jail"]=True
+                Players[Player_no]["jail"]=True
         else: 
             next_chance=True
             same_roll_count=0
-            chance_count+=1
-            Player_no=chance_count-1
-            Players[chance_count]["jail"]=False
-            if chance_count==1:
-                Playername=Player1name
-            elif chance_count==2:
-                Playername=Player2name
-            elif chance_count==3:
-                Playername=Player3name
-            elif chance_count==4:
-                Playername=Player4name
-                chance_count=0
+            Players[Player_no]["jail"]=False
+        
             
         dice_roll = dice_roll_1 + dice_roll_2
         print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
