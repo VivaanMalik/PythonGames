@@ -66,6 +66,7 @@ while Run:
     while next_chance==False:
         dice_roll_1=random.randrange(1,7)
         dice_roll_2=random.randrange(1,7)
+        chance_count+=1
         if dice_roll_1==dice_roll_2:
             next_chance=False
             same_roll_count+=1
@@ -74,7 +75,7 @@ while Run:
         else: 
             next_chance=True
             same_roll_count=0
-            chance_count+=1
+            
             Players[chance_count]["jail"]=False
             if chance_count==1:
                 Playername=Player1name
