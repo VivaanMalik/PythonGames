@@ -58,11 +58,21 @@ same_roll_count=0
 Playername = Player1name
 chance_count = 0
 Player_no=0
+dice_roll_1=9
+dice_roll_2=10
 while Run:
     next_chance=False
     while next_chance==False:
+        Players[Player_no]["jail"]=False
+        if dice_roll_1==dice_roll_2:
+            chance_count-=1
+
         dice_roll_1=random.randrange(1,7)
         dice_roll_2=random.randrange(1,7)
+
+
+        
+
         chance_count+=1
         Player_no=chance_count-1
         if chance_count==1:
@@ -78,6 +88,10 @@ while Run:
             next_chance=False
             same_roll_count+=1
             if same_roll_count==3:
+                next_chance=True
+                same_roll_count=0
+                chance_count+=1
+                Player_no=chance_count-1
                 Players[Player_no]["jail"]=True
         else: 
             next_chance=True
@@ -88,6 +102,12 @@ while Run:
         dice_roll = dice_roll_1 + dice_roll_2
         print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
         print("jail for " + Playername + " is "+ str(Players[Player_no]["jail"]))
+        print(Player_no)
+        if Players[Player_no]["jail"]==False:
+            Players[Player_no]["position"]+=dice_roll
+            if Players[Player_no]["position"]==40:
+                Players[Player_no]["position"]=0
+        print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
         
         time.sleep(5)
             
