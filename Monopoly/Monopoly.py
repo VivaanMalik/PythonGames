@@ -3,17 +3,16 @@
 #XD
 #LOL
 import random
-import time
 Player1name = input(print("Enter name of Player 1"))
 Player2name = input(print("Enter name of Player 2"))
 Player3name = input(print("Enter name of Player 3"))
 Player4name = input(print("Enter name of Player 4"))
 
 
-Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False}, 
-           { "name":Player2name, "current_balance":15000, "position":0, "jail":False},
-           { "name":Player3name, "current_balance":15000, "position":0, "jail":False},
-           { "name":Player4name, "current_balance":15000, "position":0, "jail":False}]
+Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0}, 
+           { "name":Player2name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0},
+           { "name":Player3name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0},
+           { "name":Player4name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0}]
 Player1 = Players[0]
 Player2 = Players[1]
 Player3 = Players[2]
@@ -105,11 +104,16 @@ while Run:
         print(Player_no)
         if Players[Player_no]["jail"]==False:
             Players[Player_no]["position"]+=dice_roll
-            if Players[Player_no]["position"]==40:
-                Players[Player_no]["position"]=0
+            if Players[Player_no]["position"]>=40:
+                Players[Player_no]["position"]-=40
+                Players[Player_no]["round"]+=1
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
+            Players[Player_no]["current_balance"]  +=2000
+            Players[Player_no]["go_collections"]
+        print(Players[Player_no]["current_balance"]) 
         
-        time.sleep(5)
+        x=input(print("Continue"))
             
 
  
