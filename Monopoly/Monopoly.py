@@ -18,7 +18,24 @@ Player2 = Players[1]
 Player3 = Players[2]
 Player4 = Players[3]
      
-    
+def Chance(): 
+    Chance_cards=[{"text":"Another player files a court case against you. Choose which player and pay them 500."},
+                  {"text":"Advance to GO."},
+                  {"text":"Advance to the nearest station space. If unowned, you may buy it from the bank. If owned, pay the owner twice the rental to which they are otherwise entitled. If you pass GO collect 2000."},
+                  {"text":"Advance to the nearest station space. If unowned, you may buy it from the bank. If owned, pay the owner twice the rental to which they are otherwise entitled. If you pass GO collect 2000."},
+                  {"text":"Advance to the Utility. If unowned, you may buy it from the bank. If owned, throw dice and pay owner a total 10,000 times amount thrown. If you pass GO collect 2000."},
+                  {"text":"Summoned for jury duty. Go back 3 spaces."},
+                  {"text":"Accept the position of CEO ataa a high-powered investment banking firm. Collect a signing bonus of 1500."},
+                  {"text":"Convicted of Identity Theft. Go to Jail. Do not pass GO, do not collect 2000."},
+                  {"text":"Get a tax break for driving a hybrid. Collect 500."},
+                  {"text":"Splash out on a trip to Pall Mall. If yoou pass GO, collect 2000."},
+                  {"text":"Ride first-class to King Cross Station. If you pass GO, collect 2000."},
+                  {"text":"You are acquitted. GET OUT OF JAIL FREE. This may be kept until needed or traded."},
+                  {"text":"Make a donation for disaster relief. Pay 150."},
+                  {"text":"Your city does a tax revaluation. Pay 250 for each house and 1000 for each hotel you own."},
+                  {"text":"Jump on a plane to Trafalgar Square. if you pass GO, collect 2000."},
+                  {"text":"Take a helicopter ride to Mayfair."}
+        ]
 
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
               { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500},
@@ -111,6 +128,8 @@ while Run:
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
             Players[Player_no]["go_collections"]
+        elif Players[Player_no]["position"]==4:
+            Players[Player_no]["current_balance"]-=2000
         print(Players[Player_no]["current_balance"]) 
         
         x=input(print("Continue"))
