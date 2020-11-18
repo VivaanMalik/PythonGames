@@ -2,6 +2,7 @@
 #TypesOfFakePeople@Jordindian
 #XD
 #LOL
+global Player_no
 import random
 Player1name = input(print("Enter name of Player 1"))
 Player2name = input(print("Enter name of Player 2"))
@@ -36,6 +37,19 @@ def Chance():
                   {"text":"Jump on a plane to Trafalgar Square. if you pass GO, collect 2000."},
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
+    #card_no=random.randrange(1,17)-1
+    card_no=0
+    print(Chance_cards[card_no]["text"])
+    if card_no+1 ==1:
+        player_output = input(print("type the player number from 1 to 4"))
+        while player_output==Player_no+1:
+            player_output = input(print("type the player number from 1 to 4"))
+        Players[Player_no]["current_balance"]-=500
+        Players[player_output-1]["current_balance"]+=500        
+        
+        
+            
+        
 
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
               { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500},
@@ -53,7 +67,7 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
               { "name":"Trafalgar Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2400, "base_rent":200, "mortgage_value":1200, "unmortgage_value":1320, "house1rent":1000, "house2rent":3000, "house3rent":7500, "house4rent":9250, "Hotelrent":11000, "colorset":400, "house price":1500},
               { "name":"Leicester Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500},
               { "name":"Coventry Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500},
-              { "name":"Piccaadlly", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2800, "base_rent":240, "mortgage_value":1400, "unmortgage_value":1540, "house1rent":1200, "house2rent":3600, "house3rent":8500, "house4rent":10250, "Hotelrent":12000, "colorset":480, "house price":1500},
+              { "name":"Piccadilly", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2800, "base_rent":240, "mortgage_value":1400, "unmortgage_value":1540, "house1rent":1200, "house2rent":3600, "house3rent":8500, "house4rent":10250, "Hotelrent":12000, "colorset":480, "house price":1500},
               { "name":"Regent Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000},
               { "name":"Oxford Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000},
               { "name":"Bond Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3200, "base_rent":280, "mortgage_value":1600, "unmortgage_value":1760, "house1rent":1500, "house2rent":4500, "house3rent":10000, "house4rent":12000, "Hotelrent":14000, "colorset":560, "house price":2000},
@@ -73,10 +87,18 @@ Run = True
 same_roll_count=0
 Playername = Player1name
 chance_count = 0
-Player_no=0
+Player_no =0
 dice_roll_1=9
 dice_roll_2=10
 while Run:
+    if Playername==Player1name:
+        Player_no=0
+    elif Playername==Player2name:
+        Player_no=1
+    elif Playername==Player3name:
+        Player_no=2
+    elif Playername==Player4name:
+        Player_no=3
     next_chance=False
     while next_chance==False:
         Players[Player_no]["jail"]=False
@@ -125,11 +147,17 @@ while Run:
                 Players[Player_no]["position"]-=40
                 Players[Player_no]["round"]+=1
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        int(Players[Player_no]["position"])
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
             Players[Player_no]["go_collections"]
-        elif Players[Player_no]["position"]==4:
+        if Players[Player_no]["position"]==4:
             Players[Player_no]["current_balance"]-=2000
+        if Players[Player_no]["position"]==38:
+            Players[Player_no]["current_balance"]-=1000
+        if Players[Player_no]["position"]==7:
+            Chance()
+            
         print(Players[Player_no]["current_balance"]) 
         
         x=input(print("Continue"))
