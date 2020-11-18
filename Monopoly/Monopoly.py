@@ -41,9 +41,13 @@ def Chance():
     card_no=0
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
-        player_output = input(print("type the player number from 1 to 4"))
+        tmp_player_output = input(print("type the player number from 1 to 4"))
+        player_output = int (tmp_player_output)
         while player_output==Player_no+1:
-            player_output = input(print("type the player number from 1 to 4"))
+            tmp_player_output = input(print("type the player number from 1 to 4"))
+            player_output = int (tmp_player_output)
+
+        print (Players[Player_no]["current_balance"])
         Players[Player_no]["current_balance"]-=500
         Players[player_output-1]["current_balance"]+=500        
         
