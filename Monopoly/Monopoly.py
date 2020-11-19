@@ -38,20 +38,29 @@ def Chance():
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
     #card_no=random.randrange(1,17)-1
-    card_no=0
+    card_no=1
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
-        tmp_player_output = input(print("type the player number from 1 to 4"))
-        player_output = int (tmp_player_output)
-        while player_output==Player_no+1:
-            tmp_player_output = input(print("type the player number from 1 to 4"))
-            player_output = int (tmp_player_output)
+        tmp_player_output = int(input("type the player number from 1 to 4"))
+        player_output=tmp_player_output-1
+        while player_output==Player_no:
+            tmp_player_output = int(input("type the player number from 1 to 4"))
+            player_output=tmp_player_output-1
 
-        print (Players[Player_no]["current_balance"])
+        
         Players[Player_no]["current_balance"]-=500
-        Players[player_output-1]["current_balance"]+=500        
-        
-        
+        Players[int(player_output)]["current_balance"]+=500
+    elif card_no+1==2:
+        Players[Player_no]["position"]=0
+        Players[Player_no]["current_balance"]+=2000
+    elif card_no+1==3 or card_no+1==4:
+        while Players[Player_no]["position"]%10==5:
+            if Players[Player_no]["position"]%10==5:
+                Players[Player_no]["position"]+=0
+            else:
+                Players[Player_no]["position"]+=1
+            
+               
             
         
 
