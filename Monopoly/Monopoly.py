@@ -10,13 +10,13 @@ Player3name = input(print("Enter name of Player 3"))
 Player4name = input(print("Enter name of Player 4"))
 
 
-Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0}, 
-           { "name":Player2name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0},
-           { "name":Player3name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0},
-           { "name":Player4name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0}]
+Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]}, 
+           { "name":Player2name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]},
+           { "name":Player3name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]},
+           { "name":Player4name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]}]
 Player1 = Players[0]
 Player2 = Players[1]
-Player3 = Players[2]
+Player3 = Players[2] 
 Player4 = Players[3]
      
 def Chance(): 
@@ -24,12 +24,12 @@ def Chance():
                   {"text":"Advance to GO."},
                   {"text":"Advance to the nearest station space. If unowned, you may buy it from the bank. If owned, pay the owner twice the rental to which they are otherwise entitled. If you pass GO collect 2000."},
                   {"text":"Advance to the nearest station space. If unowned, you may buy it from the bank. If owned, pay the owner twice the rental to which they are otherwise entitled. If you pass GO collect 2000."},
-                  {"text":"Advance to the Utility. If unowned, you may buy it from the bank. If owned, throw dice and pay owner a total 10,000 times amount thrown. If you pass GO collect 2000."},
+                  {"text":"Advance to the nearest Utility. If unowned, you may buy it from the bank. If owned, throw dice and pay owner a total 10,000 times amount thrown. If you pass GO collect 2000."},
                   {"text":"Summoned for jury duty. Go back 3 spaces."},
-                  {"text":"Accept the position of CEO ataa a high-powered investment banking firm. Collect a signing bonus of 1500."},
+                  {"text":"Accept the position of CEO at a high-powered investment banking firm. Collect a signing bonus of 1500."},
                   {"text":"Convicted of Identity Theft. Go to Jail. Do not pass GO, do not collect 2000."},
                   {"text":"Get a tax break for driving a hybrid. Collect 500."},
-                  {"text":"Splash out on a trip to Pall Mall. If yoou pass GO, collect 2000."},
+                  {"text":"Splash out on a trip to Pall Mall. If you pass GO, collect 2000."},
                   {"text":"Ride first-class to King Cross Station. If you pass GO, collect 2000."},
                   {"text":"You are acquitted. GET OUT OF JAIL FREE. This may be kept until needed or traded."},
                   {"text":"Make a donation for disaster relief. Pay 150."},
@@ -38,7 +38,7 @@ def Chance():
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
     #card_no=random.randrange(1,17)-1
-    card_no=1
+    card_no=3
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
         tmp_player_output = int(input("type the player number from 1 to 4"))
@@ -54,14 +54,52 @@ def Chance():
         Players[Player_no]["position"]=0
         Players[Player_no]["current_balance"]+=2000
     elif card_no+1==3 or card_no+1==4:
-        while Players[Player_no]["position"]%10==5:
-            if Players[Player_no]["position"]%10==5:
-                Players[Player_no]["position"]+=0
-            else:
-                Players[Player_no]["position"]+=1
-            
-               
-            
+        while not Players[Player_no]["position"]%10==5:
+            Players[Player_no]["position"]+=1
+        if Players[Player_no]["position"]>=40:
+            Players[Player_no]["position"]-=40
+            Players[Player_no]["round"]+=1
+    elif card_no+1==5:
+        if Players[Player_no]["position"]>=13 and Players[Player_no]["position"]<=28:
+            Players[Player_no]["position"]=28
+        if Players[Player_no]["position"]>=40:
+            Players[Player_no]["position"]-=40
+            Players[Player_no]["round"]+=1
+        else:
+            Players[Player_no]["position"]=12
+    elif card_no+1==6:
+        Players[Player_no]["position"]-=3
+    elif card_no+1==7:
+        Players[Player_no]["current_balance"]+=1500
+    elif card_no+1==8:
+        Players[Player_no]["jail"]=True
+    elif card_no+1==9:
+        Players[Player_no]["current_balance"]+=500
+    elif card_no+1==10:
+        if Players[Player_no]["position"]<=11:
+            Players[Player_no]["position"]=11
+        else:
+            Players[Player_no]["position"]=11
+            Players[Player_no]["current_balance"]+=2000
+    elif card_no+1==11:
+        if Players[Player_no]["position"]<=5:
+            Players[Player_no]["position"]=5
+        else:
+            Players[Player_no]["position"]=5
+            Players[Player_no]["current_balance"]+=2000
+    elif card_no+1==12:
+        Players[Player_no]["jail_card"]=True
+        #v b like "M gonna write da code for dis later coz m bingin rn while hearin #ESBR - #Eat. Sleep. Binge. Repeat. LOL XD" 
+    elif card_no+1==13:
+       Players[Player_no]["current_balance"]-=150        
+# =============================================================================
+#M gonna do dis later
+#     elif card_no+1==14:
+#         i =0
+#         j= len(Players[Player_no]["properties"])
+#         while i != j-1:
+#             Players[Player_no]["properties"][]
+# =============================================================================
         
 
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
@@ -158,18 +196,21 @@ while Run:
             Players[Player_no]["position"]+=dice_roll
             if Players[Player_no]["position"]>=40:
                 Players[Player_no]["position"]-=40
-                Players[Player_no]["round"]+=1
-        print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+            print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+            
         int(Players[Player_no]["position"])
+        if Players[Player_no]["position"]==7 or Players[Player_no]["position"]==22 or Players[Player_no]["position"]==36:
+            Chance()
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
-            Players[Player_no]["go_collections"]
+            Players[Player_no]["go_collections"]+=1
         if Players[Player_no]["position"]==4:
             Players[Player_no]["current_balance"]-=2000
         if Players[Player_no]["position"]==38:
             Players[Player_no]["current_balance"]-=1000
-        if Players[Player_no]["position"]==7:
-            Chance()
+        
+        print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        
             
         print(Players[Player_no]["current_balance"]) 
         
