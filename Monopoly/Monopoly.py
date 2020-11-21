@@ -10,10 +10,11 @@ Player3name = input(print("Enter name of Player 3"))
 Player4name = input(print("Enter name of Player 4"))
 
 
-Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]}, 
-           { "name":Player2name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]},
-           { "name":Player3name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]},
-           { "name":Player4name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "properties":[]}]
+Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0}, 
+           { "name":Player2name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0},
+           { "name":Player3name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0},
+           { "name":Player4name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0}
+           ]
 Player1 = Players[0]
 Player2 = Players[1]
 Player3 = Players[2] 
@@ -37,8 +38,8 @@ def Chance():
                   {"text":"Jump on a plane to Trafalgar Square. if you pass GO, collect 2000."},
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
-    #card_no=random.randrange(1,17)-1
-    card_no=3
+    card_no=random.randrange(1,17)-1
+
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
         tmp_player_output = int(input("type the player number from 1 to 4"))
@@ -92,14 +93,16 @@ def Chance():
         #v b like "M gonna write da code for dis later coz m bingin rn while hearin #ESBR - #Eat. Sleep. Binge. Repeat. LOL XD" 
     elif card_no+1==13:
        Players[Player_no]["current_balance"]-=150        
-# =============================================================================
-#M gonna do dis later
-#     elif card_no+1==14:
-#         i =0
-#         j= len(Players[Player_no]["properties"])
-#         while i != j-1:
-#             Players[Player_no]["properties"][]
-# =============================================================================
+    elif card_no+1==14:
+        Players[Player_no]["current_balance"]-=((Players[Player_no]["House_no"]*250)+(Players[Player_no]["Hotel_no"]*1000))
+    elif card_no+1==15:
+        if Players[Player_no]["position"]>=25:
+            Players[Player_no]["current_balance"]+=2000
+            Players[Player_no]["position"]=24
+        else:
+            Players[Player_no]["position"]=24
+    elif card_no+1==16:
+        Players[Player_no]["position"]=39
         
 
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
