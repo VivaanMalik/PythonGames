@@ -265,6 +265,8 @@ while Run:
         int(Players[Player_no]["position"])
         if Players[Player_no]["position"]==7 or Players[Player_no]["position"]==22 or Players[Player_no]["position"]==36:
             Chance()
+        if Players[Player_no]["position"]==2 or Players[Player_no]["position"]==17 or Players[Player_no]["position"]==33:
+            Community_Chest()
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
             Players[Player_no]["go_collections"]+=1
