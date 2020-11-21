@@ -105,7 +105,67 @@ def Chance():
     elif card_no+1==16:
         Players[Player_no]["position"]=39
         
+def Community_Chest():
+    Community_Chest_cards=[
+        {"text":"Make it big in Hollywood. Collect 2000 in a Movie Deal."},
+        {"text":"Take dance lessons from a celerity coach. Pay 500."},
+        {"text":"Recieve a royal pardon. Get out of jail free. This may be used when needed or traded"},
+        {"text":"Arrested for insider trading. Go to jail. Do not pass GO. Do not Collect 2000."},
+        {"text":"You owe back taxes. Pay 500."},
+        {"text":"You are runner up on a reality TV show. Collect 100."},
+        {"text":"Sell your lifetime tickets. Collect 200."},
+        {"text":"Your trust fund becomes available. Collect 500."},
+        {"text":"Advance to GO. Collect 2000."},
+        {"text":"Run for mayor. Collect 100 from each player to fund your campaign"},
+        {"text":"You are chosen as mascot for your team's big game at Wembley. Collect 250 for your services."},
+        {"text":"Win the lottery. Collect 1000."},
+        {"text":"Redo the landscaping at all your properties. Pay 400 per house and 1150 per hotel you own."},
+        {"text":"Your computer network hits witha virus. Pay 1000."},
+        {"text":"Promote your new book on the morning news. Recieve 100 in bonus sales."},
+        {"text":"Win big at the Casino. Collect 1000."  }
+        
+        ]
+    card_no=random.randrange(1,17)-1
 
+    print(Community_Chest_cards[card_no]["text"])
+    if card_no+1 ==1:
+        Players[Player_no]["current_balance"]+=2000
+    elif card_no+1==2:
+        Players[Player_no]["current_balance"]-=500
+    elif card_no+1==3:
+        Players[Player_no]["jail_card"]=True
+    elif card_no+1==4:
+        Players[Player_no]["jail"]=True
+    elif card_no+1==5:
+        Players[Player_no]["current_balance"]-=500
+    elif card_no+1==6:
+        Players[Player_no]["current_balance"]+=100
+    elif card_no+1==7:
+        Players[Player_no]["current_balance"]+=200
+    elif card_no+1==8:
+        Players[Player_no]["current_balance"]+=500
+    elif card_no+1==9:
+        Players[Player_no]["current_balance"]+=2000
+        Players[Player_no]["position"]=0
+    elif card_no+1==10:
+        Players[Player_no]["current_balance"]+=400
+        Players[0]["current_balance"]-=100
+        Players[1]["current_balance"]-=100
+        Players[2]["current_balance"]-=100
+        Players[3]["current_balance"]-=100
+    elif card_no+1==11:
+        Players[Player_no]["current_balance"]+=250
+    elif card_no+1==12:
+        Players[Player_no]["current_balance"]+=1000
+    elif card_no+1==13:
+        Players[Player_no]["current_balance"]-=((Players[Player_no]["House_no"]*400)+(Players[Player_no]["Hotel_no"]*1150))
+    elif card_no+1==14:
+        Players[Player_no]["current_balance"]-=1000
+    elif card_no+1==15:
+        Players[Player_no]["current_balance"]+=100
+    elif card_no+1==16:
+        Players[Player_no]["current_balance"]+=1000
+        
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
               { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500},
               { "name":"The Angel Islington", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500},
