@@ -2,6 +2,7 @@
 #TypesOfFakePeople@Jordindian
 #XD
 #LOL
+#Credits:VivaanDaGr8
 global Player_no
 import random
 Player1name = input(print("Enter name of Player 1"))
