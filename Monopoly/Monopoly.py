@@ -39,7 +39,7 @@ def Chance():
                   {"text":"Jump on a plane to Trafalgar Square. if you pass GO, collect 2000."},
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
-    card_no=random.randrange(1,17)-1
+    card_no=random.randrange(1,17)-1 # Change this to len(Chance_cards)
 
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
