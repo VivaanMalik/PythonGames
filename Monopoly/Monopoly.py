@@ -5,10 +5,10 @@
 #Credits:VivaanDaGr8
 global Player_no
 import random
-Player1name = input(print("Enter name of Player 1"))
-Player2name = input(print("Enter name of Player 2"))
-Player3name = input(print("Enter name of Player 3"))
-Player4name = input(print("Enter name of Player 4"))
+Player1name = input(print("Enter name of Player 1: "))
+Player2name = input(print("Enter name of Player 2: "))
+Player3name = input(print("Enter name of Player 3: "))
+Player4name = input(print("Enter name of Player 4: "))
 
 
 Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0}, 
@@ -40,14 +40,20 @@ def Chance():
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
     card_no=random.randrange(1,17)-1
-
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
-        tmp_player_output = int(input("type the player number from 1 to 4"))
-        player_output=tmp_player_output-1
-        while player_output==Player_no:
-            tmp_player_output = int(input("type the player number from 1 to 4"))
-            player_output=tmp_player_output-1
+        player_output=0
+        while True:
+            try:
+                tmp_player_output = int(input("type the player number from 1 to 4: "))
+                player_output=tmp_player_output-1
+                while player_output==Player_no or player_output>=4 or player_output<=-1:
+                    tmp_player_output = int(input("type the player number from 1 to 4: "))
+                    player_output=tmp_player_output-1
+                break
+            except ValueError:
+                print("Enter a number from 1 to 4...")
+                continue
 
         
         Players[Player_no]["current_balance"]-=500
@@ -189,15 +195,10 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
               { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000},
               { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000}
 ]    
-i = 0          
-              
-# =============================================================================
-# while i != 22:
-#     if Properties[i]["mortgaged"]==False:
-#         Properties[i]["base_rent"]=0
-#     i+=1
-# next chance: To see if the next player should play his chance
-# =============================================================================
+Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830},
+           {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830}
+    ]
+
 Run = True
 same_roll_count=0
 Playername = Player1name
@@ -274,13 +275,15 @@ while Run:
             Players[Player_no]["current_balance"]-=2000
         if Players[Player_no]["position"]==38:
             Players[Player_no]["current_balance"]-=1000
+        if Players[Player_no]["position"]==30:
+            Players[Player_no]["jail"]=True
         
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
         
             
         print(Players[Player_no]["current_balance"]) 
         
-        x=input(print("Continue"))
+        x=input(print("Continue???"))
             
 
  
