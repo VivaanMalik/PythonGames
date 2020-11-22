@@ -195,8 +195,8 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
               { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000},
               { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000}
 ]    
-Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830},
-           {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830}
+Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0},
+           {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0}
     ]
 
 Run = True
@@ -266,24 +266,46 @@ while Run:
         int(Players[Player_no]["position"])
         if Players[Player_no]["position"]==7 or Players[Player_no]["position"]==22 or Players[Player_no]["position"]==36:
             Chance()
+            
         if Players[Player_no]["position"]==2 or Players[Player_no]["position"]==17 or Players[Player_no]["position"]==33:
             Community_Chest()
+            
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
             Players[Player_no]["go_collections"]+=1
+            
         if Players[Player_no]["position"]==4:
             Players[Player_no]["current_balance"]-=2000
+            
         if Players[Player_no]["position"]==38:
             Players[Player_no]["current_balance"]-=1000
+            
         if Players[Player_no]["position"]==30:
             Players[Player_no]["jail"]=True
-        
+            
+        if Players[Player_no]["position"]==12:
+            if Utilities[0]["Owner"]=="Nobody":
+                while True:
+                    try:
+                        confirmation=bool(input("Do you wanna buy this?-True or False: "))
+                        break
+                    except ValueError:
+                        print("Try checking the capitalization of the first letter...and write only True or False...")
+                if confirmation==True:
+                    Players[Player_no]["current_balance"]-=Utilities[0]["Purchase_price"]
+                    Utilities[0]["Owner"]=Players[Player_no]["name"]
+                    Utilities[0]["Player_val"]=Player_no+1
+                    print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[0]["name"]+"!!!")
+            elif Utilities[0]["Owner"]!=Players[Player_no]["name"]:
+                if Utilities[0]["Owner"]==Utilities[1]["Owner"]:
+                    Utilities[0]["rent_multiplier"]=10
+                Players[Player_no]["current_balance"]-=(dice_roll*10*Utilities[0]["rent_multiplier"])
+                Players[Utilities[0]["Player_val"]-1]["current_balance"]+=(dice_roll*10*Utilities[0]["rent_multiplier"])
+                print("You payed "+ Utilities[0]["Owner"] + " " + (dice_roll*10*Utilities[0]["rent_multiplier"])+"!!!")
+                    
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
         
             
         print(Players[Player_no]["current_balance"]) 
         
         x=input(print("Continue???"))
-            
-
- 
