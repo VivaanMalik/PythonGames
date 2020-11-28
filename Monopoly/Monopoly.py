@@ -307,7 +307,7 @@ while Run:
             Chance()
             
         if Players[Player_no]["position"]==2 or Players[Player_no]["position"]==17 or Players[Player_no]["position"]==33:
-            Community_Chest()
+            Community_Chest()   
             
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
