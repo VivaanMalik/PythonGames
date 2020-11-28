@@ -5,6 +5,7 @@
 #Credits:VivaanDaGr8
 global Player_no
 import random
+global Utilities
 Player1name = input(print("Enter name of Player 1: "))
 Player2name = input(print("Enter name of Player 2: "))
 Player3name = input(print("Enter name of Player 3: "))
@@ -70,11 +71,16 @@ def Chance():
     elif card_no+1==5:
         if Players[Player_no]["position"]>=13 and Players[Player_no]["position"]<=28:
             Players[Player_no]["position"]=28
+            if not Utilities[1]["Owner"]=="Nobody":
+                Utilities[1]["rent_multiplier"]=10
         if Players[Player_no]["position"]>=40:
             Players[Player_no]["position"]-=40
             Players[Player_no]["round"]+=1
         else:
             Players[Player_no]["position"]=12
+            if not Utilities[0]["Owner"]=="Nobody":
+                Utilities[0]["rent_multiplier"]=10
+        Utility()
     elif card_no+1==6:
         Players[Player_no]["position"]-=3
     elif card_no+1==7:
@@ -126,7 +132,7 @@ def Community_Chest():
         {"text":"You are chosen as mascot for your team's big game at Wembley. Collect 250 for your services."},
         {"text":"Win the lottery. Collect 1000."},
         {"text":"Redo the landscaping at all your properties. Pay 400 per house and 1150 per hotel you own."},
-        {"text":"Your computer network hits witha virus. Pay 1000."},
+        {"text":"Your computer network hits with a virus. Pay 1000."},
         {"text":"Promote your new book on the morning news. Recieve 100 in bonus sales."},
         {"text":"Win big at the Casino. Collect 1000."  }
         
@@ -198,7 +204,40 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
 Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0},
            {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0}
     ]
-
+def Utility():
+    if Players[Player_no]["position"]==12:
+        Utility_no=0
+        Other_Utility_no=1
+    if Players[Player_no]["position"]==28:
+        Utility_no=1
+        Other_Utility_no=0
+    if Utilities[Utility_no]["Owner"]=="Nobody":
+        confirmation=0
+        while True:
+            try:
+                confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                while confirmation<=0 or confirmation>=3:
+                    confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                break
+            except ValueError:
+                print("Try checking the digit you enetred...and type only 1 or 2...")
+                continue
+        if confirmation==True:
+            Players[Player_no]["current_balance"]-=Utilities[Utility_no]["Purchase_price"]
+            Utilities[Utility_no]["Owner"]=Players[Player_no]["name"]
+            Utilities[Utility_no]["Player_val"]=Player_no+1
+            print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[Utility_no]["name"]+"!!!")
+    elif Utilities[Utility_no]["Owner"]!=Players[Player_no]["name"]:
+        if Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
+            Utilities[Utility_no]["rent_multiplier"]=10
+        
+        Players[Player_no]["current_balance"]-=(dice_roll*10*Utilities[Utility_no]["rent_multiplier"])
+        Players[Utilities[Utility_no]["Player_val"]-1]["current_balance"]+=(dice_roll*10*Utilities[Utility_no]["rent_multiplier"])
+        rent_amount=(dice_roll*10*Utilities[Utility_no]["rent_multiplier"])
+        if not Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
+            Utilities[Utility_no]["rent_multiplier"]=4
+        print("You payed "+ str(Utilities[Utility_no]["Owner"]) + " " + str(rent_amount) + "!!!")
+        
 Run = True
 same_roll_count=0
 Playername = Player1name
@@ -283,25 +322,9 @@ while Run:
         if Players[Player_no]["position"]==30:
             Players[Player_no]["jail"]=True
             
-        if Players[Player_no]["position"]==12:
-            if Utilities[0]["Owner"]=="Nobody":
-                while True:
-                    try:
-                        confirmation=bool(input("Do you wanna buy this?-True or False: "))
-                        break
-                    except ValueError:
-                        print("Try checking the capitalization of the first letter...and write only True or False...")
-                if confirmation==True:
-                    Players[Player_no]["current_balance"]-=Utilities[0]["Purchase_price"]
-                    Utilities[0]["Owner"]=Players[Player_no]["name"]
-                    Utilities[0]["Player_val"]=Player_no+1
-                    print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[0]["name"]+"!!!")
-            elif Utilities[0]["Owner"]!=Players[Player_no]["name"]:
-                if Utilities[0]["Owner"]==Utilities[1]["Owner"]:
-                    Utilities[0]["rent_multiplier"]=10
-                Players[Player_no]["current_balance"]-=(dice_roll*10*Utilities[0]["rent_multiplier"])
-                Players[Utilities[0]["Player_val"]-1]["current_balance"]+=(dice_roll*10*Utilities[0]["rent_multiplier"])
-                print("You payed "+ Utilities[0]["Owner"] + " " + (dice_roll*10*Utilities[0]["rent_multiplier"])+"!!!")
+        
+        if Players[Player_no]["position"]==12 or Players[Player_no]["position"]==28:
+            Utility()
                     
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
         
