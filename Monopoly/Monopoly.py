@@ -3,6 +3,7 @@
 #XD
 #LOL
 #Credits:VivaanDaGr8
+#Ya bro  its true
 global Player_no
 import random
 global Utilities
