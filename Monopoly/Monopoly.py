@@ -9,11 +9,11 @@ global Utilities
 while True:
     try:
         players_playing=int(input("Enter the number of players who wanna play: "))
-        while players_playing<=1 or players_playing>=101:
+        while players_playing<=1 or players_playing>=11:
             players_playing=int(input("Enter the number of players who wanna play: "))
         break
     except ValueError:
-        print("Try checking the digit you enetred...and type only 2 to 100...")
+        print("Try checking the digit you enetred...and type only 2 to 10...")
         continue
 Players=[]
 
@@ -28,15 +28,12 @@ while players_name_entering!=players_playing:
         except ValueError:
             print("Hey, Nobody is not allowed bruh")
             continue
-    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0})        
+    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False})        
     players_name_entering+=1
 
 players_playing=str(players_playing)
 
-Player1 = Players[0]
-Player2 = Players[1]
-Player3 = Players[2] 
-Player4 = Players[3]
+
      
 def Chance(): 
     Chance_cards=[{"text":"Another player files a court case against you. Choose which player and pay them 500."},
@@ -87,6 +84,8 @@ def Chance():
         if Players[Player_no]["position"]>=40:
             Players[Player_no]["position"]-=40
             Players[Player_no]["round"]+=1
+        Players[Player_no]["tmp_chance_multiplier"]=True
+        Station()
     elif card_no+1==5:
         if Players[Player_no]["position"]>=13 and Players[Player_no]["position"]<=28:
             Players[Player_no]["position"]=28
@@ -219,11 +218,17 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
               { "name":"Bond Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3200, "base_rent":280, "mortgage_value":1600, "unmortgage_value":1760, "house1rent":1500, "house2rent":4500, "house3rent":10000, "house4rent":12000, "Hotelrent":14000, "colorset":560, "house price":2000},
               { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000},
               { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000}
-]    
+    ]    
 Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0},
            {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0}
     ]
+Stations=[{"name":"King Cross Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250},
+          {"name":"Marylebone Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250},
+          {"name":"Fenchurch Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250},
+          {"name":"Liverpool Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250}
+    ]
 def Utility():
+    global Station_no
     if Players[Player_no]["position"]==12:
         Utility_no=0
         Other_Utility_no=1
@@ -241,7 +246,7 @@ def Utility():
             except ValueError:
                 print("Try checking the digit you enetred...and type only 1 or 2...")
                 continue
-        if confirmation==True:
+        if confirmation==1:
             Players[Player_no]["current_balance"]-=Utilities[Utility_no]["Purchase_price"]
             Utilities[Utility_no]["Owner"]=Players[Player_no]["name"]
             Utilities[Utility_no]["Player_val"]=Player_no+1
@@ -256,33 +261,78 @@ def Utility():
         if not Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
             Utilities[Utility_no]["rent_multiplier"]=4
         print("You payed "+ str(Utilities[Utility_no]["Owner"]) + " " + str(rent_amount) + "!!!")
-        
+
+def Station():
+    Stations[0]["rent"]=250
+    Stations[1]["rent"]=250
+    Stations[2]["rent"]=250
+    Stations[3]["rent"]=250
+    if Players[Player_no]["position"]==5:
+        Station_no=0
+    if Players[Player_no]["position"]==15:
+        Station_no=1
+    if Players[Player_no]["position"]==25:
+        Station_no=2
+    if Players[Player_no]["position"]==35:
+        Station_no=3
+    if Stations[Station_no]["Owner"]=="Nobody":
+        confirmation=0
+        while True:
+            try:
+                confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                while confirmation<=0 or confirmation>=3:
+                    confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                break
+            except ValueError:
+                print("Try checking the digit you enetred...and type only 1 or 2...")
+                continue
+        if confirmation==1:
+            Players[Player_no]["current_balance"]-Stations[Station_no]["Purchase_price"]
+            Stations[Station_no]["Owner"]=Players[Player_no]["name"]
+            Stations[Station_no]["Player_val"]=Player_no+1
+            print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Stations[Station_no]["name"]+"!!!")
+    elif Stations[Station_no]["Owner"]!=Players[Player_no]["name"]:
+        if Stations[Station_no]["Owner"]==Stations[0]["Owner"]:
+            Stations[Station_no]["rent"]*=2
+        if Stations[Station_no]["Owner"]==Stations[1]["Owner"]:
+            Stations[Station_no]["rent"]*=2
+        if Stations[Station_no]["Owner"]==Stations[2]["Owner"]:
+            Stations[Station_no]["rent"]*=2
+        if Stations[Station_no]["Owner"]==Stations[3]["Owner"]:
+            Stations[Station_no]["rent"]*=2
+        Stations[Station_no]["rent"]/=2
+        if Players[Player_no]["tmp_chance_multiplier"]==True:
+            Stations[Station_no]["rent"]*=2
+            Players[Player_no]["tmp_chance_multiplier"]==False
+        Players[Player_no]["current_balance"]-=Stations[Station_no]["rent"]
+        Players[Stations[Station_no]["Player_val"]-1]["current_balance"]+=Stations[Station_no]["rent"]
+        rent_amount=Stations[Station_no]["rent"]
+        print("You payed "+ str(Stations[Station_no]["Owner"]) + " " + str(rent_amount) + "!!!")
+    
+    
 Run = True
 same_roll_count=0
-Player_no =0
+Player_no =-1
 Playername = Players[Player_no]
-chance_count = 0
 dice_roll_1=9
 dice_roll_2=10
 while Run:
     next_chance=False
     while next_chance==False:
         Players[Player_no]["jail"]=False
-        if dice_roll_1==dice_roll_2:
-            chance_count-=1
+        
 
         dice_roll_1=random.randrange(1,7)
         dice_roll_2=random.randrange(1,7)
-
+        if dice_roll_1==dice_roll_2:
+            Player_no-=1
 
         
 
-        chance_count+=1
-       
-        if chance_count==int(players_playing)+1:
-            chance_count=1
-        Player_no=chance_count-1
-        Playername=Players[Player_no]["name"]
+        Player_no+=1
+        
+        if Player_no==int(players_playing):
+            Player_no=0
         
         if dice_roll_1==dice_roll_2:
             next_chance=False
@@ -290,15 +340,14 @@ while Run:
             if same_roll_count==3:
                 next_chance=True
                 same_roll_count=0
-                chance_count+=1
-                Player_no=chance_count-1
                 Players[Player_no]["jail"]=True
         else: 
             next_chance=True
             same_roll_count=0
+            
             Players[Player_no]["jail"]=False
         
-            
+        Playername=Players[Player_no]["name"]   
         dice_roll = dice_roll_1 + dice_roll_2
         print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
         print("jail for " + Playername + " is "+ str(Players[Player_no]["jail"]))
@@ -333,6 +382,9 @@ while Run:
         if Players[Player_no]["position"]==12 or Players[Player_no]["position"]==28:
             Utility()
                     
+        if Players[Player_no]["position"]==5 or Players[Player_no]["position"]==15 or Players[Player_no]["position"]==25 or Players[Player_no]["position"]==35:
+            Station()
+        
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
         
             
