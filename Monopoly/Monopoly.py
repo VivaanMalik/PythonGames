@@ -6,17 +6,33 @@
 global Player_no
 import random
 global Utilities
-Player1name = input(print("Enter name of Player 1: "))
-Player2name = input(print("Enter name of Player 2: "))
-Player3name = input(print("Enter name of Player 3: "))
-Player4name = input(print("Enter name of Player 4: "))
+while True:
+    try:
+        players_playing=int(input("Enter the number of players who wanna play: "))
+        while players_playing<=1 or players_playing>=101:
+            players_playing=int(input("Enter the number of players who wanna play: "))
+        break
+    except ValueError:
+        print("Try checking the digit you enetred...and type only 2 to 100...")
+        continue
+Players=[]
 
+players_name_entering=0
+while players_name_entering!=players_playing:
+    while True:
+        try:
+            player_name = input(print("Enter name of Player: "))
+            while player_name=="Nobody":
+                player_name = input(print("Enter name of Player: "))
+            break
+        except ValueError:
+            print("Hey, Nobody is not allowed bruh")
+            continue
+    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0})        
+    players_name_entering+=1
 
-Players = [{ "name":Player1name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0}, 
-           { "name":Player2name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0},
-           { "name":Player3name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0},
-           { "name":Player4name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0}
-           ]
+players_playing=str(players_playing)
+
 Player1 = Players[0]
 Player2 = Players[1]
 Player3 = Players[2] 
@@ -40,25 +56,23 @@ def Chance():
                   {"text":"Jump on a plane to Trafalgar Square. if you pass GO, collect 2000."},
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
-<<<<<<< HEAD
+
     card_no=random.randrange(1,17)-1
-=======
     card_no=random.randrange(1,17)-1 # Change this to len(Chance_cards)
 
->>>>>>> d31ed383547eb3dab9805cc4d43437c26acf386c
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
         player_output=0
         while True:
             try:
-                tmp_player_output = int(input("type the player number from 1 to 4: "))
+                tmp_player_output = int(input("type the player number from 1 to "+players_playing+": "))
                 player_output=tmp_player_output-1
-                while player_output==Player_no or player_output>=4 or player_output<=-1:
-                    tmp_player_output = int(input("type the player number from 1 to 4: "))
+                while player_output==Player_no or player_output>=int(players_playing)-1 or player_output<=-1:
+                    tmp_player_output = int(input("type the player number from 1 to "+players_playing+": "))
                     player_output=tmp_player_output-1
                 break
             except ValueError:
-                print("Enter a number from 1 to 4...")
+                print("Enter a number from 1 to "+players_playing+"...")
                 continue
 
         
@@ -245,20 +259,12 @@ def Utility():
         
 Run = True
 same_roll_count=0
-Playername = Player1name
-chance_count = 0
 Player_no =0
+Playername = Players[Player_no]
+chance_count = 0
 dice_roll_1=9
 dice_roll_2=10
 while Run:
-    if Playername==Player1name:
-        Player_no=0
-    elif Playername==Player2name:
-        Player_no=1
-    elif Playername==Player3name:
-        Player_no=2
-    elif Playername==Player4name:
-        Player_no=3
     next_chance=False
     while next_chance==False:
         Players[Player_no]["jail"]=False
@@ -272,16 +278,12 @@ while Run:
         
 
         chance_count+=1
+       
+        if chance_count==int(players_playing)+1:
+            chance_count=1
         Player_no=chance_count-1
-        if chance_count==1:
-            Playername=Player1name
-        elif chance_count==2:
-            Playername=Player2name
-        elif chance_count==3:
-            Playername=Player3name
-        elif chance_count==4:
-            Playername=Player4name
-            chance_count=0
+        Playername=Players[Player_no]["name"]
+        
         if dice_roll_1==dice_roll_2:
             next_chance=False
             same_roll_count+=1
