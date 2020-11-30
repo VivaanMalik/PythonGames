@@ -357,6 +357,23 @@ while Run:
             Players[Player_no]["position"]+=dice_roll
             if Players[Player_no]["position"]>=40:
                 Players[Player_no]["position"]-=40
+            if Players[Player_no]["position"]==30:
+                Players[Player_no]["jail"]=True
+        if Players[Player_no]["jail"]==True:
+            Players[Player_no]["position"]=10
+            if same_roll_count!=0 or same_roll_count!=3:
+                dice_roll_1=random.randrange(1,7)
+                dice_roll_2=random.randrange(1,7)
+                if dice_roll_1==dice_roll_2:
+                    Players[Player_no]["jail"]=False
+                    Players[Player_no]["position"]+=dice_roll
+                    next_chance=False
+                    same_roll_count+=1
+                    if same_roll_count==3:
+                        next_chance=True
+                        same_roll_count=0
+                        Players[Player_no]["jail"]=True
+                        Players[Player_no]["position"]==10
             print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
             
         int(Players[Player_no]["position"])
