@@ -314,34 +314,37 @@ def Station():
 Run = True
 same_roll_count=0
 Player_no =-1
-Playername = Players[Player_no]
-dice_roll_1=9
-dice_roll_2=10
+Playername = Players[Player_no]["name"]
+dice_roll_1=0
+dice_roll_2=0
 while Run:
     next_chance=False
+    
     while next_chance==False:
         Players[Player_no]["jail"]=False
         
 
         dice_roll_1=random.randrange(1,7)
         dice_roll_2=random.randrange(1,7)
-        if dice_roll_1==dice_roll_2:
-            Player_no-=1
+       
 
         
 
         Player_no+=1
         
+        
         if Player_no==int(players_playing):
             Player_no=0
         
-        if dice_roll_1==dice_roll_2:
-            next_chance=False
-            same_roll_count+=1
-            if same_roll_count==3:
-                next_chance=True
-                same_roll_count=0
-                Players[Player_no]["jail"]=True
+# =============================================================================
+#         if dice_roll_1==dice_roll_2:
+#             next_chance=False
+#             same_roll_count+=1
+#             if same_roll_count==3:
+#                 next_chance=True
+#                 same_roll_count=0
+#                 Players[Player_no]["jail"]=True
+# =============================================================================
         else: 
             next_chance=True
             same_roll_count=0
@@ -359,21 +362,28 @@ while Run:
                 Players[Player_no]["position"]-=40
             if Players[Player_no]["position"]==30:
                 Players[Player_no]["jail"]=True
+# =============================================================================
+#         if dice_roll_1==dice_roll_2:
+#             Player_no-=1
+# =============================================================================
         if Players[Player_no]["jail"]==True:
             Players[Player_no]["position"]=10
             if same_roll_count!=0 or same_roll_count!=3:
                 dice_roll_1=random.randrange(1,7)
                 dice_roll_2=random.randrange(1,7)
-                if dice_roll_1==dice_roll_2:
-                    Players[Player_no]["jail"]=False
-                    Players[Player_no]["position"]+=dice_roll
-                    next_chance=False
-                    same_roll_count+=1
-                    if same_roll_count==3:
-                        next_chance=True
-                        same_roll_count=0
-                        Players[Player_no]["jail"]=True
-                        Players[Player_no]["position"]==10
+# =============================================================================
+#                 if dice_roll_1==dice_roll_2:
+#                     Players[Player_no]["jail"]=False
+#                     Players[Player_no]["position"]+=dice_roll
+#                     next_chance=False
+#                     same_roll_count+=1
+#                     if same_roll_count==3:
+#                         next_chance=True
+#                         same_roll_count=0
+#                         Players[Player_no]["jail"]=True
+#                         Players[Player_no]["position"]==10
+# =============================================================================
+    
             print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
             
         int(Players[Player_no]["position"])
