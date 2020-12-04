@@ -7,6 +7,7 @@
 global Player_no
 import random
 global Utilities
+
 while True:
     try:
         players_playing=int(input("Enter the number of players who wanna play: "))
@@ -29,7 +30,7 @@ while players_name_entering!=players_playing:
         except ValueError:
             print("Hey, Nobody is not allowed bruh")
             continue
-    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False})        
+    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False, "jail_count":0})        
     players_name_entering+=1
 
 players_playing=str(players_playing)
@@ -179,11 +180,11 @@ def Community_Chest():
         Players[Player_no]["current_balance"]+=2000
         Players[Player_no]["position"]=0
     elif card_no+1==10:
-        Players[Player_no]["current_balance"]+=400
-        Players[0]["current_balance"]-=100
-        Players[1]["current_balance"]-=100
-        Players[2]["current_balance"]-=100
-        Players[3]["current_balance"]-=100
+        i=0
+        while i!=players_playing:
+            Players[Player_no]["current_balance"]+=100
+            Players[1]["current_balance"]-=100
+            i+=1
     elif card_no+1==11:
         Players[Player_no]["current_balance"]+=250
     elif card_no+1==12:
@@ -240,9 +241,9 @@ def Utility():
         confirmation=0
         while True:
             try:
-                confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] +"?-1 for True | 2 for False: "))
                 while confirmation<=0 or confirmation>=3:
-                    confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                    confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] +"?-1 for True | 2 for False: "))
                 break
             except ValueError:
                 print("Try checking the digit you enetred...and type only 1 or 2...")
@@ -280,9 +281,9 @@ def Station():
         confirmation=0
         while True:
             try:
-                confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +"?-1 for True | 2 for False: "))
                 while confirmation<=0 or confirmation>=3:
-                    confirmation=int(input("Do you wanna buy this?-1 for True | 2 for False: "))
+                    confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +"?-1 for True | 2 for False: "))
                 break
             except ValueError:
                 print("Try checking the digit you enetred...and type only 1 or 2...")
@@ -310,6 +311,27 @@ def Station():
         rent_amount=Stations[Station_no]["rent"]
         print("You payed "+ str(Stations[Station_no]["Owner"]) + " " + str(rent_amount) + "!!!")
     
+def Jail():
+    global dice_roll_1
+    global dice_roll_2
+    print("You went to jail, lol XD")
+    if Players[Player_no]["jail_card"]==True:
+        while True:
+            try:
+                confirmation=int(input("Do you wanna use the get out of jail card?-1 for True | 2 for False: "))
+                while confirmation<=0 or confirmation>=3:
+                    confirmation=int(input("Do you wanna use the get out of jail card?-1 for True | 2 for False: "))
+                break
+            except ValueError:
+                print("Try checking the digit you enetred...and type only 1 or 2...")
+                continue
+        Players[Player_no]["jail"]=False
+    if dice_roll_1==dice_roll_2:
+        Players[Player_no]["jail"]=False
+    dice_roll_1=random.randrange(1,7)
+    dice_roll_2=random.randrange(1,7)
+    
+    
     
 Run = True
 same_roll_count=0
@@ -318,38 +340,28 @@ Playername = Players[Player_no]["name"]
 dice_roll_1=0
 dice_roll_2=0
 while Run:
-    next_chance=False
-    
-    while next_chance==False:
-        Players[Player_no]["jail"]=False
+    Player_no+=1
         
+        
+    if Player_no==int(players_playing):
+        Player_no=0
+    
 
+    Players[Player_no]["jail"]=False
+    
+    dice_roll_1=0
+    dice_roll_2=0
+    same_roll_count=0
+    while dice_roll_1==dice_roll_2:
         dice_roll_1=random.randrange(1,7)
         dice_roll_2=random.randrange(1,7)
        
 
         
 
-        Player_no+=1
         
         
-        if Player_no==int(players_playing):
-            Player_no=0
-        
-# =============================================================================
-#         if dice_roll_1==dice_roll_2:
-#             next_chance=False
-#             same_roll_count+=1
-#             if same_roll_count==3:
-#                 next_chance=True
-#                 same_roll_count=0
-#                 Players[Player_no]["jail"]=True
-# =============================================================================
-        else: 
-            next_chance=True
-            same_roll_count=0
             
-            Players[Player_no]["jail"]=False
         
         Playername=Players[Player_no]["name"]   
         dice_roll = dice_roll_1 + dice_roll_2
@@ -362,29 +374,19 @@ while Run:
                 Players[Player_no]["position"]-=40
             if Players[Player_no]["position"]==30:
                 Players[Player_no]["jail"]=True
-# =============================================================================
-#         if dice_roll_1==dice_roll_2:
-#             Player_no-=1
-# =============================================================================
+
         if Players[Player_no]["jail"]==True:
             Players[Player_no]["position"]=10
             if same_roll_count!=0 or same_roll_count!=3:
                 dice_roll_1=random.randrange(1,7)
                 dice_roll_2=random.randrange(1,7)
-# =============================================================================
-#                 if dice_roll_1==dice_roll_2:
-#                     Players[Player_no]["jail"]=False
-#                     Players[Player_no]["position"]+=dice_roll
-#                     next_chance=False
-#                     same_roll_count+=1
-#                     if same_roll_count==3:
-#                         next_chance=True
-#                         same_roll_count=0
-#                         Players[Player_no]["jail"]=True
-#                         Players[Player_no]["position"]==10
-# =============================================================================
+
     
             print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        same_roll_count+=1
+        if same_roll_count==3:
+            Players[Player_no]["jail"]=True
+            
             
         int(Players[Player_no]["position"])
         if Players[Player_no]["position"]==7 or Players[Player_no]["position"]==22 or Players[Player_no]["position"]==36:
@@ -412,8 +414,11 @@ while Run:
                     
         if Players[Player_no]["position"]==5 or Players[Player_no]["position"]==15 or Players[Player_no]["position"]==25 or Players[Player_no]["position"]==35:
             Station()
-        
-        print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        if Players[Player_no]["jail"]==False:
+            print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        else:
+            Players[Player_no]["position"]=10
+            Jail()
         
             
         print(Players[Player_no]["current_balance"]) 
