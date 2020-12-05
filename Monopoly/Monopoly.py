@@ -7,6 +7,7 @@
 global Player_no
 import random
 global Utilities
+global same_roll_count
 
 while True:
     try:
@@ -30,7 +31,7 @@ while players_name_entering!=players_playing:
         except ValueError:
             print("Hey, Nobody is not allowed bruh")
             continue
-    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False, "jail_count":0})        
+    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False, "jail_count":0, "dice_roll":0})        
     players_name_entering+=1
 
 players_playing=str(players_playing)
@@ -183,7 +184,7 @@ def Community_Chest():
         i=0
         while i!=players_playing:
             Players[Player_no]["current_balance"]+=100
-            Players[1]["current_balance"]-=100
+            Players[i]["current_balance"]-=100
             i+=1
     elif card_no+1==11:
         Players[Player_no]["current_balance"]+=250
@@ -310,85 +311,12 @@ def Station():
         Players[Stations[Station_no]["Player_val"]-1]["current_balance"]+=Stations[Station_no]["rent"]
         rent_amount=Stations[Station_no]["rent"]
         print("You payed "+ str(Stations[Station_no]["Owner"]) + " " + str(rent_amount) + "!!!")
-    
-def Jail():
-    global dice_roll_1
-    global dice_roll_2
-    print("You went to jail, lol XD")
-    if Players[Player_no]["jail_card"]==True:
-        while True:
-            try:
-                confirmation=int(input("Do you wanna use the get out of jail card?-1 for True | 2 for False: "))
-                while confirmation<=0 or confirmation>=3:
-                    confirmation=int(input("Do you wanna use the get out of jail card?-1 for True | 2 for False: "))
-                break
-            except ValueError:
-                print("Try checking the digit you enetred...and type only 1 or 2...")
-                continue
-        Players[Player_no]["jail"]=False
-    if dice_roll_1==dice_roll_2:
-        Players[Player_no]["jail"]=False
-    dice_roll_1=random.randrange(1,7)
-    dice_roll_2=random.randrange(1,7)
-    
-    
-    
-Run = True
-same_roll_count=0
-Player_no =-1
-Playername = Players[Player_no]["name"]
-dice_roll_1=0
-dice_roll_2=0
-while Run:
-    Player_no+=1
-        
-        
-    if Player_no==int(players_playing):
-        Player_no=0
-    
 
-    Players[Player_no]["jail"]=False
+def Position_check():
     
-    dice_roll_1=0
-    dice_roll_2=0
-    same_roll_count=0
-    while dice_roll_1==dice_roll_2:
-        dice_roll_1=random.randrange(1,7)
-        dice_roll_2=random.randrange(1,7)
-       
-
-        
-
-        
-        
-            
-        
-        Playername=Players[Player_no]["name"]   
-        dice_roll = dice_roll_1 + dice_roll_2
-        print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
-        print("jail for " + Playername + " is "+ str(Players[Player_no]["jail"]))
-        print(Player_no)
-        if Players[Player_no]["jail"]==False:
-            Players[Player_no]["position"]+=dice_roll
-            if Players[Player_no]["position"]>=40:
-                Players[Player_no]["position"]-=40
-            if Players[Player_no]["position"]==30:
-                Players[Player_no]["jail"]=True
-
-        if Players[Player_no]["jail"]==True:
-            Players[Player_no]["position"]=10
-            if same_roll_count!=0 or same_roll_count!=3:
-                dice_roll_1=random.randrange(1,7)
-                dice_roll_2=random.randrange(1,7)
-
     
-            print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
-        same_roll_count+=1
-        if same_roll_count==3:
-            Players[Player_no]["jail"]=True
-            
-            
-        int(Players[Player_no]["position"])
+        
+    if Players[Player_no]["jail"]==False:
         if Players[Player_no]["position"]==7 or Players[Player_no]["position"]==22 or Players[Player_no]["position"]==36:
             Chance()
             
@@ -414,9 +342,101 @@ while Run:
                     
         if Players[Player_no]["position"]==5 or Players[Player_no]["position"]==15 or Players[Player_no]["position"]==25 or Players[Player_no]["position"]==35:
             Station()
-        if Players[Player_no]["jail"]==False:
-            print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+    
+def Jail():
+    #Stuff to do: Player in jail shud b moving after use of jail_card, put option of paying 500 and auto-get out of jail after 3 turns
+    global dice_roll_1
+    global dice_roll_2
+    global same_roll_count
+    print("You went to jail, lol XD")
+    if Players[Player_no]["jail_card"]==True:
+        while True:
+            try:
+                confirmation=int(input("Do you wanna use the get out of jail card?-1 for True | 2 for False: "))
+                while confirmation<=0 or confirmation>=3:
+                    confirmation=int(input("Do you wanna use the get out of jail card?-1 for True | 2 for False: "))
+                break
+            except ValueError:
+                print("Try checking the digit you enetred...and type only 1 or 2...")
+                continue
+        Players[Player_no]["jail"]=False
+    if dice_roll_1==dice_roll_2 and same_roll_count!=4:
+        same_roll_count-=1
+        Players[Player_no]["jail"]=False
+        Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
+        same_roll_count
+    
+# =============================================================================
+#         Position_check()
+# =============================================================================
+        
+# =============================================================================
+#     dice_roll_1=random.randrange(1,7)
+#     dice_roll_2=random.randrange(1,7)
+# =============================================================================
+    
+    
+    
+Run = True
+same_roll_count=0
+Player_no =-1
+Playername = Players[Player_no]["name"]
+dice_roll_1=0
+dice_roll_2=0
+while Run:
+    Player_no+=1
+        
+        
+    if Player_no==int(players_playing):
+        Player_no=0
+    
+
+# =============================================================================
+#     Players[Player_no]["jail"]=False
+# =============================================================================
+    
+    dice_roll_1=0
+    dice_roll_2=0
+    same_roll_count=0
+    while dice_roll_1==dice_roll_2:
+        if Players[Player_no]["dice_roll"]==0:
+            dice_roll_1=random.randrange(1,7)
+            dice_roll_2=random.randrange(1,7)
         else:
+            dice_roll_1=Players[Player_no]["dice_roll"]/2
+            dice_roll_2=Players[Player_no]["dice_roll"]/2
+            Players[Player_no]["dice_roll"]=0
+            
+        Playername=Players[Player_no]["name"]   
+        dice_roll = dice_roll_1 + dice_roll_2
+        print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
+        print("jail for " + Playername + " is "+ str(Players[Player_no]["jail"]))
+        print(Player_no)
+        if Players[Player_no]["jail"]==False:
+            Players[Player_no]["position"]+=dice_roll
+            if Players[Player_no]["position"]>=40:
+                Players[Player_no]["position"]-=40
+            if Players[Player_no]["position"]==30:
+                Players[Player_no]["jail"]=True
+    
+        if Players[Player_no]["jail"]==True:
+            Players[Player_no]["position"]=10
+            
+    
+    
+            print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        same_roll_count+=1
+        if same_roll_count==4:
+            Players[Player_no]["jail"]=True
+        if Players[Player_no]["position"]==30:
+            Players[Player_no]["jail"]=True
+            
+            
+        int(Players[Player_no]["position"])
+
+        Position_check()
+        if Players[Player_no]["jail"]==True:
             Players[Player_no]["position"]=10
             Jail()
         
