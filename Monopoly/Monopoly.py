@@ -31,7 +31,7 @@ while players_name_entering!=players_playing:
         except ValueError:
             print("Hey, Nobody is not allowed bruh")
             continue
-    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":True, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False, "jail_count":0, "dice_roll":0})        
+    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False, "jail_count":0, "dice_roll":0})        
     players_name_entering+=1
 
 players_playing=str(players_playing)
@@ -345,8 +345,7 @@ def Position_check():
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
     
 def Jail():
-    # remember to make jail_card false nubba
-    #Stuff to do:put option of paying 500 and auto-get out of jail after 3 turns
+    
     global dice_roll_1
     global dice_roll_2
     global same_roll_count
@@ -373,8 +372,7 @@ def Jail():
             Players[Player_no]["jail"]=False
             Player_no-=1
             same_roll_count-=1
-            
-            Player_no+=1
+            Players[Player_no]["jail_card"]=False
             Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
             
     if dice_roll_1==dice_roll_2 and same_roll_count!=4 and Players[Player_no]["jail"]==True:
@@ -382,7 +380,26 @@ def Jail():
         Players[Player_no]["jail"]=False
         Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
     if Players[Player_no]["jail"]==False:
-        Players[Player_no]["jail_count"]=0:
+        Players[Player_no]["jail_count"]=0
+        
+    if Players[Player_no]["jail"]==True:
+        while True:
+            try:
+                confirmation=int(input("Do you wanna pay 500 for getting out of jail?-1 for True | 2 for False: "))
+                while confirmation<=0 or confirmation>=3:
+                    confirmation=int(input("Do you wanna pay 500 for getting out of jail?-1 for True | 2 for False: "))
+                break
+            except ValueError:
+                print("Try checking the digit you enetred...and type only 1 or 2...")
+                continue
+        if confirmation==True:
+            Players[Player_no]["jail"]=False
+            Player_no-=1
+            same_roll_count-=1
+            Players[Player_no]["current_balance"]-=500
+            Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
+            
+    
 # =============================================================================
 #         Position_check()
 # =============================================================================
