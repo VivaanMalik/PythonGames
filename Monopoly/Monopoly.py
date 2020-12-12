@@ -182,7 +182,7 @@ def Community_Chest():
         Players[Player_no]["position"]=0
     elif card_no+1==10:
         i=0
-        while i!=players_playing:
+        while i!=players_playing-1:
             Players[Player_no]["current_balance"]+=100
             Players[i]["current_balance"]-=100
             i+=1
@@ -346,13 +346,20 @@ def Position_check():
     
 def Jail():
     # remember to make jail_card false nubba
-    #Stuff to do: Player in jail shud b moving after use of jail_card, put option of paying 500 and auto-get out of jail after 3 turns
+    #Stuff to do:put option of paying 500 and auto-get out of jail after 3 turns
     global dice_roll_1
     global dice_roll_2
     global same_roll_count
     global Player_no
     print("You went to jail, lol XD")
-    if Players[Player_no]["jail_card"]==True and dice_roll_1!=dice_roll_2:
+    Players[Player_no]["jail_count"]+=1
+    if Players[Player_no]["jail_count"]==3 and Players[Player_no]["jail"]==True:
+        same_roll_count-=1
+        Players[Player_no]["jail"]=False
+        Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
+    
+    
+    if Players[Player_no]["jail_card"]==True and Players[Player_no]["jail"]==True:
         while True:
             try:
                 confirmation=int(input("Do you wanna use the get out of jail card?-1 for True | 2 for False: "))
@@ -367,12 +374,15 @@ def Jail():
             Player_no-=1
             same_roll_count-=1
             
+            Player_no+=1
+            Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
+            
     if dice_roll_1==dice_roll_2 and same_roll_count!=4 and Players[Player_no]["jail"]==True:
         same_roll_count-=1
         Players[Player_no]["jail"]=False
         Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
-        same_roll_count
-    
+    if Players[Player_no]["jail"]==False:
+        Players[Player_no]["jail_count"]=0:
 # =============================================================================
 #         Position_check()
 # =============================================================================
