@@ -24,14 +24,18 @@ players_name_entering=0
 while players_name_entering!=players_playing:
     while True:
         try:
-            player_name = input(print("Enter name of Player: "))
-            while player_name=="Nobody":
-                player_name = input(print("Enter name of Player: "))
+            player_name = input(print("Enter name of Player "+ (str(players_name_entering+1)) + ": "))
+            o=0
+            while o!= players_name_entering:
+                while player_name=="Nobody" or player_name==Players[o]["name"]:
+                    print("Don't enter Nobody and don't repeat names")
+                    player_name = input(print("Enter name of Player "+ (str(players_name_entering+1)) + ": "))
+                o+=1
             break
         except ValueError:
-            print("Hey, Nobody is not allowed bruh")
+            print("Don't enter Nobody and don't repeat names")
             continue
-    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False, "jail_count":0, "dice_roll":0})        
+    Players.append({ "name":player_name, "current_balance":15000, "position":0, "jail":False, "round":0, "go_collections":0, "jail_card":False, "House_no":0, "Hotel_no":0, "tmp_chance_multiplier":False, "jail_count":0, "dice_roll":0, "items":[]})        
     players_name_entering+=1
 
 players_playing=str(players_playing)
@@ -76,7 +80,7 @@ def Chance():
                 continue
 
         
-        Players[Player_no]["current_balance"]-=500
+        Players[Player_no]["current_balance"] -=500
         Players[int(player_output)]["current_balance"]+=500
     elif card_no+1==2:
         Players[Player_no]["position"]=0
@@ -242,18 +246,21 @@ def Utility():
         confirmation=0
         while True:
             try:
-                confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] +"?-1 for True | 2 for False: "))
+                confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] + " for "+  Utilities[Utility_no]["Purchase_price"] +"?-1 for True | 2 for False: "))
                 while confirmation<=0 or confirmation>=3:
-                    confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] +"?-1 for True | 2 for False: "))
+                    confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] + " for "+  Utilities[Utility_no]["Purchase_price"] +"?-1 for True | 2 for False: "))
                 break
             except ValueError:
                 print("Try checking the digit you enetred...and type only 1 or 2...")
                 continue
         if confirmation==1:
-            Players[Player_no]["current_balance"]-=Utilities[Utility_no]["Purchase_price"]
-            Utilities[Utility_no]["Owner"]=Players[Player_no]["name"]
-            Utilities[Utility_no]["Player_val"]=Player_no+1
-            print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[Utility_no]["name"]+"!!!")
+            if Players[Player_no]["current_balance"]-Utilities[Utility_no]["Purchase_price"]<=-1:
+                print("Mortgage time")
+            else:
+                Players[Player_no]["current_balance"]-=Utilities[Utility_no]["Purchase_price"]
+                Utilities[Utility_no]["Owner"]=Players[Player_no]["name"]
+                Utilities[Utility_no]["Player_val"]=Player_no+1
+                print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[Utility_no]["name"]+"!!!")
     elif Utilities[Utility_no]["Owner"]!=Players[Player_no]["name"]:
         if Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
             Utilities[Utility_no]["rent_multiplier"]=10
@@ -282,9 +289,9 @@ def Station():
         confirmation=0
         while True:
             try:
-                confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +"?-1 for True | 2 for False: "))
+                confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +" for "+Stations[Station_no]["Purchase_price"]+"?-1 for True | 2 for False: "))
                 while confirmation<=0 or confirmation>=3:
-                    confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +"?-1 for True | 2 for False: "))
+                    confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +" for "+Stations[Station_no]["Purchase_price"]+"?-1 for True | 2 for False: "))
                 break
             except ValueError:
                 print("Try checking the digit you enetred...and type only 1 or 2...")
@@ -350,7 +357,7 @@ def Jail():
     global dice_roll_2
     global same_roll_count
     global Player_no
-    print("You went to jail, lol XD")
+    print("You are in jail, lol XD")
     Players[Player_no]["jail_count"]+=1
     if Players[Player_no]["jail_count"]==3 and Players[Player_no]["jail"]==True:
         same_roll_count-=1
