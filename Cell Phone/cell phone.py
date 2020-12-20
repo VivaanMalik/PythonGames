@@ -27,29 +27,47 @@ Man=pygame.image.load('ManwithPhone.png')
 Man = pygame.transform.scale(Man, (Manscale))
 Manx=round(winw/2- (int(round((winw/16)*1.4))/2))
 Many=round(winh/1.5)
+phone=pygame.image.load('Phone.png')
+phonescale=int(winh/1.5)
+phone = pygame.transform.scale(phone, (phonescale, phonescale))
 
-
-def msg_to_screen(msg):
+def msg_to_screen(orig_msg):
     global bg, textbox, battery, Man, Manx, Many
     #screentext = font.render(msg, True, (255, 255, 255))
     #game.blit(screentext, [0, 0])
+    msg=orig_msg
     msg=list(msg)
     fps=5
     text_letter=0
     while text_letter<=len(msg)-1:
-        screentext = font.render(msg[text_letter], True, (255, 255, 255))
-        game.blit(screentext, [text_letter*30, 0])
-        text_letter+=1
-        pygame.time.delay(100)
-        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            screentext=font.render(str(orig_msg), True, (255, 255, 255))
+            game.blit(bg, (0, 0))
+            game.blit(textbox, (0,0))
+            game.blit(Man, (Manx, Many))
+            game.blit(battery, (10, ((winh/8)+10)))
+            game.blit(phone, (int(winw/1.4), int(winh/4)))
+            game.blit(screentext, [0,0])
+            text_letter=len(msg)
+            pygame.display.update()
+        else:                
+            screentext = font.render(msg[text_letter], True, (255, 255, 255))
+            game.blit(screentext, [text_letter*30, 0])
+            text_letter+=1
+            pygame.time.delay(100)
+            pygame.display.update()
     pygame.time.delay(1000)
     game.blit(bg, (0, 0))
     game.blit(textbox, (0,0))
     game.blit(Man, (Manx, Many))
     game.blit(battery, (10, ((winh/8)+10)))
+    game.blit(phone, (int(winw/1.4), int(winh/4)))
         
 def gameloop():
-    Manxadd=0
     clock=pygame.time.Clock()
     fps=30
     msg_display=False
@@ -77,6 +95,7 @@ def gameloop():
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
         game.blit(battery, (10, ((winh/8)+10)))
+        game.blit(phone, (int(winw/1.4), int(winh/4)))
         pygame.display.update()
         if batterywidth>=2:
             batterywidth=originalbatterywidth/100
@@ -86,14 +105,23 @@ def gameloop():
                 batterycolor=(255, 255, 0)
             if batterywidth<=originalbatterywidth/4:
                 batterycolor=(255, 0, 0)
+        
             pygame.time.wait(50)
-            
+        
+        game.blit(bg, (0, 0))
+        game.blit(textbox, (0,0))
+        game.blit(Man, (Manx, Many))
+        pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
+        game.blit(battery, (10, ((winh/8)+10)))
+        game.blit(phone, (int(winw/1.4), int(winh/4)))
+        pygame.display.update()    
         if batterywidth<=10 and not msg_display==True:
-            
+            batterywidth=0
+            msg_to_screen("PRESS ENTER IF YOU WANT ME TO SPEAK FASTER")
             msg_to_screen("OH NO!!! MY STUPID PHONE'S BATTERY HAS DIED... UGH!")
             msg_to_screen("WHAT AM I GONNA DO NOW?!")
-            msg_to_screen("ANYWAYS, I WAS PLANNING ON THROWING IT...")
-            msg_to_screen("SINCE, YOU KNOW, PEOPLE HARDLY USE IT FOR 2 YEARS")
+            msg_to_screen("ANYWAYS, I WAS PLANNING ON BUYING ANOTHER ONE")
+            msg_to_screen("SINCE, YOU KNOW, PEOPLE HARDLY USE ONE FOR 2 YEARS")
             msg_to_screen("WELL, ACCORDING TO STATISTICS AT LEAST")
             msg_to_screen("OH HI BY THE WAY!!! I AM BRUCE CELLPHONEYSON.")
             msg_to_screen("YOU CAN CONTROL ME USING THE ARROW KEYS...")
@@ -101,23 +129,26 @@ def gameloop():
             msg_to_screen("CHECK IT OUT!!!")
             msg_display=True
 
-        i=0
-        while i!=5:
-            i+=1
-            Manx+=Manxadd
-            game.blit(bg, (0, 0))
-            game.blit(Man, (Manx, Many))
-            game.blit(textbox, (0,0))
-            game.blit(battery, (10, ((winh/8)+10)))
+        
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gamequit = True
-            if event.type==pygame.KEYDOWN and msg_display==True:
-                if event.key == pygame.K_LEFT:
-                    Manxadd = 10
-                elif event.key == pygame.K_RIGHT:
-                    Manxadd = -10
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_LEFT]:
+            Manx -= 5
+
+        if keys[pygame.K_RIGHT]:
+            Manx += 5
+ 
+        game.blit(bg, (0, 0))
+        game.blit(Man, (Manx, Many))
+        game.blit(textbox, (0,0))
+        pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
+        game.blit(battery, (10, ((winh/8)+10)))
+        game.blit(phone, (int(winw/1.4), int(winh/4)))
+        
         pygame.display.update()
         
     pygame.quit()
