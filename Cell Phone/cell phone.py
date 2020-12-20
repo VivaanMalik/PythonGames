@@ -49,6 +49,7 @@ def msg_to_screen(msg):
     game.blit(battery, (10, ((winh/8)+10)))
         
 def gameloop():
+    Manxadd=0
     clock=pygame.time.Clock()
     fps=30
     msg_display=False
@@ -71,19 +72,12 @@ def gameloop():
     bg=pygame.transform.scale(bg, (screensize))
     
     while not gamequit:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                gamequit = True
-            if event.type==pygame.KEYDOWN and msg_display=True:
-                if event.key == pygame.K_LEFT:
-                    Manxadd = 10
-                elif event.key == pygame.K_RIGHT:
-                    Manxadd = -10
         game.blit(bg, (0, 0))
         game.blit(Man, (Manx, Many))
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
         game.blit(battery, (10, ((winh/8)+10)))
+        pygame.display.update()
         if batterywidth>=2:
             batterywidth=originalbatterywidth/100
             batterywidth*=battery_percent_multiplier
@@ -93,6 +87,7 @@ def gameloop():
             if batterywidth<=originalbatterywidth/4:
                 batterycolor=(255, 0, 0)
             pygame.time.wait(50)
+            
         if batterywidth<=10 and not msg_display==True:
             
             msg_to_screen("OH NO!!! MY STUPID PHONE'S BATTERY HAS DIED... UGH!")
@@ -106,10 +101,23 @@ def gameloop():
             msg_to_screen("CHECK IT OUT!!!")
             msg_display=True
 
-        
+        i=0
+        while i!=5:
+            i+=1
+            Manx+=Manxadd
+            game.blit(bg, (0, 0))
+            game.blit(Man, (Manx, Many))
+            game.blit(textbox, (0,0))
+            game.blit(battery, (10, ((winh/8)+10)))
             
-            
-
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gamequit = True
+            if event.type==pygame.KEYDOWN and msg_display==True:
+                if event.key == pygame.K_LEFT:
+                    Manxadd = 10
+                elif event.key == pygame.K_RIGHT:
+                    Manxadd = -10
         pygame.display.update()
         
     pygame.quit()
