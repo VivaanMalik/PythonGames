@@ -1,7 +1,7 @@
 import pygame
 import ctypes
 import os
-#Put Apple logo and apple guy
+#Fix Apple logo and put apple guy
 winx=0
 winy=30
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (winx,winy)
@@ -43,7 +43,7 @@ AppleLogo=pygame.transform.scale(AppleLogo, (int(winh/4), int(winh/4)))
 
 def msg_to_screen(orig_msg):
     global bgx, bgy
-    global bg, textbox, battery, Man, Manx, Many, Mall, Mallx, Mally
+    global bg, textbox, battery, Man, Manx, Many, Mall, Mallx, Mally, AppleLogo
     #screentext = font.render(msg, True, (255, 255, 255))
     #game.blit(screentext, [0, 0])
     msg=orig_msg
@@ -62,6 +62,7 @@ def msg_to_screen(orig_msg):
             game.blit(bg, (bgx+winw, bgy))
             game.blit(bg, (bgx-winw, bgy))
             game.blit(Mall, (Mallx, Mally))
+            game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
             game.blit(textbox, (0,0))
             game.blit(Man, (Manx, Many))
             game.blit(battery, (10, ((winh/8)+10)))
@@ -81,6 +82,7 @@ def msg_to_screen(orig_msg):
     game.blit(bg, (bgx+winw, bgy))
     game.blit(bg, (bgx-winw, bgy))
     game.blit(Mall, (Mallx, Mally))
+    game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
     game.blit(textbox, (0,0))
     game.blit(Man, (Manx, Many))
     game.blit(battery, (10, ((winh/8)+10)))
@@ -114,7 +116,7 @@ def gameloop():
     leftcheck=False
     rightcheck=False
     global Mallx, Mally
-    global bgx, bgy
+    global bgx, bgy, AppleLogo
     
     while not gamequit:
         if bgx>=winw:
@@ -125,6 +127,7 @@ def gameloop():
         game.blit(bg, (bgx+winw, bgy))
         game.blit(bg, (bgx-winw, bgy))
         game.blit(Mall, (Mallx, Mally))
+        game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
         game.blit(Man, (Manx, Many))
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
@@ -146,6 +149,7 @@ def gameloop():
         game.blit(bg, (bgx+winw, bgy))
         game.blit(bg, (bgx-winw, bgy))
         game.blit(Mall, (Mallx, Mally))
+        game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
         game.blit(textbox, (0,0))
         game.blit(Man, (Manx, Many))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
@@ -164,9 +168,50 @@ def gameloop():
             msg_to_screen("YOU CAN CONTROL ME USING THE ARROW KEYS...")
             msg_to_screen("YOU CAN USE NUMBER KEYS TO CHOOSE BETWEEN OPTIONS")
             msg_to_screen("CHECK IT OUT!!!")
-            if leftcheck==True:
-                if rightcheck==True:
-                    msg_to_screen("Now move left and go to the Apple Store")
+
+            left_check_counts=0
+            right_check_counts=0
+            while not rightcheck==True and not leftcheck==True:
+                if bgx>=winw:
+                    bgx-=winw
+                elif bgx<=0-winw:
+                    bgx+=winw
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gamequit = True
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LEFT]:
+                    bgx += 5
+                    if Manflip==1:
+                        Man=pygame.transform.flip(Man, True, False)
+                        Manflip=0
+                        left_check_counts+=1
+                        if left_check_counts==3:
+                            leftcheck=True
+                if keys[pygame.K_RIGHT]:
+                    bgx -= 5
+                    if Manflip==0:
+                        Man=pygame.transform.flip(Man, True, False)
+                        Manflip=1
+                        right_check_counts+=1
+                        if right_check_counts==3:
+                            rightcheck=True
+                game.blit(bg, (bgx, bgy))
+                game.blit(bg, (bgx+winw, bgy))
+                game.blit(bg, (bgx-winw, bgy))
+                game.blit(Mall, (Mallx, Mally))
+                game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
+                game.blit(Man, (Manx, Many))
+                game.blit(textbox, (0,0))
+                pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
+                game.blit(battery, (10, ((winh/8)+10)))
+                game.blit(phone, (int(winw/1.4), int(winh/4)))
+                pygame.display.update()
+
+            
+            msg_to_screen("NOW MOVE LEFT AND GO TO THE APPLE STORE...")
+            msg_to_screen("YOU'LL FIND HELP THERE...")
+            msg_to_screen("<-- <-- <-- <-- <-- <-- <-- <-- <-- <-- <-- <-- <--")
             msg_display=True
 
         
@@ -179,16 +224,14 @@ def gameloop():
 
             if keys[pygame.K_LEFT]:
                 bgx += 10
-                Mallx+=10
-                leftcheck=True
+                Mallx+=15
                 if Manflip==1:
                     Man=pygame.transform.flip(Man, True, False)
                     Manflip=0
 
             if keys[pygame.K_RIGHT]:
                 bgx -= 10
-                Mallx-=10
-                rightcheck=True
+                Mallx-=15
                 if Manflip==0:
                     Man=pygame.transform.flip(Man, True, False)
                     Manflip=1
@@ -198,6 +241,7 @@ def gameloop():
         game.blit(bg, (bgx+winw, bgy))
         game.blit(bg, (bgx-winw, bgy))
         game.blit(Mall, (Mallx, Mally))
+        game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
         game.blit(Man, (Manx, Many))
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
