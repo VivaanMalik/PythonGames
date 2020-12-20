@@ -1,7 +1,7 @@
 import pygame
 import ctypes
 import os
-#Fix Apple logo and put apple guy
+#put apple guy
 winx=0
 winy=30
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (winx,winy)
@@ -38,7 +38,12 @@ Mallx=0-(winw*3)
 Mally=0
 AppleLogo=pygame.image.load('Apple.png')
 AppleLogo=pygame.transform.scale(AppleLogo, (int(winh/4), int(winh/4)))
-
+Applex=int(round(Mallx+(winw/2)+winw/8))
+Appley=int(round(Mally+winh/5))
+appleguy=pygame.image.load('apple guy.jpg')
+applegh=winw/4
+applegw=round(((appleh/5)*6)/2)
+appleguy=pygame.transform.scale(appleguy, (applegw, applegh))
 
 
 def msg_to_screen(orig_msg):
@@ -62,7 +67,7 @@ def msg_to_screen(orig_msg):
             game.blit(bg, (bgx+winw, bgy))
             game.blit(bg, (bgx-winw, bgy))
             game.blit(Mall, (Mallx, Mally))
-            game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
+            game.blit(AppleLogo,(Applex, Appley))
             game.blit(textbox, (0,0))
             game.blit(Man, (Manx, Many))
             game.blit(battery, (10, ((winh/8)+10)))
@@ -82,7 +87,7 @@ def msg_to_screen(orig_msg):
     game.blit(bg, (bgx+winw, bgy))
     game.blit(bg, (bgx-winw, bgy))
     game.blit(Mall, (Mallx, Mally))
-    game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
+    game.blit(AppleLogo,(Applex, Appley))
     game.blit(textbox, (0,0))
     game.blit(Man, (Manx, Many))
     game.blit(battery, (10, ((winh/8)+10)))
@@ -119,6 +124,8 @@ def gameloop():
     global bgx, bgy, AppleLogo
     
     while not gamequit:
+        Applex=int(round(Mallx+(winw/2)-(winw/16)))
+        Appley=int(round(Mally+winh/5))
         if bgx>=winw:
             bgx-=winw
         elif bgx<=0-winw:
@@ -127,7 +134,7 @@ def gameloop():
         game.blit(bg, (bgx+winw, bgy))
         game.blit(bg, (bgx-winw, bgy))
         game.blit(Mall, (Mallx, Mally))
-        game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
+        game.blit(AppleLogo,(Applex, Appley))
         game.blit(Man, (Manx, Many))
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
@@ -149,7 +156,7 @@ def gameloop():
         game.blit(bg, (bgx+winw, bgy))
         game.blit(bg, (bgx-winw, bgy))
         game.blit(Mall, (Mallx, Mally))
-        game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
+        game.blit(AppleLogo,(Applex, Appley))
         game.blit(textbox, (0,0))
         game.blit(Man, (Manx, Many))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
@@ -200,7 +207,7 @@ def gameloop():
                 game.blit(bg, (bgx+winw, bgy))
                 game.blit(bg, (bgx-winw, bgy))
                 game.blit(Mall, (Mallx, Mally))
-                game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
+                game.blit(AppleLogo,(Applex, Appley))
                 game.blit(Man, (Manx, Many))
                 game.blit(textbox, (0,0))
                 pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
@@ -241,13 +248,13 @@ def gameloop():
         game.blit(bg, (bgx+winw, bgy))
         game.blit(bg, (bgx-winw, bgy))
         game.blit(Mall, (Mallx, Mally))
-        game.blit(AppleLogo,(Mallx+(winw/2-((winh/4)/2), Mally+int(winh/5))))
+        game.blit(AppleLogo,(Applex, Appley))
         game.blit(Man, (Manx, Many))
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
         game.blit(battery, (10, ((winh/8)+10)))
         game.blit(phone, (int(winw/1.4), int(winh/4)))
-        
+        clock.tick(fps)        
         pygame.display.update()
         
     pygame.quit()
