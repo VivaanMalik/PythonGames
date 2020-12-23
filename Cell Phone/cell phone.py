@@ -41,10 +41,12 @@ AppleLogo=pygame.transform.scale(AppleLogo, (int(winh/4), int(winh/4)))
 Applex=int(round(Mallx+(winw/2)+winw/8))
 Appley=int(round(Mally+winh/5))
 appleguy=pygame.image.load('apple guy.jpg')
-applegh=winw/4
-applegw=round(((appleh/5)*6)/2)
+applegh=int((winh/8)*2.5)
+applegw=int(round(((applegh/5)*6)/2))
 appleguy=pygame.transform.scale(appleguy, (applegw, applegh))
-
+appleguyx=int(round(Mallx+(winw/2)))
+appleguyy=int(round(winh/1.5))
+introduction_of_appleguy=False
 
 def msg_to_screen(orig_msg):
     global bgx, bgy
@@ -70,6 +72,7 @@ def msg_to_screen(orig_msg):
             game.blit(AppleLogo,(Applex, Appley))
             game.blit(textbox, (0,0))
             game.blit(Man, (Manx, Many))
+            game.blit(appleguy, (appleguyx, appleguyy))
             game.blit(battery, (10, ((winh/8)+10)))
             game.blit(phone, (int(winw/1.4), int(winh/4)))
             game.blit(screentext, [0,0])
@@ -90,6 +93,7 @@ def msg_to_screen(orig_msg):
     game.blit(AppleLogo,(Applex, Appley))
     game.blit(textbox, (0,0))
     game.blit(Man, (Manx, Many))
+    game.blit(appleguy, (appleguyx, appleguyy))
     game.blit(battery, (10, ((winh/8)+10)))
     game.blit(phone, (int(winw/1.4), int(winh/4)))
         
@@ -124,6 +128,8 @@ def gameloop():
     global bgx, bgy, AppleLogo
     
     while not gamequit:
+        appleguyx=int(round(Mallx+(winw/2)))
+        appleguyy=int(round(winh/1.5))
         Applex=int(round(Mallx+(winw/2)-(winw/16)))
         Appley=int(round(Mally+winh/5))
         if bgx>=winw:
@@ -136,6 +142,7 @@ def gameloop():
         game.blit(Mall, (Mallx, Mally))
         game.blit(AppleLogo,(Applex, Appley))
         game.blit(Man, (Manx, Many))
+        game.blit(appleguy, (appleguyx, appleguyy))
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
         game.blit(battery, (10, ((winh/8)+10)))
@@ -159,10 +166,13 @@ def gameloop():
         game.blit(AppleLogo,(Applex, Appley))
         game.blit(textbox, (0,0))
         game.blit(Man, (Manx, Many))
+        game.blit(appleguy, (appleguyx, appleguyy))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
         game.blit(battery, (10, ((winh/8)+10)))
         game.blit(phone, (int(winw/1.4), int(winh/4)))
-        pygame.display.update()    
+        pygame.display.update()
+
+        #battery empty
         if batterywidth<=10 and not msg_display==True:
             batterywidth=0
             msg_to_screen("PRESS ENTER IF YOU WANT ME TO SPEAK FASTER")
@@ -203,12 +213,17 @@ def gameloop():
                         right_check_counts+=1
                         if right_check_counts==3:
                             rightcheck=True
+                Applex=int(round(Mallx+(winw/2)-(winw/16)))
+                Appley=int(round(Mally+winh/5))
+                appleguyx=round(Mallx+(winw/4))
+                appleguyy=round(winh/1.3)
                 game.blit(bg, (bgx, bgy))
                 game.blit(bg, (bgx+winw, bgy))
                 game.blit(bg, (bgx-winw, bgy))
                 game.blit(Mall, (Mallx, Mally))
                 game.blit(AppleLogo,(Applex, Appley))
                 game.blit(Man, (Manx, Many))
+                game.blit(appleguy, (appleguyx, appleguyy))
                 game.blit(textbox, (0,0))
                 pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
                 game.blit(battery, (10, ((winh/8)+10)))
@@ -221,6 +236,22 @@ def gameloop():
             msg_to_screen("<-- <-- <-- <-- <-- <-- <-- <-- <-- <-- <-- <-- <--")
             msg_display=True
 
+        #talking to appleguy
+            
+        if Manx==appleguyx+applegw:
+            msg_to_screen("Press Space to talk")
+            while introduction_of_appleguy==False:
+                for event in pygame.event.get():
+                   if event.type == pygame.QUIT:
+                       pygame.quit()
+                   keys = pygame.key.get_pressed()
+                   if keys[pygame.K_SPACE]:
+                       msg_to_screen("Well, Hello there!!!")
+                       msg_to_screen("I am Bob Cena")
+                       msg_to_screen("I will show you 'The Life cycle of a phone'")
+                       msg_to_screen("And you can make your own phone too!!!")
+                       introduction_of_appleguy=True
+                   
         
             
         for event in pygame.event.get():
@@ -242,13 +273,14 @@ def gameloop():
                 if Manflip==0:
                     Man=pygame.transform.flip(Man, True, False)
                     Manflip=1
-
+      
  
         game.blit(bg, (bgx, bgy))
         game.blit(bg, (bgx+winw, bgy))
         game.blit(bg, (bgx-winw, bgy))
         game.blit(Mall, (Mallx, Mally))
         game.blit(AppleLogo,(Applex, Appley))
+        game.blit(appleguy, (appleguyx, appleguyy))
         game.blit(Man, (Manx, Many))
         game.blit(textbox, (0,0))
         pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
@@ -260,4 +292,3 @@ def gameloop():
     pygame.quit()
     
 gameloop()
-
