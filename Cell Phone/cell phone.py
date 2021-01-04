@@ -50,6 +50,7 @@ clock=pygame.time.Clock()
 
 def msg_to_screen(orig_msg):
     global bg, bgx, bgy, winw, Mall, Mallx, Mally, textbox, Man, Max, many, appleguy, appleguyx, appleguyy, batterycolor, batterywidth, battery, phone
+    text=""
     msg=orig_msg
     msg=list(msg)
     fps=5
@@ -58,9 +59,10 @@ def msg_to_screen(orig_msg):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-        else:                
-            screentext = font.render(msg[text_letter], True, (255, 255, 255))
-            game.blit(screentext, [text_letter*30, 0])
+        else:
+            text+=msg[text_letter]
+            screentext = font.render(text, True, (255, 255, 255))
+            game.blit(screentext, [0, 0])
             text_letter+=1
             pygame.time.delay(50)
             pygame.display.update()
@@ -81,7 +83,7 @@ def gameloop():
     vel=10
     Manflip=0#0=left, 1 =right
     clock=pygame.time.Clock()
-    fps=30
+    fps=60
     msg_display=False
     textbox=pygame.Surface((winw, winh/8))
     textbox.set_alpha(100)
@@ -99,7 +101,7 @@ def gameloop():
     Man = pygame.transform.scale(Man, (Manscale))
     introduction_of_appleguy=False
     
-
+    global Mall, Mallx, Mally
 
     gamequit=False
     bg=pygame.image.load('background.png')
@@ -291,11 +293,39 @@ def gameloop():
                             game.blit(phone, (int(winw/1.4), int(winh/4)))
                             pygame.display.update()
                             msg_to_screen("AND YOU CAN MAKE YOUR OWN PHONE TOO!!!")
+                            game.blit(bg, (bgx, bgy))
+                            game.blit(bg, (bgx+winw, bgy))
+                            game.blit(bg, (bgx-winw, bgy))
+                            game.blit(Mall, (Mallx, Mally))
+                            pygame.display.update()
+                            game.blit(Man, (Manx, Many))
+                            game.blit(appleguy, (appleguyx, appleguyy))
+                            pygame.display.update()
+                            game.blit(textbox, (0,0))
+                            pygame.draw.rect(game, batterycolor, [15, ((winh/8)+15), batterywidth, round(winh/8-5)])
+                            game.blit(battery, (10, ((winh/8)+10)))
+                            game.blit(phone, (int(winw/1.4), int(winh/4)))
+                            pygame.display.update()
+                            alpha=0
+                            mergebg=pygame.image.load('Rectangle.jpg')
+                            mergebg=pygame.transform.scale(mergebg, (winw, winh))
+                            mergebg.set_colorkey((0,0,0))
+                            while alpha!=255:
+                                mergebg.set_alpha(alpha)
+                                alpha+=1
+                                game.blit(mergebg, (0,0))
+                                pygame.display.update()
+                                pygame.time.delay(100)
+                            while alpha!=0:
+                                mergebg.set_alpha(alpha)
+                                alpha-=1
+                                game.blit(mergebg, (0,0))
+                                pygame.display.update()
+                                pygame.time.delay(100)
+                            msg_to_screen("HERE WE ARE!!!")
                             bg=pygame.image.load('applestore.jpg')
                             bg=pygame.transform.scale(bg, (winw, winh))
-                            Mallx=0
-                            Mally=0
-                            msg_to_screen("HERE WE ARE!!!")
+                            Mall=pygame.transform.scale(Mall, (0,0))
                             game.blit(bg, (bgx, bgy))
                             game.blit(bg, (bgx+winw, bgy))
                             game.blit(bg, (bgx-winw, bgy))
@@ -333,7 +363,7 @@ def gameloop():
                 if Manflip==0:
                     Man=pygame.transform.flip(Man, True, False)
                     Manflip=1
-      
+        clock.tick(fps)
  
         game.blit(bg, (bgx, bgy))
         game.blit(bg, (bgx+winw, bgy))
