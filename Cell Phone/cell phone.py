@@ -47,7 +47,28 @@ applestore=pygame.image.load('applestore.jpg')
 vel=10
 clock=pygame.time.Clock()
 
-
+def black_out():
+    alpha=0
+    size = (winw, winh)
+    blackout=pygame.Surface(size)
+    while alpha!=255:
+        blackout.set_alpha(alpha)
+        pygame.draw.rect(blackout, (0,0,0), blackout.get_rect(), 10)
+        game.blit(blackout, (0, 0))
+        pygame.display.update()
+        alpha+=1
+        pygame.time.delay(50)
+    alpha=255
+    size = (winw, winh)
+    blackout=pygame.Surface(size)
+    while alpha!=1:
+        blackout.set_alpha(alpha)
+        pygame.draw.rect(blackout, (255,255,255), blackout.get_rect(), 10)
+        game.blit(blackout, (0, 0))
+        pygame.display.update()
+        alpha-=1
+        pygame.time.delay(50)
+                    
 def msg_to_screen(orig_msg):
     global bg, bgx, bgy, winw, Mall, Mallx, Mally, textbox, Man, Max, many, appleguy, appleguyx, appleguyy, batterycolor, batterywidth, battery, phone
     text=""
@@ -112,7 +133,7 @@ def gameloop():
     global bgx, bgy
     
     while not gamequit:
-        clock.tick()
+        clock.tick(60)
         appleguyx=int(round(Mallx+(winw/2)))
         appleguyy=int(round(winh/1.5))
         if bgx>=winw:
@@ -285,6 +306,7 @@ def gameloop():
                 game.blit(battery, (10, ((winh/8)+10)))
                 game.blit(phone, (int(winw/1.4), int(winh/4)))
                 pygame.display.update()
+                black_out()
                 msg_to_screen("HERE WE ARE!!!")
                 bg=pygame.image.load('applestore.jpg')
                 bg=pygame.transform.scale(bg, (winw, winh))
