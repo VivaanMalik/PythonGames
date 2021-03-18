@@ -6,6 +6,7 @@
 #Ya bro  its true
 global Player_no
 import random
+import sys
 global Utilities
 global same_roll_count
 
@@ -30,6 +31,7 @@ while players_name_entering!=players_playing:
                 while player_name=="Nobody" or player_name==Players[o]["name"]:
                     print("Don't enter Nobody and don't repeat names")
                     player_name = input(print("Enter name of Player "+ (str(players_name_entering+1)) + ": "))
+                                                   
                 o+=1
             break
         except ValueError:
@@ -186,7 +188,7 @@ def Community_Chest():
         Players[Player_no]["position"]=0
     elif card_no+1==10:
         i=0
-        while i!=players_playing-1:
+        while int(i) !=int(players_playing)-1:
             Players[Player_no]["current_balance"]+=100
             Players[i]["current_balance"]-=100
             i+=1
@@ -203,28 +205,28 @@ def Community_Chest():
     elif card_no+1==16:
         Players[Player_no]["current_balance"]+=1000
         
-Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500},
-              { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500},
-              { "name":"The Angel Islington", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500},
-              { "name":"Euston Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500},
-              { "name":"Pentonville Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1200, "base_rent":80, "mortgage_value":600, "unmortgage_value":660, "house1rent":400, "house2rent":1000, "house3rent":3000, "house4rent":4500, "Hotelrent":6000, "colorset":160, "house price":500},
-              { "name":"Pall Mall", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1400, "base_rent":100, "mortgage_value":700, "unmortgage_value":770, "house1rent":500, "house2rent":1500, "house3rent":4500, "house4rent":6250, "Hotelrent":7500, "colorset":200, "house price":1000},
-              { "name":"White Hall", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1400, "base_rent":100, "mortgage_value":700, "unmortgage_value":770, "house1rent":500, "house2rent":1500, "house3rent":4500, "house4rent":6250, "Hotelrent":7500, "colorset":200, "house price":1000},
-              { "name":"Northumberland Avenue", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1600, "base_rent":120, "mortgage_value":800, "unmortgage_value":880, "house1rent":600, "house2rent":1800, "house3rent":5000, "house4rent":7000, "Hotelrent":9000, "colorset":240, "house price":1000},
-              { "name":"Bow Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1800, "base_rent":140, "mortgage_value":900, "unmortgage_value":990, "house1rent":700, "house2rent":2000, "house3rent":5500, "house4rent":7500, "Hotelrent":9500, "colorset":280, "house price":1000},
-              { "name":"Marlborough Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1800, "base_rent":140, "mortgage_value":900, "unmortgage_value":990, "house1rent":700, "house2rent":2000, "house3rent":5500, "house4rent":7500, "Hotelrent":9500, "colorset":280, "house price":1000},
-              { "name":"Vine Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2000, "base_rent":160, "mortgage_value":1000, "unmortgage_value":1100, "house1rent":800, "house2rent":2200, "house3rent":6000, "house4rent":8000, "Hotelrent":10000, "colorset":320, "house price":1000},
-              { "name":"Strand", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2200, "base_rent":180, "mortgage_value":1100, "unmortgage_value":1210, "house1rent":900, "house2rent":2500, "house3rent":7000, "house4rent":8750, "Hotelrent":10500, "colorset":360, "house price":1500},
-              { "name":"Fleet Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2200, "base_rent":180, "mortgage_value":1100, "unmortgage_value":1210, "house1rent":900, "house2rent":2500, "house3rent":7000, "house4rent":8750, "Hotelrent":10500, "colorset":360, "house price":1500},
-              { "name":"Trafalgar Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2400, "base_rent":200, "mortgage_value":1200, "unmortgage_value":1320, "house1rent":1000, "house2rent":3000, "house3rent":7500, "house4rent":9250, "Hotelrent":11000, "colorset":400, "house price":1500},
-              { "name":"Leicester Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500},
-              { "name":"Coventry Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500},
-              { "name":"Piccadilly", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2800, "base_rent":240, "mortgage_value":1400, "unmortgage_value":1540, "house1rent":1200, "house2rent":3600, "house3rent":8500, "house4rent":10250, "Hotelrent":12000, "colorset":480, "house price":1500},
-              { "name":"Regent Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000},
-              { "name":"Oxford Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000},
-              { "name":"Bond Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3200, "base_rent":280, "mortgage_value":1600, "unmortgage_value":1760, "house1rent":1500, "house2rent":4500, "house3rent":10000, "house4rent":12000, "Hotelrent":14000, "colorset":560, "house price":2000},
-              { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000},
-              { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000}
+Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500, "Housescheck":5},
+              { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500, "Housescheck":5},
+              { "name":"The Angel Islington", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500, "Housescheck":5},
+              { "name":"Euston Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500, "Housescheck":5},
+              { "name":"Pentonville Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1200, "base_rent":80, "mortgage_value":600, "unmortgage_value":660, "house1rent":400, "house2rent":1000, "house3rent":3000, "house4rent":4500, "Hotelrent":6000, "colorset":160, "house price":500, "Housescheck":5},
+              { "name":"Pall Mall", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1400, "base_rent":100, "mortgage_value":700, "unmortgage_value":770, "house1rent":500, "house2rent":1500, "house3rent":4500, "house4rent":6250, "Hotelrent":7500, "colorset":200, "house price":1000, "Housescheck":5},
+              { "name":"White Hall", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1400, "base_rent":100, "mortgage_value":700, "unmortgage_value":770, "house1rent":500, "house2rent":1500, "house3rent":4500, "house4rent":6250, "Hotelrent":7500, "colorset":200, "house price":1000, "Housescheck":5},
+              { "name":"Northumberland Avenue", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1600, "base_rent":120, "mortgage_value":800, "unmortgage_value":880, "house1rent":600, "house2rent":1800, "house3rent":5000, "house4rent":7000, "Hotelrent":9000, "colorset":240, "house price":1000, "Housescheck":5},
+              { "name":"Bow Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1800, "base_rent":140, "mortgage_value":900, "unmortgage_value":990, "house1rent":700, "house2rent":2000, "house3rent":5500, "house4rent":7500, "Hotelrent":9500, "colorset":280, "house price":1000, "Housescheck":5},
+              { "name":"Marlborough Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1800, "base_rent":140, "mortgage_value":900, "unmortgage_value":990, "house1rent":700, "house2rent":2000, "house3rent":5500, "house4rent":7500, "Hotelrent":9500, "colorset":280, "house price":1000, "Housescheck":5},
+              { "name":"Vine Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2000, "base_rent":160, "mortgage_value":1000, "unmortgage_value":1100, "house1rent":800, "house2rent":2200, "house3rent":6000, "house4rent":8000, "Hotelrent":10000, "colorset":320, "house price":1000, "Housescheck":5},
+              { "name":"Strand", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2200, "base_rent":180, "mortgage_value":1100, "unmortgage_value":1210, "house1rent":900, "house2rent":2500, "house3rent":7000, "house4rent":8750, "Hotelrent":10500, "colorset":360, "house price":1500, "Housescheck":5},
+              { "name":"Fleet Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2200, "base_rent":180, "mortgage_value":1100, "unmortgage_value":1210, "house1rent":900, "house2rent":2500, "house3rent":7000, "house4rent":8750, "Hotelrent":10500, "colorset":360, "house price":1500, "Housescheck":5},
+              { "name":"Trafalgar Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2400, "base_rent":200, "mortgage_value":1200, "unmortgage_value":1320, "house1rent":1000, "house2rent":3000, "house3rent":7500, "house4rent":9250, "Hotelrent":11000, "colorset":400, "house price":1500, "Housescheck":5},
+              { "name":"Leicester Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500, "Housescheck":5},
+              { "name":"Coventry Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500, "Housescheck":5},
+              { "name":"Piccadilly", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2800, "base_rent":240, "mortgage_value":1400, "unmortgage_value":1540, "house1rent":1200, "house2rent":3600, "house3rent":8500, "house4rent":10250, "Hotelrent":12000, "colorset":480, "house price":1500, "Housescheck":5},
+              { "name":"Regent Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000, "Housescheck":5},
+              { "name":"Oxford Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000, "Housescheck":5},
+              { "name":"Bond Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3200, "base_rent":280, "mortgage_value":1600, "unmortgage_value":1760, "house1rent":1500, "house2rent":4500, "house3rent":10000, "house4rent":12000, "Hotelrent":14000, "colorset":560, "house price":2000, "Housescheck":5},
+              { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000, "Housescheck":5},
+              { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000, "Housescheck":5}
     ]    
 Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0},
            {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0}
@@ -234,6 +236,112 @@ Stations=[{"name":"King Cross Station", "Owner":"Nobody", "Purchase_price":2000,
           {"name":"Fenchurch Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250},
           {"name":"Liverpool Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250}
     ]
+
+def Property():
+    
+    if Players[Player_no]["position"]==1:
+        property_no=0
+    if Players[Player_no]["position"]==3:
+        property_no=1
+    if Players[Player_no]["position"]==6:
+        property_no=2
+    if Players[Player_no]["position"]==8:
+        property_no=3
+    if Players[Player_no]["position"]==9:
+        property_no=4
+    if Players[Player_no]["position"]==11:
+        property_no=5
+    if Players[Player_no]["position"]==13:
+        property_no=6
+    if Players[Player_no]["position"]==14:
+        property_no=7
+    if Players[Player_no]["position"]==16:
+        property_no=8
+    if Players[Player_no]["position"]==18:
+        property_no=9
+    if Players[Player_no]["position"]==19:
+        property_no=10
+    if Players[Player_no]["position"]==21:
+        property_no=11
+    if Players[Player_no]["position"]==23:
+        property_no=12
+    if Players[Player_no]["position"]==24:
+        property_no=13
+    if Players[Player_no]["position"]==26:
+        property_no=14
+    if Players[Player_no]["position"]==27:
+        property_no=15
+    if Players[Player_no]["position"]==29:
+        property_no=16
+    if Players[Player_no]["position"]==31:
+        property_no=17
+    if Players[Player_no]["position"]==32:
+        property_no=18
+    if Players[Player_no]["position"]==34:
+        property_no=19
+    if Players[Player_no]["position"]==37:
+        property_no=20
+    if Players[Player_no]["position"]==39:
+        property_no=21
+    if Properties[property_no]["Owner"]=="Nobody":
+        confirmation=0
+        while True:
+            try:
+                confirmation=input("Do you wanna buy "+ Properties[property_no]["name"] + " for "+  str(Properties[property_no]["Purchase_price"]) +"?-1 for True | 2 for False: ")
+                confirmation=int(confirmation)
+                while confirmation<=0 or confirmation>=3:
+                    confirmation=input("Do you wanna buy "+ Properties[property_no]["name"] + " for "+  str(Properties[property_no]["Purchase_price"]) +"?-1 for True | 2 for False: ")
+                    confirmation=int(confirmation)
+                break
+            except ValueError:
+                print("Try checking the digit you enetred...and type only 1 or 2...")
+                continue
+        if confirmation==1:
+            if Players[Player_no]["current_balance"]-Properties[property_no]["Purchase_price"]<=-1:
+                print("Mortgage time")
+            else:
+                Players[Player_no]["current_balance"]-=Properties[property_no]["Purchase_price"]
+                Properties[property_no]["Owner"]=Players[Player_no]["name"]
+                Properties[property_no]["Player_val"]=Player_no+1
+                print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Properties[property_no]["name"]+"!!!")
+                Players[Player_no]["items"].append(Properties[property_no]["name"])
+    elif Properties[property_no]["Owner"]==Players[Player_no]["name"]:
+        if Properties[property_no]["Housescheck"]!=0:
+            while True:
+                try:
+                    confirmation=input("Do you wanna buy a house/hotel for "+  str(Properties[property_no]["house price"]) +"?-1 for True | 2 for False: ")
+                    confirmation=int(confirmation)
+                    while confirmation<=0 or confirmation>=3:
+                        confirmation=input("Do you wanna buy a house/hotel for "+  str(Properties[property_no]["house price"]) +"?-1 for True | 2 for False: ")
+                        confirmation=int(confirmation)
+                    break
+                except ValueError:
+                    print("Try checking the digit you enetred...and type only 1 or 2...")
+                    continue
+            if confirmation==1:
+                if Properties[property_no]["Housescheck"]!=0:
+                    Properties[property_no]["Housescheck"]-=1
+                    Players[Player_no]["current_balance"]-=Properties[property_no]["house price"]
+                    if Properties[property_no]["Housescheck"]==4:
+                        Properties[property_no]["base_rent"]=Properties[property_no]["house1rent"]
+                    if Properties[property_no]["Housescheck"]==3:
+                        Properties[property_no]["base_rent"]=Properties[property_no]["house2rent"]
+                    if Properties[property_no]["Housescheck"]==2:
+                        Properties[property_no]["base_rent"]=Properties[property_no]["house3rent"]
+                    if Properties[property_no]["Housescheck"]==1:
+                        Properties[property_no]["base_rent"]=Properties[property_no]["house4rent"]
+                    if Properties[property_no]["Housescheck"]==0:
+                        Properties[property_no]["base_rent"]=Properties[property_no]["Hotelrent"]
+                        print("You have maxed out "+Properties[property_no]["name"]+" Gz")
+                    else:
+                        print("You just built another house at "+Properties[property_no]["name"]+"!")
+            
+    
+    elif Properties[property_no]["Owner"]!=Players[Player_no]["name"]:
+        Players[Player_no]["current_balance"]-=Properties[property_no]["base_rent"]
+        print("You payed "+Properties[property_no]["Owner"]+" "+str(Properties[property_no]["base_rent"])+"!")
+        
+        
 def Utility():
     global Station_no
     if Players[Player_no]["position"]==12:
@@ -246,9 +354,11 @@ def Utility():
         confirmation=0
         while True:
             try:
-                confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] + " for "+  Utilities[Utility_no]["Purchase_price"] +"?-1 for True | 2 for False: "))
+                confirmation=input("Do you wanna buy "+ Utilities[Utility_no]["name"] + " for "+  str(Utilities[Utility_no]["Purchase_price"]) +"?-1 for True | 2 for False: ")
+                confirmation=int(confirmation)
                 while confirmation<=0 or confirmation>=3:
-                    confirmation=int(input("Do you wanna buy "+ Utilities[Utility_no]["name"] + " for "+  Utilities[Utility_no]["Purchase_price"] +"?-1 for True | 2 for False: "))
+                    confirmation=input("Do you wanna buy "+ Utilities[Utility_no]["name"] + " for "+  str(Utilities[Utility_no]["Purchase_price"]) +"?-1 for True | 2 for False: ")
+                    confirmation=int(confirmation)
                 break
             except ValueError:
                 print("Try checking the digit you enetred...and type only 1 or 2...")
@@ -261,6 +371,8 @@ def Utility():
                 Utilities[Utility_no]["Owner"]=Players[Player_no]["name"]
                 Utilities[Utility_no]["Player_val"]=Player_no+1
                 print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[Utility_no]["name"]+"!!!")
+                Players[Player_no]["items"].append(Utilities[Utility_no]["name"])
+                    
     elif Utilities[Utility_no]["Owner"]!=Players[Player_no]["name"]:
         if Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
             Utilities[Utility_no]["rent_multiplier"]=10
@@ -289,9 +401,11 @@ def Station():
         confirmation=0
         while True:
             try:
-                confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +" for "+Stations[Station_no]["Purchase_price"]+"?-1 for True | 2 for False: "))
+                confirmation=input("Do you wanna buy "+ str(Stations[Station_no]["name"]) +" for "+str(Stations[Station_no]["Purchase_price"])+"?-1 for True | 2 for False: ")
+                confirmation=int(confirmation)
                 while confirmation<=0 or confirmation>=3:
-                    confirmation=int(input("Do you wanna buy "+ Stations[Station_no]["name"] +" for "+Stations[Station_no]["Purchase_price"]+"?-1 for True | 2 for False: "))
+                    confirmation=input("Do you wanna buy "+ Stations[Station_no]["name"] +" for "+str(Stations[Station_no]["Purchase_price"])+"?-1 for True | 2 for False: ")
+                    confirmation=int(confirmation)
                 break
             except ValueError:
                 print("Try checking the digit you enetred...and type only 1 or 2...")
@@ -301,6 +415,8 @@ def Station():
             Stations[Station_no]["Owner"]=Players[Player_no]["name"]
             Stations[Station_no]["Player_val"]=Player_no+1
             print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Stations[Station_no]["name"]+"!!!")
+            Players[Player_no]["items"].append(Stations[Station_no]["name"])
+            
     elif Stations[Station_no]["Owner"]!=Players[Player_no]["name"]:
         if Stations[Station_no]["Owner"]==Stations[0]["Owner"]:
             Stations[Station_no]["rent"]*=2
@@ -324,31 +440,33 @@ def Position_check():
     
         
     if Players[Player_no]["jail"]==False:
-        if Players[Player_no]["position"]==7 or Players[Player_no]["position"]==22 or Players[Player_no]["position"]==36:
-            Chance()
-            
-        if Players[Player_no]["position"]==2 or Players[Player_no]["position"]==17 or Players[Player_no]["position"]==33:
-            Community_Chest()   
-            
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
             Players[Player_no]["go_collections"]+=1
             
-        if Players[Player_no]["position"]==4:
+        if Players[Player_no]["position"]==7 or Players[Player_no]["position"]==22 or Players[Player_no]["position"]==36:
+            Chance()
+            
+        elif Players[Player_no]["position"]==2 or Players[Player_no]["position"]==17 or Players[Player_no]["position"]==33:
+            Community_Chest()           
+            
+        elif Players[Player_no]["position"]==4:
             Players[Player_no]["current_balance"]-=2000
             
-        if Players[Player_no]["position"]==38:
+        elif Players[Player_no]["position"]==38:
             Players[Player_no]["current_balance"]-=1000
             
-        if Players[Player_no]["position"]==30:
-            Players[Player_no]["jail"]=True
-            
+        elif Players[Player_no]["position"]==30:
+            Players[Player_no]["jail"]=True 
         
-        if Players[Player_no]["position"]==12 or Players[Player_no]["position"]==28:
+        elif Players[Player_no]["position"]==12 or Players[Player_no]["position"]==28:
             Utility()
                     
-        if Players[Player_no]["position"]==5 or Players[Player_no]["position"]==15 or Players[Player_no]["position"]==25 or Players[Player_no]["position"]==35:
+        elif Players[Player_no]["position"]==5 or Players[Player_no]["position"]==15 or Players[Player_no]["position"]==25 or Players[Player_no]["position"]==35:
             Station()
+            
+        elif Players[Player_no]["position"]==1 or Players[Player_no]["position"]==3 or Players[Player_no]["position"]==6 or Players[Player_no]["position"]==8 or Players[Player_no]["position"]==9 or Players[Player_no]["position"]==11 or Players[Player_no]["position"]==13 or Players[Player_no]["position"]==14 or Players[Player_no]["position"]==16 or Players[Player_no]["position"]==18 or Players[Player_no]["position"]==19 or Players[Player_no]["position"]==21 or Players[Player_no]["position"]==23 or Players[Player_no]["position"]==24 or Players[Player_no]["position"]==26 or Players[Player_no]["position"]==27 or Players[Player_no]["position"]==29 or Players[Player_no]["position"]==31 or Players[Player_no]["position"]==32 or Players[Player_no]["position"]==34 or Players[Player_no]["position"]==37 or Players[Player_no]["position"]==39:
+            Property()
         print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
     
 def Jail():
@@ -406,16 +524,8 @@ def Jail():
             Players[Player_no]["current_balance"]-=500
             Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
             
-    
-# =============================================================================
-#         Position_check()
-# =============================================================================
-        
-# =============================================================================
-#     dice_roll_1=random.randrange(1,7)
-#     dice_roll_2=random.randrange(1,7)
-# =============================================================================
-    
+
+      
     
     
 Run = True
@@ -440,13 +550,9 @@ while Run:
     dice_roll_2=0
     same_roll_count=0
     while dice_roll_1==dice_roll_2:
-        if Players[Player_no]["dice_roll"]==0:
-            dice_roll_1=random.randrange(1,7)
-            dice_roll_2=random.randrange(1,7)
-        else:
-            dice_roll_1=Players[Player_no]["dice_roll"]/2
-            dice_roll_2=Players[Player_no]["dice_roll"]/2
-            Players[Player_no]["dice_roll"]=0
+        dice_roll_1=random.randrange(1,7)
+        dice_roll_2=random.randrange(1,7)
+        Players[Player_no]["dice_roll"]=0
             
         Playername=Players[Player_no]["name"]   
         dice_roll = dice_roll_1 + dice_roll_2
@@ -484,3 +590,20 @@ while Run:
         print(Players[Player_no]["current_balance"]) 
         
         x=input(print("Continue???"))
+        if x == "no":
+            print(":(")
+            player_no=0
+            while player_no!=int(players_playing):
+                item_count=0
+                items="|"
+                item_no=0
+                while item_count!=len(Players[player_no]["items"]):
+                    items+=str(Players[int(player_no)]["items"][item_no])
+                    items+="|"
+                    item_count+=1
+                    item_no+=1
+                if items=="|":
+                    items="|Nothing...gl next time...|"
+                print(Players[int(player_no)]["name"]+" has "+str(Players[int(player_no)]["current_balance"])+" money and owns "+items)
+                player_no+=1
+            sys.exit()
