@@ -228,15 +228,109 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
               { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000, "Housescheck":5},
               { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000, "Housescheck":5}
     ]    
-Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0},
-           {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0}
+Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0, "mortgaged":False},
+           {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0, "mortgaged":False}
     ]
-Stations=[{"name":"King Cross Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250},
-          {"name":"Marylebone Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250},
-          {"name":"Fenchurch Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250},
-          {"name":"Liverpool Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250}
+Stations=[{"name":"King Cross Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
+          {"name":"Marylebone Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
+          {"name":"Fenchurch Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
+          {"name":"Liverpool Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False}
     ]
 
+def Sell():
+    print("You are out of money... you have to sell something")
+    print("Here are your Properties, Stations and Utilities. Your bank will buy your asset for 90% of the total price including houses and hotels")
+    print("If mortgaged, the unmortgage value will be deducted from your newly earned money")
+    items="|"
+    item_no=0
+    while item_count!=len(Players[player_no]["items"]):
+        items="|"
+        items+=str(Players[int(player_no)]["items"][item_no])
+        item_no+=1
+        if items!=len(Players[player_no]["items"]):
+            items+="|"
+        if items=="|":
+            items="Nothing yet..."
+        item_count+=1
+        print(item_no+items)
+    while True:
+        try:
+            sell_no = int(input("Type the number of your asset you wanna sell")
+            sell_no-=1
+            while sell_no<=-1 or sell_no>=len(Players[player_no]["items"]):
+                sell_no = int(input("Type the number of your asset you wanna sell")
+                sell_no-=1
+            break
+        except ValueError:
+            print("Enter a number from 1 to "+len(Players[player_no]["items"])+"...")
+            continue
+    i=0
+    while i!= len(Properties):
+        if Players[player_no]["items"][sell_no]==Properties[i]["name"]:
+            #Sell stuff
+            if Properties[i]["mortgaged"]==True:
+                Players[Player_no]["current_balance"]-=Properties[i]["unmortgage_value"]
+        i+=1
+    i=0
+    while i!= len(Stations):
+        if Players[player_no]["items"][sell_no]==Stations[i]["name"]:
+            #Sell stuff
+            if Stations[i]["mortgaged"]==True:
+                Players[Player_no]["current_balance"]-=Stations[i]["unmortgage_value"]
+        i+=1
+    i=0
+    while i!= len(Utilities):
+        if Players[player_no]["items"][sell_no]==Utilities[i]["name"]:
+            #Sell stuff
+            if Utilities[i]["mortgaged"]==True:
+                Players[Player_no]["current_balance"]-=Utilities[i]["unmortgage_value"]
+        i+=1     
+    
+def Mortgage():
+    print("You are out of money... you have to mortgage something")
+    print("Here are your owned properties, stations and utilities")
+    items="|"
+    item_no=0
+    while item_count!=len(Players[player_no]["items"]):
+        items="|"
+        items+=str(Players[int(player_no)]["items"][item_no])
+        item_no+=1
+        if items!=len(Players[player_no]["items"]):
+            items+="|"
+        if items=="|":
+            items="Nothing yet..."
+        item_count+=1
+        print(item_no+items)
+    while True:
+        try:
+            mortgage_no = int(input("Type the number of your asset you wanna mortgage")
+            mortgage_no-=1
+            while mortgage_no<=-1 or mortgage_no>=len(Players[player_no]["items"]):
+                mortgage_no = int(input("Type the number of your asset you wanna mortgage")
+                mortgage_no-=1
+            break
+        except ValueError:
+            print("Enter a number from 1 to "+len(Players[player_no]["items"])+"...")
+            continue
+    i=0
+    while i!= len(Properties):
+        if Players[player_no]["items"][mortage_no]==Properties[i]["name"]:
+            Properties[i]["mortgaged"]=True
+            Players[Player_no]["current_balance"]+=Properties[i]["mortgage_value"]
+        i+=1
+    i=0
+    while i!= len(Stations):
+        if Players[player_no]["items"][mortage_no]==Stations[i]["name"]:
+            Stations[i]["mortgaged"]=True
+            Players[Player_no]["current_balance"]+=Stations[i]["mortgage_value"]
+        i+=1
+    i=0
+    while i!= len(Utilities):
+        if Players[player_no]["items"][mortage_no]==Utilities[i]["name"]:
+            Utilities[i]["mortgaged"]=True
+            Players[Player_no]["current_balance"]+=Utilities[i]["mortgage_value"]
+        i+=1     
+    
 def Property():
     
     if Players[Player_no]["position"]==1:
@@ -319,6 +413,7 @@ def Property():
                     print("Try checking the digit you enetred...and type only 1 or 2...")
                     continue
             if confirmation==1:
+                #All colour rent
                 if Properties[property_no]["Housescheck"]!=0:
                     Properties[property_no]["Housescheck"]-=1
                     Players[Player_no]["current_balance"]-=Properties[property_no]["house price"]
@@ -337,7 +432,7 @@ def Property():
                         print("You just built another house at "+Properties[property_no]["name"]+"!")
             
     
-    elif Properties[property_no]["Owner"]!=Players[Player_no]["name"]:
+    elif Properties[property_no]["Owner"]!=Players[Player_no]["name"] and Properties[property_no]["mortgaged"]==False:
         Players[Player_no]["current_balance"]-=Properties[property_no]["base_rent"]
         print("You payed "+Properties[property_no]["Owner"]+" "+str(Properties[property_no]["base_rent"])+"!")
         
@@ -373,7 +468,7 @@ def Utility():
                 print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[Utility_no]["name"]+"!!!")
                 Players[Player_no]["items"].append(Utilities[Utility_no]["name"])
                     
-    elif Utilities[Utility_no]["Owner"]!=Players[Player_no]["name"]:
+    elif Utilities[Utility_no]["Owner"]!=Players[Player_no]["name"] and Utilities[Utility_no]["mortgaged"]==False:
         if Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
             Utilities[Utility_no]["rent_multiplier"]=10
         
@@ -417,7 +512,7 @@ def Station():
             print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Stations[Station_no]["name"]+"!!!")
             Players[Player_no]["items"].append(Stations[Station_no]["name"])
             
-    elif Stations[Station_no]["Owner"]!=Players[Player_no]["name"]:
+    elif Stations[Station_no]["Owner"]!=Players[Player_no]["name"] and Stations[Station_no]["mortgaged"]==False:
         if Stations[Station_no]["Owner"]==Stations[0]["Owner"]:
             Stations[Station_no]["rent"]*=2
         if Stations[Station_no]["Owner"]==Stations[1]["Owner"]:
