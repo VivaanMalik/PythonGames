@@ -41,8 +41,6 @@ while players_name_entering!=players_playing:
     players_name_entering+=1
 
 players_playing=str(players_playing)
-
-
      
 def Chance(): 
     Chance_cards=[{"text":"Another player files a court case against you. Choose which player and pay them 500."},
@@ -204,7 +202,32 @@ def Community_Chest():
         Players[Player_no]["current_balance"]+=100
     elif card_no+1==16:
         Players[Player_no]["current_balance"]+=1000
+
         
+Properties_backup = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500, "Housescheck":5},
+              { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500, "Housescheck":5},
+              { "name":"The Angel Islington", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500, "Housescheck":5},
+              { "name":"Euston Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500, "Housescheck":5},
+              { "name":"Pentonville Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1200, "base_rent":80, "mortgage_value":600, "unmortgage_value":660, "house1rent":400, "house2rent":1000, "house3rent":3000, "house4rent":4500, "Hotelrent":6000, "colorset":160, "house price":500, "Housescheck":5},
+              { "name":"Pall Mall", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1400, "base_rent":100, "mortgage_value":700, "unmortgage_value":770, "house1rent":500, "house2rent":1500, "house3rent":4500, "house4rent":6250, "Hotelrent":7500, "colorset":200, "house price":1000, "Housescheck":5},
+              { "name":"White Hall", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1400, "base_rent":100, "mortgage_value":700, "unmortgage_value":770, "house1rent":500, "house2rent":1500, "house3rent":4500, "house4rent":6250, "Hotelrent":7500, "colorset":200, "house price":1000, "Housescheck":5},
+              { "name":"Northumberland Avenue", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1600, "base_rent":120, "mortgage_value":800, "unmortgage_value":880, "house1rent":600, "house2rent":1800, "house3rent":5000, "house4rent":7000, "Hotelrent":9000, "colorset":240, "house price":1000, "Housescheck":5},
+              { "name":"Bow Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1800, "base_rent":140, "mortgage_value":900, "unmortgage_value":990, "house1rent":700, "house2rent":2000, "house3rent":5500, "house4rent":7500, "Hotelrent":9500, "colorset":280, "house price":1000, "Housescheck":5},
+              { "name":"Marlborough Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1800, "base_rent":140, "mortgage_value":900, "unmortgage_value":990, "house1rent":700, "house2rent":2000, "house3rent":5500, "house4rent":7500, "Hotelrent":9500, "colorset":280, "house price":1000, "Housescheck":5},
+              { "name":"Vine Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2000, "base_rent":160, "mortgage_value":1000, "unmortgage_value":1100, "house1rent":800, "house2rent":2200, "house3rent":6000, "house4rent":8000, "Hotelrent":10000, "colorset":320, "house price":1000, "Housescheck":5},
+              { "name":"Strand", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2200, "base_rent":180, "mortgage_value":1100, "unmortgage_value":1210, "house1rent":900, "house2rent":2500, "house3rent":7000, "house4rent":8750, "Hotelrent":10500, "colorset":360, "house price":1500, "Housescheck":5},
+              { "name":"Fleet Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2200, "base_rent":180, "mortgage_value":1100, "unmortgage_value":1210, "house1rent":900, "house2rent":2500, "house3rent":7000, "house4rent":8750, "Hotelrent":10500, "colorset":360, "house price":1500, "Housescheck":5},
+              { "name":"Trafalgar Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2400, "base_rent":200, "mortgage_value":1200, "unmortgage_value":1320, "house1rent":1000, "house2rent":3000, "house3rent":7500, "house4rent":9250, "Hotelrent":11000, "colorset":400, "house price":1500, "Housescheck":5},
+              { "name":"Leicester Square", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500, "Housescheck":5},
+              { "name":"Coventry Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2600, "base_rent":220, "mortgage_value":1300, "unmortgage_value":1430, "house1rent":1100, "house2rent":3300, "house3rent":8000, "house4rent":9750, "Hotelrent":11500, "colorset":440, "house price":1500, "Housescheck":5},
+              { "name":"Piccadilly", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":2800, "base_rent":240, "mortgage_value":1400, "unmortgage_value":1540, "house1rent":1200, "house2rent":3600, "house3rent":8500, "house4rent":10250, "Hotelrent":12000, "colorset":480, "house price":1500, "Housescheck":5},
+              { "name":"Regent Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000, "Housescheck":5},
+              { "name":"Oxford Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3000, "base_rent":260, "mortgage_value":1500, "unmortgage_value":1650, "house1rent":1300, "house2rent":3900, "house3rent":9000, "house4rent":11000, "Hotelrent":12750, "colorset":520, "house price":2000, "Housescheck":5},
+              { "name":"Bond Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3200, "base_rent":280, "mortgage_value":1600, "unmortgage_value":1760, "house1rent":1500, "house2rent":4500, "house3rent":10000, "house4rent":12000, "Hotelrent":14000, "colorset":560, "house price":2000, "Housescheck":5},
+              { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000, "Housescheck":5},
+              { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000, "Housescheck":5}
+    ]
+
 Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500, "Housescheck":5},
               { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500, "Housescheck":5},
               { "name":"The Angel Islington", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":1000, "base_rent":60, "mortgage_value":500, "unmortgage_value":550, "house1rent":300, "house2rent":900, "house3rent":2700, "house4rent":4000, "Hotelrent":5500, "colorset":120,  "house price":500, "Housescheck":5},
@@ -227,15 +250,53 @@ Properties = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"
               { "name":"Bond Street", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3200, "base_rent":280, "mortgage_value":1600, "unmortgage_value":1760, "house1rent":1500, "house2rent":4500, "house3rent":10000, "house4rent":12000, "Hotelrent":14000, "colorset":560, "house price":2000, "Housescheck":5},
               { "name":"Park Lane", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":3500, "base_rent":350, "mortgage_value":1750, "unmortgage_value":1930, "house1rent":1750, "house2rent":5000, "house3rent":11000, "house4rent":13000, "Hotelrent":15000, "colorset":700, "house price":2000, "Housescheck":5},
               { "name":"Mayfair", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":4000, "base_rent":500, "mortgage_value":2000, "unmortgage_value":2200, "house1rent":2000, "house2rent":6000, "house3rent":14000, "house4rent":17000, "Hotelrent":20000, "colorset":1000, "house price":2000, "Housescheck":5}
-    ]    
+    ]
+
+Utilities_backup=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0, "mortgaged":False},
+           {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0, "mortgaged":False}
+    ]
+
 Utilities=[{"name":"Electric Company", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0, "mortgaged":False},
            {"name":"Water works", "Owner":"Nobody", "Purchase_price":1500, "Mortgage_value":750, "Unmortgage_value":830, "rent_multiplier":4, "Player_val":0, "mortgaged":False}
     ]
+
+Stations_backup=[{"name":"King Cross Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
+          {"name":"Marylebone Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
+          {"name":"Fenchurch Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
+          {"name":"Liverpool Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False}
+    ]
+
 Stations=[{"name":"King Cross Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
           {"name":"Marylebone Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
           {"name":"Fenchurch Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False},
           {"name":"Liverpool Station", "Owner":"Nobody", "Purchase_price":2000, "Mortgage_value":1000, "Unmortgage_value":1100, "Player_val":0, "rent":250, "mortgaged":False}
     ]
+
+def color_rent(property_no):
+    #add if property is part of colorset
+    if  Properties[0]["name"] in Players[player_no]["items"] and Properties[1]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+        
+    if  Properties[2]["name"] in Players[player_no]["items"] and Properties[3]["name"] in Players[player_no]["items"] and Properties[4]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+
+    if  Properties[5]["name"] in Players[player_no]["items"] and Properties[6]["name"] in Players[player_no]["items"] and Properties[7]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+
+    if  Properties[8]["name"] in Players[player_no]["items"] and Properties[9]["name"] in Players[player_no]["items"] and Properties[10]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+
+    if  Properties[11]["name"] in Players[player_no]["items"] and Properties[12]["name"] in Players[player_no]["items"] and Properties[13]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+
+    if  Properties[14]["name"] in Players[player_no]["items"] and Properties[15]["name"] in Players[player_no]["items"] and Properties[16]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+
+    if  Properties[17]["name"] in Players[player_no]["items"] and Properties[18]["name"] in Players[player_no]["items"] and Properties[19]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+
+    if  Properties[20]["name"] in Players[player_no]["items"] and Properties[21]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
+        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
 def Sell():
     print("You are out of money... you have to sell something")
@@ -255,10 +316,10 @@ def Sell():
         print(item_no+items)
     while True:
         try:
-            sell_no = int(input("Type the number of your asset you wanna sell")
+            sell_no = int(input("Type the number of your asset you wanna sell"))
             sell_no-=1
             while sell_no<=-1 or sell_no>=len(Players[player_no]["items"]):
-                sell_no = int(input("Type the number of your asset you wanna sell")
+                sell_no = int(input("Type the number of your asset you wanna sell"))
                 sell_no-=1
             break
         except ValueError:
@@ -267,21 +328,34 @@ def Sell():
     i=0
     while i!= len(Properties):
         if Players[player_no]["items"][sell_no]==Properties[i]["name"]:
-            #Sell stuff
+            Sell_price=((Properties[i]["Purchase_price"]+(Properties[i]["house price"]*Properties[i]["Houses"]))/10)*9
+            Players[player_no]["current_balance"]+=Sell_price
+            Players[player_no]["items"].remove(Players[player_no]["items"][sell_no])
+            Properties[i]=Properties_backup[i]
             if Properties[i]["mortgaged"]==True:
                 Players[Player_no]["current_balance"]-=Properties[i]["unmortgage_value"]
         i+=1
     i=0
     while i!= len(Stations):
         if Players[player_no]["items"][sell_no]==Stations[i]["name"]:
-            #Sell stuff
+            
+            Sell_price=(Stations["Purchase_price"]/10)*9
+            Players[player_no]["current_balance"]+=Sell_price
+            Players[player_no]["items"].remove(Players[player_no]["items"][sell_no])
+            Stations[i]=Stations_backup[i]
+            
             if Stations[i]["mortgaged"]==True:
                 Players[Player_no]["current_balance"]-=Stations[i]["unmortgage_value"]
         i+=1
     i=0
     while i!= len(Utilities):
         if Players[player_no]["items"][sell_no]==Utilities[i]["name"]:
-            #Sell stuff
+            
+            Sell_price=(Utilities[i]["Purchase_price"]/10)*9
+            Players[player_no]["current_balance"]+=Sell_price
+            Players[player_no]["items"].remove(Players[player_no]["items"][sell_no])
+            Utilities[i]=Utilities_backup[i]
+            
             if Utilities[i]["mortgaged"]==True:
                 Players[Player_no]["current_balance"]-=Utilities[i]["unmortgage_value"]
         i+=1     
@@ -303,10 +377,10 @@ def Mortgage():
         print(item_no+items)
     while True:
         try:
-            mortgage_no = int(input("Type the number of your asset you wanna mortgage")
+            mortgage_no = int(input("Type the number of your asset you wanna mortgage"))
             mortgage_no-=1
             while mortgage_no<=-1 or mortgage_no>=len(Players[player_no]["items"]):
-                mortgage_no = int(input("Type the number of your asset you wanna mortgage")
+                mortgage_no = int(input("Type the number of your asset you wanna mortgage"))
                 mortgage_no-=1
             break
         except ValueError:
@@ -413,9 +487,9 @@ def Property():
                     print("Try checking the digit you enetred...and type only 1 or 2...")
                     continue
             if confirmation==1:
-                #All colour rent
                 if Properties[property_no]["Housescheck"]!=0:
                     Properties[property_no]["Housescheck"]-=1
+                    Properties[property_no]["Houses"]+=1
                     Players[Player_no]["current_balance"]-=Properties[property_no]["house price"]
                     if Properties[property_no]["Housescheck"]==4:
                         Properties[property_no]["base_rent"]=Properties[property_no]["house1rent"]
@@ -433,6 +507,7 @@ def Property():
             
     
     elif Properties[property_no]["Owner"]!=Players[Player_no]["name"] and Properties[property_no]["mortgaged"]==False:
+        #if Properties[property_no]["Housescheck"]==5
         Players[Player_no]["current_balance"]-=Properties[property_no]["base_rent"]
         print("You payed "+Properties[property_no]["Owner"]+" "+str(Properties[property_no]["base_rent"])+"!")
         
