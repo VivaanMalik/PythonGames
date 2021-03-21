@@ -61,8 +61,7 @@ def Chance():
                   {"text":"Take a helicopter ride to Mayfair."}
         ]
 
-    card_no=random.randrange(1,17)-1
-    card_no=random.randrange(1,17)-1 # Change this to len(Chance_cards)
+    card_no=random.randrange(1,len(Chance_cards))-1 
 
     print(Chance_cards[card_no]["text"])
     if card_no+1 ==1:
@@ -128,7 +127,6 @@ def Chance():
             Players[Player_no]["current_balance"]+=2000
     elif card_no+1==12:
         Players[Player_no]["jail_card"]=True
-        #v b like "M gonna write da code for dis later coz m bingin rn while hearin #ESBR - #Eat. Sleep. Binge. Repeat. LOL XD" 
     elif card_no+1==13:
        Players[Player_no]["current_balance"]-=150        
     elif card_no+1==14:
@@ -141,7 +139,8 @@ def Chance():
             Players[Player_no]["position"]=24
     elif card_no+1==16:
         Players[Player_no]["position"]=39
-        
+    Outtamoney()
+    
 def Community_Chest():
     Community_Chest_cards=[
         {"text":"Make it big in Hollywood. Collect 2000 in a Movie Deal."},
@@ -162,7 +161,7 @@ def Community_Chest():
         {"text":"Win big at the Casino. Collect 1000."  }
         
         ]
-    card_no=random.randrange(1,17)-1
+    card_no=random.randrange(1,len(Community_Chest_cards))-1
 
     print(Community_Chest_cards[card_no]["text"])
     if card_no+1 ==1:
@@ -202,7 +201,7 @@ def Community_Chest():
         Players[Player_no]["current_balance"]+=100
     elif card_no+1==16:
         Players[Player_no]["current_balance"]+=1000
-
+    Outtamoney()
         
 Properties_backup = [{ "name":"Old Kent Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":20, "mortgage_value":300, "unmortgage_value":330, "house1rent":100, "house2rent":300, "house3rent":900, "house4rent":1600, "Hotelrent":2500, "colorset":40, "house price":500, "Housescheck":5},
               { "name":"Whitechapel Road", "Houses":0, "mortgaged":False, "Owner":"Nobody", "Purchase_price":600, "base_rent":40, "mortgage_value":300, "unmortgage_value":330, "house1rent":200, "house2rent":600, "house3rent":1800, "house4rent":3200, "Hotelrent":4500, "colorset":80, "house price":500, "Housescheck":5},
@@ -305,12 +304,30 @@ def color_rent(property_no):
         if property_no>=20 and property_no<=21:
             Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
+def Outtamoney():
+    while Players[Player_no]["current_balance"]<=-1:
+        print("BRUH!!! Stop spending money, man!!! How much ya gonna do?!")
+        while True:
+            try:
+                mortorsell=int(input("Let's get to it... 1 for mortgage and 2 for sell. Remember, There's no going back!!!"))
+                while mortorsell<=0 or mortorsell>=3:
+                    mortorsell=int(input("Let's get to it... 1 for mortgage and 2 for sell. Remember, There's no going back!!!"))
+                break
+            except ValueError:
+                print("Enter 1 or 2 only!!!")
+                continue
+        if mortorsell==1:
+            Mortgage()
+        elif mortorsell==2:
+            Sell()
+
 def Sell():
     print("You are out of money... you have to sell something")
     print("Here are your Properties, Stations and Utilities. Your bank will buy your asset for 90% of the total price including houses and hotels")
     print("If mortgaged, the unmortgage value will be deducted from your newly earned money")
     items="|"
     item_no=0
+    item_count=0
     while item_count!=len(Players[player_no]["items"]):
         items="|"
         items+=str(Players[int(player_no)]["items"][item_no])
@@ -372,6 +389,7 @@ def Mortgage():
     print("Here are your owned properties, stations and utilities")
     items="|"
     item_no=0
+    item_count=0
     while item_count!=len(Players[player_no]["items"]):
         items="|"
         items+=str(Players[int(player_no)]["items"][item_no])
@@ -517,7 +535,7 @@ def Property():
         color_rent(property_no)
         Players[Player_no]["current_balance"]-=Properties[property_no]["base_rent"]
         print("You payed "+Properties[property_no]["Owner"]+" "+str(Properties[property_no]["base_rent"])+"!")
-        
+    Outtamoney()        
         
 def Utility():
     global Station_no
@@ -560,6 +578,7 @@ def Utility():
         if not Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
             Utilities[Utility_no]["rent_multiplier"]=4
         print("You payed "+ str(Utilities[Utility_no]["Owner"]) + " " + str(rent_amount) + "!!!")
+    Outtamoney()
 
 def Station():
     Stations[0]["rent"]=250
@@ -611,11 +630,9 @@ def Station():
         Players[Stations[Station_no]["Player_val"]-1]["current_balance"]+=Stations[Station_no]["rent"]
         rent_amount=Stations[Station_no]["rent"]
         print("You payed "+ str(Stations[Station_no]["Owner"]) + " " + str(rent_amount) + "!!!")
+    Outtamoney()
 
 def Position_check():
-    
-    
-        
     if Players[Player_no]["jail"]==False:
         if Players[Player_no]["position"]>=0 and Players[Player_no]["round"]!=Players[Player_no]["go_collections"]:
             Players[Player_no]["current_balance"]  +=2000
@@ -629,9 +646,11 @@ def Position_check():
             
         elif Players[Player_no]["position"]==4:
             Players[Player_no]["current_balance"]-=2000
+            Outtamoney()
             
         elif Players[Player_no]["position"]==38:
             Players[Player_no]["current_balance"]-=1000
+            Outtamoney()
             
         elif Players[Player_no]["position"]==30:
             Players[Player_no]["jail"]=True 
@@ -699,6 +718,7 @@ def Jail():
             Player_no-=1
             same_roll_count-=1
             Players[Player_no]["current_balance"]-=500
+            Outtamoney()
             Players[Player_no]["dice_roll"]=dice_roll_1+dice_roll_2
             
 
@@ -766,7 +786,7 @@ while Run:
             
         print(Players[Player_no]["current_balance"]) 
         
-        x=input(print("Continue???"))
+        x=input(print("Continue??? Press Enter for next chance and 'no' to end the game..."))
         if x == "no":
             print(":(")
             player_no=0
