@@ -33,7 +33,7 @@ while players_name_entering!=players_playing:
             player_name = input(print("Enter name of Player "+ (str(players_name_entering+1)) + ": "))
             o=0
             while o!= players_name_entering:
-                while player_name=="Nobody" or player_name==Players[o]["name"]:
+                while player_name=="Nobody" or player_name==Players[o]["name"] or player_name=="":
                     print("Don't enter Nobody and don't repeat names")
                     player_name = input(print("Enter name of Player "+ (str(players_name_entering+1)) + ": "))
                                                    
