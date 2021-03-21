@@ -273,30 +273,37 @@ Stations=[{"name":"King Cross Station", "Owner":"Nobody", "Purchase_price":2000,
     ]
 
 def color_rent(property_no):
-    #add if property is part of colorset
-    if  Properties[0]["name"] in Players[player_no]["items"] and Properties[1]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[0]["Owner"] == Properties[1]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[0]["Owner"]!="Nobody":
+        if property_no>=0 and property_no<=1:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
         
-    if  Properties[2]["name"] in Players[player_no]["items"] and Properties[3]["name"] in Players[player_no]["items"] and Properties[4]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[2]["Owner"] == Properties[3]["Owner"] and Properties[3]["Owner"] == Properties[4]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[2]["Owner"]!="Nobody":
+        if property_no>=2 and property_no<=4:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
-    if  Properties[5]["name"] in Players[player_no]["items"] and Properties[6]["name"] in Players[player_no]["items"] and Properties[7]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[5]["Owner"] == Properties[6]["Owner"] and Properties[6]["Owner"] == Properties[7]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[5]["Owner"]!="Nobody":
+        if property_no>=5 and property_no<=7:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
-    if  Properties[8]["name"] in Players[player_no]["items"] and Properties[9]["name"] in Players[player_no]["items"] and Properties[10]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[8]["Owner"] == Properties[9]["Owner"] and Properties[9]["Owner"] == Properties[10]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[8]["Owner"]!="Nobody":
+        if property_no>=8 and property_no<=10:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
-    if  Properties[11]["name"] in Players[player_no]["items"] and Properties[12]["name"] in Players[player_no]["items"] and Properties[13]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[11]["Owner"] == Properties[12]["Owner"] and Properties[12]["Owner"] == Properties[13]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[11]["Owner"]!="Nobody":
+        if property_no>=11 and property_no<=13:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
-    if  Properties[14]["name"] in Players[player_no]["items"] and Properties[15]["name"] in Players[player_no]["items"] and Properties[16]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[14]["Owner"] == Properties[15]["Owner"] and Properties[15]["Owner"] == Properties[16]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[14]["Owner"]!="Nobody":
+        if property_no>=14 and property_no<=16:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
-    if  Properties[17]["name"] in Players[player_no]["items"] and Properties[18]["name"] in Players[player_no]["items"] and Properties[19]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[17]["Owner"] == Properties[18]["Owner"] and Properties[18]["Owner"] == Properties[19]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[17]["Owner"]!="Nobody":
+        if property_no>=17 and property_no<=19:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
-    if  Properties[20]["name"] in Players[player_no]["items"] and Properties[21]["name"] in Players[player_no]["items"] and Properties[property_no]["Houses"]==0:
-        Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
+    if  Properties[20]["Owner"] == Properties[21]["Owner"] and Properties[property_no]["Houses"]==0 and Properties[20]["Owner"]!="Nobody":
+        if property_no>=20 and property_no<=21:
+            Properties[property_no]["base_rent"]=Properties[property_no]["colorset"]
 
 def Sell():
     print("You are out of money... you have to sell something")
@@ -507,7 +514,7 @@ def Property():
             
     
     elif Properties[property_no]["Owner"]!=Players[Player_no]["name"] and Properties[property_no]["mortgaged"]==False:
-        #if Properties[property_no]["Housescheck"]==5
+        color_rent(property_no)
         Players[Player_no]["current_balance"]-=Properties[property_no]["base_rent"]
         print("You payed "+Properties[property_no]["Owner"]+" "+str(Properties[property_no]["base_rent"])+"!")
         
