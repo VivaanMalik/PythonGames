@@ -43,8 +43,11 @@ while players_name_entering!=players_playing:
         try:
             player_name = str(input(print("Enter name of Player "+ (str(players_name_entering+1)) + ": ")))
             o=0
+            if player_name=="":
+                print("Your name is now Player "+str(players_name_entering+1))
+                player_name="Player "+str(players_name_entering+1)
             while o!= players_name_entering:
-                while player_name=="Nobody" or player_name==Players[o]["name"] or player_name==None:
+                while player_name=="Nobody" or player_name==Players[o]["name"]:
                     print("Don't enter Nobody and don't repeat names")
                     player_name = str(input(print("Enter name of Player "+ (str(players_name_entering+1)) + ": ")))
                                                    
@@ -353,7 +356,7 @@ def Sell():
         if items=="|":
             items="Nothing yet..."
         item_count+=1
-        print(item_no+items)
+        print(str(item_no)+str(items))
     while True:
         try:
             sell_no = int(input("Type the number of your asset you wanna sell"))
@@ -363,41 +366,44 @@ def Sell():
                 sell_no-=1
             break
         except ValueError:
-            print("Enter a number from 1 to "+len(Players[Player_no]["items"])+"...")
+            print("Enter a number from 1 to "+str(len(Players[Player_no]["items"]))+"...")
             continue
     i=0
     while i!= len(Properties):
-        if Players[player_no]["items"][sell_no]==Properties[i]["name"]:
+        
+        if Players[Player_no]["items"][sell_no]==Properties[i]["name"]:
             Sell_price=((Properties[i]["Purchase_price"]+(Properties[i]["house price"]*Properties[i]["Houses"]))/10)*9
             Players[Player_no]["current_balance"]+=Sell_price
             Players[Player_no]["items"].remove(Players[Player_no]["items"][sell_no])
             Properties[i]=Properties_backup[i]
             if Properties[i]["mortgaged"]==True:
                 Players[Player_no]["current_balance"]-=Properties[i]["unmortgage_value"]
+            sell_no-=1
+            break
         i+=1
     i=0
     while i!= len(Stations):
-        if Players[player_no]["items"][sell_no]==Stations[i]["name"]:
-            
+        if Players[Player_no]["items"][sell_no]==Stations[i]["name"]:
             Sell_price=(Stations["Purchase_price"]/10)*9
             Players[Player_no]["current_balance"]+=Sell_price
             Players[Player_no]["items"].remove(Players[Player_no]["items"][sell_no])
             Stations[i]=Stations_backup[i]
-            
             if Stations[i]["mortgaged"]==True:
-                Players[Player_no]["current_balance"]-=Stations[i]["unmortgage_value"]
+                Players[Player_no]["current_balance"]-=Stations[i]["Unmortgage_value"]
+            sell_no-=1
+            break
         i+=1
     i=0
     while i!= len(Utilities):
         if Players[Player_no]["items"][sell_no]==Utilities[i]["name"]:
-            
             Sell_price=(Utilities[i]["Purchase_price"]/10)*9
             Players[Player_no]["current_balance"]+=Sell_price
             Players[Player_no]["items"].remove(Players[Player_no]["items"][sell_no])
             Utilities[i]=Utilities_backup[i]
-            
             if Utilities[i]["mortgaged"]==True:
-                Players[Player_no]["current_balance"]-=Utilities[i]["unmortgage_value"]
+                Players[Player_no]["current_balance"]-=Utilities[i]["Unmortgage_value"]
+            sell_no-=1
+            break
         i+=1     
     
 def Mortgage():
@@ -415,7 +421,7 @@ def Mortgage():
         if items=="|":
             items="Nothing yet..."
         item_count+=1
-        print(item_no+items)
+        print(str(item_no)+items)
     while True:
         try:
             mortgage_no = int(input("Type the number of your asset you wanna mortgage"))
@@ -425,25 +431,34 @@ def Mortgage():
                 mortgage_no-=1
             break
         except ValueError:
-            print("Enter a number from 1 to "+len(Players[player_no]["items"])+"...")
+            print("Enter a number from 1 to "+str(len(Players[Player_no]["items"]))+"...")
             continue
     i=0
-    while i!= len(Properties):
-        if Players[Player_no]["items"][mortage_no]==Properties[i]["name"]:
-            Properties[i]["mortgaged"]=True
-            Players[Player_no]["current_balance"]+=Properties[i]["mortgage_value"]
+    while i!= len(Properties)-1:
+        if Players[Player_no]["items"][mortgage_no]==Properties[i]["name"]:
+            if Properties[i]["mortgaged"]==False:
+                Properties[i]["mortgaged"]=True
+                Players[Player_no]["current_balance"]+=Properties[i]["mortgage_value"]
+            else:
+                print("Already Mortgaged bruh")
         i+=1
     i=0
-    while i!= len(Stations):
-        if Players[Player_no]["items"][mortage_no]==Stations[i]["name"]:
-            Stations[i]["mortgaged"]=True
-            Players[Player_no]["current_balance"]+=Stations[i]["mortgage_value"]
+    while i!= len(Stations)-1:
+        if Players[Player_no]["items"][mortgage_no]==Stations[i]["name"]:
+            if Stations[i]["mortgaged"]==False:
+                Stations[i]["mortgaged"]=True
+                Players[Player_no]["current_balance"]+=Stations[i]["Mortgage_value"]
+            else:
+                print("Already Mortgaged bruh")
         i+=1
     i=0
-    while i!= len(Utilities):
-        if Players[Player_no]["items"][mortage_no]==Utilities[i]["name"]:
-            Utilities[i]["mortgaged"]=True
-            Players[Player_no]["current_balance"]+=Utilities[i]["mortgage_value"]
+    while i!= len(Utilities)-1:
+        if Players[Player_no]["items"][mortgage_no]==Utilities[i]["name"]:
+            if Utilities[i]["mortgaged"]==False:
+                Utilities[i]["mortgaged"]=True
+                Players[Player_no]["current_balance"]+=Utilities[i]["Mortgage_value"]
+            else:
+                print("Already Mortgaged bruh")
         i+=1     
     
 def Property():
@@ -506,14 +521,11 @@ def Property():
                 print("Try checking the digit you enetred...and type only 1 or 2...")
                 continue
         if confirmation==1:
-            if Players[Player_no]["current_balance"]-Properties[property_no]["Purchase_price"]<=-1:
-                print("Mortgage time")
-            else:
-                Players[Player_no]["current_balance"]-=Properties[property_no]["Purchase_price"]
-                Properties[property_no]["Owner"]=Players[Player_no]["name"]
-                Properties[property_no]["Player_val"]=Player_no+1
-                print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Properties[property_no]["name"]+"!!!")
-                Players[Player_no]["items"].append(Properties[property_no]["name"])
+            Players[Player_no]["current_balance"]-=Properties[property_no]["Purchase_price"]
+            Properties[property_no]["Owner"]=Players[Player_no]["name"]
+            Properties[property_no]["Player_val"]=Player_no+1
+            print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Properties[property_no]["name"]+"!!!")
+            Players[Player_no]["items"].append(Properties[property_no]["name"])
     elif Properties[property_no]["Owner"]==Players[Player_no]["name"]:
         if Properties[property_no]["Housescheck"]!=0:
             while True:
@@ -575,14 +587,11 @@ def Utility():
                 print("Try checking the digit you enetred...and type only 1 or 2...")
                 continue
         if confirmation==1:
-            if Players[Player_no]["current_balance"]-Utilities[Utility_no]["Purchase_price"]<=-1:
-                print("Mortgage time")
-            else:
-                Players[Player_no]["current_balance"]-=Utilities[Utility_no]["Purchase_price"]
-                Utilities[Utility_no]["Owner"]=Players[Player_no]["name"]
-                Utilities[Utility_no]["Player_val"]=Player_no+1
-                print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[Utility_no]["name"]+"!!!")
-                Players[Player_no]["items"].append(Utilities[Utility_no]["name"])
+            Players[Player_no]["current_balance"]-=Utilities[Utility_no]["Purchase_price"]
+            Utilities[Utility_no]["Owner"]=Players[Player_no]["name"]
+            Utilities[Utility_no]["Player_val"]=Player_no+1
+            print(Players[Player_no]["name"] + ", Congrats!!! You bought "+ Utilities[Utility_no]["name"]+"!!!")
+            Players[Player_no]["items"].append(Utilities[Utility_no]["name"])
                     
     elif Utilities[Utility_no]["Owner"]!=Players[Player_no]["name"] and Utilities[Utility_no]["mortgaged"]==False:
         if Utilities[Utility_no]["Owner"]==Utilities[Other_Utility_no]["Owner"]:
@@ -770,8 +779,7 @@ while Run:
         Playername=Players[Player_no]["name"]   
         dice_roll = dice_roll_1 + dice_roll_2
         print(Playername + " got " + str(dice_roll_1)+" and "+ str(dice_roll_2)+ " which is "+str(dice_roll)) 
-        print("jail for " + Playername + " is "+ str(Players[Player_no]["jail"]))
-        print(Player_no)
+        
         if Players[Player_no]["jail"]==False:
             Players[Player_no]["position"]+=dice_roll
             if Players[Player_no]["position"]>=40:
@@ -781,10 +789,10 @@ while Run:
     
         if Players[Player_no]["jail"]==True:
             Players[Player_no]["position"]=10
-            
+        print("jail for " + Playername + " is "+ str(Players[Player_no]["jail"]))    
     
     
-            print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
+        print(str(Players[Player_no]["name"])+" is on "+str(Players[Player_no]["position"]))
         same_roll_count+=1
         if same_roll_count==4:
             Players[Player_no]["jail"]=True
@@ -817,26 +825,39 @@ while Run:
                     while i!=len(Properties):
                         if Properties[i]["name"]==str(Players[int(player_no)]["items"][item_no]):
                             if Properties[i]["Houses"]==5:
-                                items+="with a Hotel"
+                                items+="with a Hotel XD"
                             elif Properties[i]["Houses"]==1:
-                                items+="with a house"
+                                items+="with a house :)"
                             else:
-                                items+="with "+str(Properties[i]["Houses"])+" houses"
-                            
-                        
+                                items+="with "+str(Properties[i]["Houses"])+" houses :>"
+                        if Properties[i]["name"]==str(Players[int(player_no)]["items"][item_no]):
+                            if Properties[i]["mortgaged"]==True:
+                                items+=" which is mortgaged :("
+                        i+=1
+                    i=0
+                    while i!=len(Stations):
+                        if Stations[i]["name"]==str(Players[int(player_no)]["items"][item_no]):
+                            if Stations[i]["mortgaged"]==True:
+                                items+=" which is mortgaged :("
+                        i+=1
+                    i=0
+                    while i!=len(Utilities):
+                        if Utilities[i]["name"]==str(Players[int(player_no)]["items"][item_no]):
+                            if Utilities[i]["mortgaged"]==True:
+                                items+=" which is mortgaged :("
+                        i+=1
+                    
                     items+="|"
                     item_count+=1
                     item_no+=1
-                if items=="|":
-                    items="|Nothing...gl next time...|"
+                    if items=="|":
+                        items="|Nothing...gl next time...|"
                 print(Players[int(player_no)]["name"]+" has "+str(Players[int(player_no)]["current_balance"])+" money and owns "+items)
                 player_no+=1
-    TYPE("░███████╗███╗░░░███╗░█████╗░███╗░░██╗░█████╗░██████╗░░█████╗░██╗░░░██╗░░░██╗░███████╗")
-    TYPE("██╔██╔══╝████╗░████║██╔══██╗████╗░██║██╔══██╗██╔══██╗██╔══██╗██║░░░╚██╗░██╔╝██╔██╔══╝")
-    TYPE("╚██████╗░██╔████╔██║██║░░██║██╔██╗██║██║░░██║██████╔╝██║░░██║██║░░░░╚████╔╝░╚██████╗░")
-    TYPE("░╚═██╔██╗██║╚██╔╝██║██║░░██║██║╚████║██║░░██║██╔═══╝░██║░░██║██║░░░░░╚██╔╝░░░╚═██╔██╗")
-    TYPE("███████╔╝██║░╚═╝░██║╚█████╔╝██║░╚███║╚█████╔╝██║░░░░░╚█████╔╝███████╗░██║░░░███████╔╝")
-    TYPE("╚══════╝░╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚══╝░╚════╝░╚═╝░░░░░░╚════╝░╚══════╝░╚═╝░░░╚══════╝░")
+            TYPE("░███████╗███╗░░░███╗░█████╗░███╗░░██╗░█████╗░██████╗░░█████╗░██╗░░░██╗░░░██╗░███████╗")
+            TYPE("██╔██╔══╝████╗░████║██╔══██╗████╗░██║██╔══██╗██╔══██╗██╔══██╗██║░░░╚██╗░██╔╝██╔██╔══╝")
+            TYPE("╚██████╗░██╔████╔██║██║░░██║██╔██╗██║██║░░██║██████╔╝██║░░██║██║░░░░╚████╔╝░╚██████╗░")
+            TYPE("░╚═██╔██╗██║╚██╔╝██║██║░░██║██║╚████║██║░░██║██╔═══╝░██║░░██║██║░░░░░╚██╔╝░░░╚═██╔██╗")
+            TYPE("███████╔╝██║░╚═╝░██║╚█████╔╝██║░╚███║╚█████╔╝██║░░░░░╚█████╔╝███████╗░██║░░░███████╔╝")
+            TYPE("╚══════╝░╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚══╝░╚════╝░╚═╝░░░░░░╚════╝░╚══════╝░╚═╝░░░╚══════╝░")
             sys.exit()
-
-        
