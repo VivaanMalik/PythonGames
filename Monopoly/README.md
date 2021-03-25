@@ -2,11 +2,11 @@
 
 ## Key Technologies:
 
-### Exception handling
-### generating and working with random numbers
-### JSON Format for storing Properties, Stations, Utilities, Chance and Community Chests
-### ASCII Art for The intro
-### Extensive use of arrays and dictionaries
+1 Exception handling
+1 generating and working with random numbers
+1 JSON Format for storing Properties, Stations, Utilities, Chance and Community Chests
+1 ASCII Art for The intro
+1 Extensive use of arrays and dictionaries
 
 ## Functions:
 
