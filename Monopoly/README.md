@@ -1,4 +1,4 @@
-# README File for Vivaan's version of Monopoly made by Vivaan Malik
+# README File for Vivaan's version of Monopoly              -Vivaan Malik
 
 ## Key Technologies:
 
